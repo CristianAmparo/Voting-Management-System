@@ -7,6 +7,20 @@ const getVote = asyncHandler(async (req, res) => {
     const [results] = await db.promise().query(query);
     res.json(results);
 });
+// Count all votes for Each candidates on each position
+const countVote = asyncHandler(async (req, res) => {
+    const query = `
+        SELECT tbl_candidates.name, tbl_candidates.position, COUNT(tbl_vote.id) as vote_count 
+        FROM tbl_candidates INNER JOIN tbl_vote 
+        ON tbl_candidates.name = tbl_vote.president 
+        OR tbl_candidates.name = tbl_vote.vice
+        OR tbl_candidates.name = tbl_vote.secretary
+        OR tbl_candidates.name = tbl_vote.treasurer
+        OR tbl_candidates.name = tbl_vote.first_rep
+        GROUP BY tbl_candidates.name, tbl_candidates.position; `;
+    const [results] = await db.promise().query(query);
+    res.json(results);
+});
 
 // Get user vote for preview
 const myVote = asyncHandler(async (req, res) => {
@@ -15,6 +29,7 @@ const myVote = asyncHandler(async (req, res) => {
     const [results] = await db.promise().query(query, [user_id]);
     res.json(results);
 });
+
 
 // Register a vote - POST
 const addVote = asyncHandler(async (req, res) => {
@@ -57,6 +72,7 @@ const updateVote = asyncHandler(async (req, res) => {
 
 module.exports = {
     getVote,
+    countVote,
     myVote,
     addVote,
     updateVote

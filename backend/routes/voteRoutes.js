@@ -1,10 +1,11 @@
 const express = require('express')
 const router = express.Router()
-const { getVote, myVote, addVote, updateVote } = require('../controller/voteController')
+const { getVote, myVote, addVote, updateVote, countVote } = require('../controller/voteController')
 
 
 router.get('/', getVote);// See all votes
 router.post('/', addVote);// Add vote
+router.get('/count', countVote);// See all votes
 router.get('/:user_id', myVote);// See all votes
 router.put('/:user_id', updateVote);// Update vote
 
