@@ -11,8 +11,8 @@ const getUsers = asyncHandler(async (req, res) => {
 
 // Register a user - POST
 const registerUser = asyncHandler(async (req, res) => {
-    const { name, username, password } = req.body;
-    if (!name || !username || !password) {
+    const { fname, lname, username, password } = req.body;
+    if (!fname || !lname || !username || !password) {
         return res.status(400).json({ error: 'Please fill out all the fields' });
     }
 
@@ -26,7 +26,7 @@ const registerUser = asyncHandler(async (req, res) => {
 
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
-
+        const name = fname + " " + lname;
         const query = 'INSERT INTO tbl_users (name, username, password) VALUES (?, ?, ?)';
         await db.promise().execute(query, [name, username, hashedPassword]);
 
