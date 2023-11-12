@@ -51,7 +51,7 @@ const navigate = useNavigate();
       <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto h-screen lg:py-0">
           <div className="w-full bg-white rounded-lg shadow-xl md:mt-0 sm:max-w-md xl:p-0 ">
               <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
-                  <h1 className="text-2xl font-bold leading-tight tracking-tight text-gray-900 md:text-3xl text-center"><span className='text-orange-600'>Voting</span> System</h1>
+                  <h1 className="text-2xl font-bold leading-tight tracking-tight text-gray-900 md:text-4xl text-center"><span className='text-orange-600'>Voting</span> System</h1>
                   <form className="space-y-2 md:space-y-4" onSubmit={handleSubmit}>
                       <div>
                           <label htmlFor="email" className="label ">Username</label>
@@ -78,13 +78,17 @@ const navigate = useNavigate();
                               className="textInput sm:text-sm focus:ring-primary-600 focus:border-primary-600" 
                           />
                       </div>
+                      <div className='text-center w-full '> 
+                        {success !== '' && <h1>{success}</h1>}
+                        {error !== '' && <h1 className='text-red-600'>{error}</h1>}
+                      </div>
                       <button type="submit" className="w-full text-white bg-orange-600 hover:bg-orange-700 focus:ring-1 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Login</button>
                       <p className="text-sm font-light text-gray-500 dark:text-gray-400 text-center">
                           Don’t have an account yet? <a href="/register" className="font-medium text-primary-600 hover:underline dark:text-blue-400">Register!</a>
                       </p>
                   </form>
-                  {success !== '' && <h1>{success}</h1>}
-                  {error !== '' && <h1>{error}</h1>}
+                  
+                  
               </div>
           </div>
       </div>

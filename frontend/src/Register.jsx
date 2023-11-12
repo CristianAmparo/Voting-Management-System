@@ -56,33 +56,44 @@ function Register() {
                   <h1 className="text-2xl font-bold leading-tight tracking-tight text-gray-900 md:text-4xl text-center">Voting <span className='text-orange-600'>System</span></h1>
 
                   <form className="space-y-2 md:space-y-4" onSubmit={handleSubmit} >
-                     <div className='flex gap-3 '>
-                        <div>
-                            <label htmlFor="email" className="label ">First Name</label>
-                            <input 
-                                type="text"
-                                id="fname"
-                                name="fname"
-                                value={fname}
-                                placeholder="Enter first name"
-                                onChange={handleChange}
-                                className="textInput sm:text-sm focus:ring-primary-600 focus:border-primary-600" 
-
-                            />
+                      <div className='w-max relative mx-auto'>
+                        <div className=" w-32 h-32 bg-blue-200 rounded-full overflow-hidden border-4 border-gray-700 flex justify-center items-center mx-auto">
+                            <div id="imagePreview"><img src="/profile.png" alt="" /></div>
                         </div>
-                        <div>
-                            <label htmlFor="email" className="label ">Last Name</label>
-                            <input 
-                                type="text"
-                                id="lname"
-                                name="lname"
-                                value={lname}
-                                placeholder="Enter last name"
-                                onChange={handleChange}
-                                className="textInput sm:text-sm focus:ring-primary-600 focus:border-primary-600" 
-
-                            />
+                        <div className="">
+                            <label htmlFor="imageInput" className="absolute bottom-1 right-0 rounded-full w-10 h-10 bg-slate-600 hover:bg-slate-700 p-2 text-white cursor-pointer flex justify-center items-center">
+                                <img className="w-5 h-5 object-center" src="/editProfile.png" alt="" />
+                                <span className="sr-only">Choose an image to upload</span>
+                            </label>
+                            <input type="file" name="image" id="imageInput" className="hidden h-full w-full cursor-pointer" accept=".png, .jpg, .jpeg"  />
                         </div>
+                      </div>
+                      <div className='flex gap-10 '>
+                        <div>
+                          <label htmlFor="email" className="label ">First Name</label>
+                          <input 
+                              type="text"
+                              id="fname"
+                              name="fname"
+                              value={fname}
+                              placeholder="Enter first name"
+                              onChange={handleChange}
+                              className="textInput sm:text-sm focus:ring-primary-600 focus:border-primary-600" 
+                          />
+                        </div>
+                      <div>
+                        <label htmlFor="email" className="label ">Last Name</label>
+                        <input 
+                            type="text"
+                            id="lname"
+                            name="lname"
+                            value={lname}
+                            placeholder="Enter last name"
+                            onChange={handleChange}
+                            className="textInput sm:text-sm focus:ring-primary-600 focus:border-primary-600" 
+
+                        />
+                      </div>
                       </div>
                       <div>
                           <label htmlFor="email" className="label ">Username</label>
@@ -120,11 +131,13 @@ function Register() {
                               className="textInput sm:text-sm focus:ring-primary-600 focus:border-primary-600" 
                           />
                       </div>
-                      {success !== '' && <h1>{success}</h1>}
-                      {error !== '' && <h1 className='text-red-700'>{error}</h1>}
+                      <div className='text-center w-full'> 
+                        {success !== '' && <h1>{success}</h1>}
+                        {error !== '' && <h1 className='text-red-700'>{error}</h1>}
+                      </div>
                       <button type="submit" className="w-full text-white bg-orange-600 hover:bg-orange-700 focus:ring-1 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Register</button>
                       <p className="text-sm font-light text-gray-500 dark:text-gray-400 text-center">
-                          Already have an account <a href="#" className="font-medium text-primary-600 hover:underline dark:text-blue-400">Login!</a>
+                          Already have an account <a href="/login" className="font-medium text-primary-600 hover:underline dark:text-blue-400">Login!</a>
                       </p>
                   </form>
               </div>
