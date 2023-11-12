@@ -1,15 +1,18 @@
-import React, { useRef, useEffect, useState } from 'react'
-import Header from './Header';
+import React, { useState, useEffect } from 'react';
+import Headers from './Header'
 import Sidebar from './Sidebar';
+import VoteTally from './VoteTally';
+
 
 const Sample = () => {
   return (
     <>
-      <Header />
-      <Sidebar />
-      
+    <Headers />
+    <Sidebar />
+    <VoteTally />
+
     </>
-  )
+  );
 }
 
 export default Sample;
