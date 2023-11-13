@@ -35,4 +35,11 @@
         @apply flex-1 ms-3 whitespace-nowrap;
     }
 
+    .graph {
+        background-color: bisque;
+        display: grid;
+        justify-items: center;
+        width: 100%;
+    }
+
 }

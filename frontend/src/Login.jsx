@@ -44,7 +44,6 @@ const navigate = useNavigate();
 
   };
 
-
   return (
     <>
       <section className=" bg-gray-100">

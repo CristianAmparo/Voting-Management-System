@@ -10,6 +10,7 @@ const Sample = () => {
     <Headers />
     <Sidebar />
     <VoteTally />
+    
 
     </>
   );

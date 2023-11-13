@@ -10,14 +10,31 @@ const getVote = asyncHandler(async (req, res) => {
 // Count all votes for Each candidates on each position
 const countVote = asyncHandler(async (req, res) => {
     const query = `
-        SELECT tbl_candidates.name, tbl_candidates.position, COUNT(tbl_vote.id) as vote_count 
-        FROM tbl_candidates INNER JOIN tbl_vote 
-        ON tbl_candidates.name = tbl_vote.president 
-        OR tbl_candidates.name = tbl_vote.vice
-        OR tbl_candidates.name = tbl_vote.secretary
-        OR tbl_candidates.name = tbl_vote.treasurer
-        OR tbl_candidates.name = tbl_vote.first_rep
-        GROUP BY tbl_candidates.name, tbl_candidates.position; `;
+        SELECT
+            tbl_candidates.name,
+            tbl_candidates.position,
+            COUNT(tbl_vote.id) AS vote_count
+        FROM
+            tbl_candidates
+        LEFT JOIN
+            tbl_vote
+         ON
+            tbl_candidates.name = tbl_vote.president
+            OR tbl_candidates.name = tbl_vote.vice
+            OR tbl_candidates.name = tbl_vote.secretary
+            OR tbl_candidates.name = tbl_vote.treasurer
+            OR tbl_candidates.name = tbl_vote.first_rep
+        GROUP BY
+            tbl_candidates.name,
+            tbl_candidates.position
+        ORDER BY
+            CASE 
+                WHEN tbl_candidates.position = 'President' THEN 1
+                WHEN tbl_candidates.position = 'Vice' THEN 2
+                WHEN tbl_candidates.position = 'Secretary' THEN 3
+                ELSE 4
+            END,
+            tbl_candidates.position ASC; `;
     const [results] = await db.promise().query(query);
     res.json(results);
 });
