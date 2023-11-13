@@ -2,12 +2,20 @@ const db = require('../db');
 const bcrypt = require('bcryptjs');
 const asyncHandler = require('express-async-handler');
 
-// Get list of users
+// Get list of users/voters
 const getUsers = asyncHandler(async (req, res) => {
     const query = 'SELECT * FROM tbl_users';
     const [results] = await db.promise().query(query);
     res.json(results);
 });
+
+// Count All of users/voters
+const countUser = asyncHandler(async (req, res) => {
+    const query = 'SELECT COUNT(tbl_users.id) AS voters_count from tbl_users;';
+    const [results] = await db.promise().query(query);
+    res.json(results);
+});
+
 
 // Register a user - POST
 const registerUser = asyncHandler(async (req, res) => {
@@ -75,6 +83,7 @@ const deleteUser = asyncHandler(async (req, res) => {
 
 module.exports = {
     getUsers,
+    countUser,
     loginUser,
     registerUser,
     updateUser,

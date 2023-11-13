@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-function Sample() {
+function Duration() {
   const [alarmTime, setAlarmTime] = useState(new Date());
   const [timeRemaining, setTimeRemaining] = useState(0);
   const [inputValues, setInputValues] = useState({
@@ -106,4 +106,4 @@ function Sample() {
   );
 }
 
-export default Sample;
+export default Duration;

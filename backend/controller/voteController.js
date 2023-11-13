@@ -39,6 +39,13 @@ const countVote = asyncHandler(async (req, res) => {
     res.json(results);
 });
 
+const countTotalVotes = asyncHandler(async (req, res) => {
+    const query = `SELECT COUNT(tbl_vote.id) AS votes_count from tbl_vote;`;
+    const [results] = await db.promise().query(query);
+    res.json(results);
+});
+
+
 // Get user vote for preview
 const myVote = asyncHandler(async (req, res) => {
     const { user_id } = req.params;
@@ -90,6 +97,7 @@ const updateVote = asyncHandler(async (req, res) => {
 module.exports = {
     getVote,
     countVote,
+    countTotalVotes,
     myVote,
     addVote,
     updateVote
