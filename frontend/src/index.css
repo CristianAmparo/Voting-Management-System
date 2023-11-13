@@ -23,6 +23,10 @@
         text-shadow: 4px 2px 4px rgba(40, 40, 40, 0.6);
     }
 
+    .titleShadow {
+        text-shadow: 4px 2px 4px rgba(0, 0, 0, 0.8);
+    }
+
     .sidebarList {
         @apply flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700;
     }
@@ -36,10 +40,14 @@
     }
 
     .graph {
-        background-color: bisque;
+
         display: grid;
         justify-items: center;
         width: 100%;
+    }
+
+    body {
+        background-color: bisque;
     }
 
 }

@@ -45,8 +45,7 @@ const VoteTally = () => {
           const xLabels = positionData.map((item) => item.name);
 
           return (
-            <div className='flex flex-col justify-center bg-slate-200 items-center w-max h-max' key={position}>
-              <h3>{position} Chart</h3>
+            <div className='flex flex-col justify-center items-center w-max h-max bg-gray-100 shadow-lg rounded-3xl' key={position}>
               <BarChart
                 width={graphSize.width}
                 height={graphSize.height}
@@ -68,11 +67,12 @@ const VoteTally = () => {
 
   return (
     <>
-      <section className='fixed top-20 left-0 xl:left-72 bottom-0 right-0 flex justify-center'>
-        <div className="graph overflow-auto overflow-x-hidden w-screen h-full gap-5 grid grid-cols-1 xl:grid-cols-2 2xl:grid-cols-3">
+      
+        
+        <div className="graph overflow-auto overflow-x-hidden w-full gap-5 grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-3 py-10">
           {chartComponents}
         </div>
-      </section>
+      
     </>
   );
 }

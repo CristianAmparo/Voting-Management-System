@@ -3,6 +3,8 @@ import Login from "./Login"
 import Register from "./Register"
 import Dashboard from "./Dashboard"
 import Sample from "./sample"
+import Admin from "./Admin"
+
 
 function App() {
 
@@ -13,6 +15,7 @@ function App() {
         <Routes>
           <Route path='/' element={<Dashboard/>}/>
           <Route path='/sample' element={<Sample/>}/>
+          <Route path='/admin' element={<Admin/>}/>
           <Route path='/login' element={<Login/>}/>
           <Route path='/register' element={<Register/>}/>   
         </Routes>
