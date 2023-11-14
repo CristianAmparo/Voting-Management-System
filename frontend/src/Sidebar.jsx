@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { Link } from 'react-router-dom';
 import { useContext } from 'react';
 import { MyContext } from './context/MyContext';
 
@@ -16,29 +17,29 @@ const Sidebar = () => {
       <div className="h-full px-3 py-4 overflow-y-auto bg-gray-800">
           <ul className="space-y-2 font-medium">
             <li>
-                <a href="#" className="sidebarList">
+                <Link className="sidebarList" to="">
                   <img className='icon ' src="/dashboard.png" alt="" />
                   <span className="ms-3">Dashboard</span>
-                </a>
+                </Link>
             </li>
             <li>
-                <a href="#" className="sidebarList">
+                <Link  className="sidebarList" to="">
                   <img className='icon ' src="/tally.png" alt="" />
                   <span className="flex-1 ms-3 whitespace-nowrap">Vote Tally</span>
-                </a>
+                </Link>
             </li>
             <li>
-                <a href="#" className="sidebarList">
+                <Link  className="sidebarList" to="">
                   <img className='icon ' src="/votedetails.png" alt="" />
                   <span className="flex-1 ms-3 whitespace-nowrap">Vote Details</span>
-                </a>
+                </Link>
             </li>
             <li>
-                <a href="#" className="sidebarList">
+                <Link  className="sidebarList" to="">
                   <img className='icon ' src="/results.png" alt="" />
                   <span className="flex-1 ms-3 whitespace-nowrap">Result</span>
                   <span className="inline-flex items-center justify-center w-3 h-3 p-3 ms-3 text-sm font-medium rounded-full bg-orange-700 text-white">3</span>
-                </a>
+                </Link>
             </li>
             <li>
                 <button type="button" className="flex items-center w-full p-2 text-base  transition duration-75 rounded-lg group  text-white hover:bg-gray-700" onClick={toggleDropDown} >
@@ -53,8 +54,8 @@ const Sidebar = () => {
                       <li>
                         <a href="#" className="flex items-center w-full p-2  transition duration-75 rounded-lg pl-11 group  text-white hover:bg-gray-700">Users</a>
                       </li>
-                      <li>
-                        <a href="#" className="flex items-center w-full p-2  transition duration-75 rounded-lg pl-11 group  text-white hover:bg-gray-700">Election Duration</a>
+                      <li className="flex items-center w-full p-2  transition duration-75 rounded-lg pl-11 group  text-white hover:bg-gray-700">
+                        <Link to="/admin/duration">Election Duration</Link>
                       </li>
                 </ul>
             </li>
