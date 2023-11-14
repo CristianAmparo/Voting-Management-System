@@ -1,6 +1,8 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useContext } from 'react';
 import axios from 'axios';
 import VoteTally from './VoteTally';
+import Duration from './Duration';
+import { MyContext } from '../context/MyContext';
 
 function Dashboard() {
     
@@ -10,6 +12,7 @@ function Dashboard() {
     const totalUsersCount = usersCountdata ? (usersCountdata.voters_count || 0).toString().padStart(2, '0') : '00';
     const [remainingTime, setRemainingTime] = useState(0);
     const countdownRef = useRef(null);
+    const {isDurationModalOpen, openDurationModal} = useContext(MyContext) 
 
     useEffect(() => {
       // Make a GET request to get the initial remaining time
@@ -82,11 +85,15 @@ function Dashboard() {
 
   return (
     <>
-      <section className='fixed top-20 left-0 xl:left-72 bottom-0 right-0 flex flex-col'>
-        <section className='p-5'>
-          <h1 className=' pb-5 text-4xl font-sans text-orange-500 tracking-wider font-bold sm:block hidden titleShadow underline-offset-4 underline'>Dashboard</h1>
-          <div className=' text-white flex gap-5'>
-            <div className='px-4 py-2 bg-secondary-100 rounded-3xl w-56'>
+      <section className={`fixed top-20 left-0 xl:left-72  bottom-0 right-0 flex flex-col ${isDurationModalOpen? 'bg-backdrop transition-transform' : ''} `}>
+        
+
+        
+        <section className='p-5 xl:px-20'>
+          <h1 className=' pb-5 text-4xl font-sans text-orange-500 tracking-wider font-bold titleShadow underline-offset-4 underline'>Dashboard</h1>
+          <div className=' text-white flex flex-col md:flex-row gap-5 items-center'>
+            <div className='flex gap-5'>
+            <div className='px-4 py-2 bg-secondary-100 shadow-lg rounded-3xl w-44 md:w-56 h-32'>
               <div className='flex justify-between items-center w-full '>
                 <span className='text-lg font-bold'>Total Votes</span>
                 <a href=""><img className='w-6 h-6' src="/details.png" alt="" /></a>
@@ -96,7 +103,7 @@ function Dashboard() {
                 <span className='text-7xl  pb-1 pl-1 font-bold'>{totalVotesCount}</span>
               </div>
             </div>
-            <div className='px-4 py-2 bg-secondary-200 rounded-3xl w-56'>
+            <div className='px-4 py-2 bg-secondary-200 shadow-lg rounded-3xl w-44 md:w-56 h-32'>
               <div className='flex justify-between items-center w-full '>
                 <span className='text-lg font-bold'>Total Voters</span>
                 <a href=""><img className='w-6 h-6' src="/details.png" alt="" /></a>
@@ -106,10 +113,11 @@ function Dashboard() {
                 <span className='text-7xl  pb-1 pl-1 font-bold'>{totalUsersCount}</span>
               </div>
             </div>
-            <div className='px-4 py-2 bg-secondary-300 rounded-3xl w-96'>
+            </div>
+            <div className='px-4 py-2 bg-secondary-300 shadow-lg rounded-3xl w-96 h-32'>
               <div className='flex justify-between items-center w-full '>
                 <span className='text-lg font-bold'>Election Duration</span>
-                <a href="/duration"><img className='w-6 h-6' src="/details.png" alt="" /></a>
+                <button onClick={openDurationModal}><img className='w-6 h-6' src="/details.png" alt="" /></button>
               </div>
               <div className='w-full flex items-center h-20 my-auto justify-center pb-3'>
                 <img className='w-8' src="/duration.png" alt="" />
@@ -122,9 +130,12 @@ function Dashboard() {
                 </span>
               </div>
             </div>
+            
           </div>
         </section>
         <VoteTally />
+        {isDurationModalOpen? <Duration />  : ""}
+        
       </section>
     </>
   )

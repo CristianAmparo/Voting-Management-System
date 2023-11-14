@@ -4,6 +4,16 @@ const MyContext = createContext();
 
 const MyContextProvider = ({children}) => {
     const [isSidebarOpen, setSidebarOpen] = useState(true); 
+    const [isDurationModalOpen, setIsDurationModalOpen] = useState(false);
+
+  const openDurationModal = () => {
+    setIsDurationModalOpen(true);
+  };
+
+  const closeDurationModal = () => {
+    setIsDurationModalOpen(false);
+  };
+
     const toggleSidebar = () => {
         setSidebarOpen(!isSidebarOpen);
     };
@@ -15,7 +25,7 @@ const MyContextProvider = ({children}) => {
 
     
       return (
-        <MyContext.Provider value={{toggleSidebar, isSidebarOpen}}>
+        <MyContext.Provider value={{toggleSidebar, isSidebarOpen, isDurationModalOpen, openDurationModal, closeDurationModal }}>
             {children}    
         </MyContext.Provider>
       )

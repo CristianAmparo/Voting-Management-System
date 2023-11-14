@@ -16,7 +16,7 @@
     }
 
     .profileName {
-        @apply hidden bg-slate-300 px-2 py-1 text-xs rounded-md
+        @apply hidden bg-slate-300 px-2 py-1 text-xs rounded-md w-max
     }
 
     .textShadow {

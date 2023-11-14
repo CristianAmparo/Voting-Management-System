@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom';
 import { useContext } from 'react';
-import { MyContext } from './context/MyContext';
+import { MyContext } from '../context/MyContext';
 
 const Sidebar = () => {
  const {isSidebarOpen} = useContext(MyContext)
@@ -17,21 +17,15 @@ const Sidebar = () => {
       <div className="h-full px-3 py-4 overflow-y-auto bg-gray-800">
           <ul className="space-y-2 font-medium">
             <li>
-                <Link className="sidebarList" to="">
+                <Link className="sidebarList" to="/admin">
                   <img className='icon ' src="/dashboard.png" alt="" />
                   <span className="ms-3">Dashboard</span>
                 </Link>
             </li>
             <li>
-                <Link  className="sidebarList" to="">
-                  <img className='icon ' src="/tally.png" alt="" />
-                  <span className="flex-1 ms-3 whitespace-nowrap">Vote Tally</span>
-                </Link>
-            </li>
-            <li>
-                <Link  className="sidebarList" to="">
+                <Link  className="sidebarList" to="/admin/voteinfo">
                   <img className='icon ' src="/votedetails.png" alt="" />
-                  <span className="flex-1 ms-3 whitespace-nowrap">Vote Details</span>
+                  <span className="flex-1 ms-3 whitespace-nowrap">Votes Information</span>
                 </Link>
             </li>
             <li>
@@ -49,15 +43,18 @@ const Sidebar = () => {
                 </button>
                 <ul className={`py-2 space-y-2 ${dropDown? 'black' : 'hidden'}`}>
                       <li>
-                        <a href="#" className="flex items-center w-full p-2  transition duration-75 rounded-lg pl-11 group  text-white hover:bg-gray-700">Candidates</a>
+                        <Link to="/admin/candidates" className="flex items-center w-full p-2  transition duration-75 rounded-lg pl-11 group  text-white hover:bg-gray-700">Candidates</Link>
                       </li>
                       <li>
-                        <a href="#" className="flex items-center w-full p-2  transition duration-75 rounded-lg pl-11 group  text-white hover:bg-gray-700">Users</a>
-                      </li>
-                      <li className="flex items-center w-full p-2  transition duration-75 rounded-lg pl-11 group  text-white hover:bg-gray-700">
-                        <Link to="/admin/duration">Election Duration</Link>
+                        <Link to="/admin/users" className="flex items-center w-full p-2  transition duration-75 rounded-lg pl-11 group  text-white hover:bg-gray-700">Users</Link>
                       </li>
                 </ul>
+            </li>
+             <li>
+                <Link  className="sidebarList" to="/admin/voteinfo">
+                  <img className='icon ' src="/admin.png" alt="" />
+                  <span className="flex-1 ms-3 whitespace-nowrap">Account Settings</span>
+                </Link>
             </li>
             
           
