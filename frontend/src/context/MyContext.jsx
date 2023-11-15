@@ -5,7 +5,7 @@ const MyContext = createContext();
 const MyContextProvider = ({children}) => {
     const [isSidebarOpen, setSidebarOpen] = useState(true); 
     const [isDurationModalOpen, setIsDurationModalOpen] = useState(false);
-    const [isAddCandidateModal, setIsAddCandidateModal] = useState(false);
+    const [isAddCandidateModal, setIsAddCandidateModal] = useState(true);
 
 const toggleSidebar = () => {
         setSidebarOpen(!isSidebarOpen);
@@ -20,11 +20,11 @@ const closeDurationModal = () => {
 };
 
 const openAddCandidateModal = () => {
-  setIsDurationModalOpen(true);
+  setIsAddCandidateModal(true);
 };
 
 const closeAddCandidateModal = () => {
-  setIsDurationModalOpen(false);
+  setIsAddCandidateModal(false);
 };
 
     

@@ -160,7 +160,7 @@ function Sample() {
                         {success !== '' && <h1>{success}</h1>}
                         {error !== '' && <h1 className='text-red-700'>{error}</h1>}
                       </div>
-                      <button type="submit" className="w-full text-white bg-orange-600 hover:bg-orange-700 focus:ring-1 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Add Candidate</button>
+                      <button type="submit" className="w-full text-white bg-orange-600 hover:bg-orange-700 focus:ring-1 font-medium rounded-lg text-lg px-5 py-2.5 text-center">Add Candidate</button>
                    
                   </form>
               </div>

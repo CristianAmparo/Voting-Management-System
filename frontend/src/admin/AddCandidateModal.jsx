@@ -25,7 +25,7 @@ function AddCandidateModal() {
         image: file,
       }));
 
-      if (file) {
+       if (file) {
         const reader = new FileReader();
         reader.onload = (e) => {
           
@@ -33,24 +33,33 @@ function AddCandidateModal() {
         };
         reader.readAsDataURL(file);
       }
-    } else {
+
+     } else {
       setFormData((prev) => ({
         ...prev,
         [e.target.name]: e.target.value,
       }));
     }
   };
-  console.log(formData);
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
-
+    // Simulate an API request to handle form submission
+    const formDataToSend = new FormData();
+    formDataToSend.append('name', name);
+    formDataToSend.append('image', image);
+    formDataToSend.append('position', position);
+    formDataToSend.append('partylist', partylist);
+    formDataToSend.append('credentials', credentials);
+    formDataToSend.append('platform', platform);
 
     axios
-      .post('http://localhost:5000/api/candidates/', formData)
+      .post('http://localhost:5000/api/candidates/', formDataToSend)
       .then((response) => {
         console.log(response.data);
         setSuccess('Register Successfully');
+        closeAddCandidateModal();
         setError('');
       })
       .catch((error) => {
@@ -60,11 +69,11 @@ function AddCandidateModal() {
       });
   };
 
-  const {isAddCandidateModal, openAddCandidateModal, closeAddCandidateModal} = useContext(MyContext)
+  const {closeAddCandidateModal} = useContext(MyContext)
   return(
     <>
-    <section className=" bg-gray-100">
-      <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto h-screen lg:py-0">
+    <section >
+      <div className="flex flex-col absolute inset-0 backdrop-blur-lg items-center justify-center px-6 py-8 mx-auto lg:py-0">
           <div className="relative w-full bg-white rounded-3xl shadow-xl md:mt-0 sm:max-w-md xl:p-0 ">
               <div className=" space-y-4 pt-14 p-8">
                   <form className="space-y-2 " onSubmit={handleSubmit} >
@@ -81,9 +90,10 @@ function AddCandidateModal() {
                           />
                         </div>
                       </div>
+                      <a className='icon absolute top-5 right-10 cursor-pointer' onClick={closeAddCandidateModal}><img src="/closeModal.png" alt="" /></a>
                       <div className='relative mx-auto bg-orange-600 w-[137px] h-[137px] flex items-center rounded-full'>
-                        <div className=" w-32 h-32 bg-blue-200 rounded-full overflow-hidden border-4 border-white flex justify-center items-center mx-auto">
-                            <div ><img  src="/profile.png" alt="" /></div>
+                        <div className=" w-32 h-32 bg-orange-100 rounded-full overflow-hidden border-4 border-white flex justify-center items-center mx-auto">
+                            <div><img id="imagePreview" src="/profile.png" alt="" /></div>
                         </div>
                         <div className="">
                             <label htmlFor="imageInput" className="absolute bottom-1 right-0 rounded-full w-10 h-10 bg-slate-600 hover:bg-slate-700 p-2 text-white cursor-pointer flex justify-center items-center">
@@ -152,7 +162,7 @@ function AddCandidateModal() {
                         {success !== '' && <h1>{success}</h1>}
                         {error !== '' && <h1 className='text-red-700'>{error}</h1>}
                       </div>
-                      <button type="submit" className="w-full text-white bg-orange-600 hover:bg-orange-700 focus:ring-1 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Add Candidate</button>
+                      <button type="submit" className="w-full text-white bg-orange-600 hover:bg-orange-700 focus:ring-1 font-medium rounded-lg text-lg px-5 py-2.5 text-center">Add Candidate</button>
                    
                   </form>
               </div>
