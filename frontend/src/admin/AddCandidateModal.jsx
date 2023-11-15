@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { MyContext } from '../context/MyContext';
 import axios from 'axios';
 
-function Sample() {
+function AddCandidateModal() {
   const [success, setSuccess] = useState('');
   const [error, setError] = useState('');
   const [formData, setFormData] = useState({
@@ -25,7 +25,7 @@ function Sample() {
         image: file,
       }));
 
-       if (file) {
+      if (file) {
         const reader = new FileReader();
         reader.onload = (e) => {
           
@@ -33,29 +33,21 @@ function Sample() {
         };
         reader.readAsDataURL(file);
       }
-
-     } else {
+    } else {
       setFormData((prev) => ({
         ...prev,
         [e.target.name]: e.target.value,
       }));
     }
   };
-
+  console.log(formData);
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Simulate an API request to handle form submission
-    const formDataToSend = new FormData();
-    formDataToSend.append('name', name);
-    formDataToSend.append('image', image);
-    formDataToSend.append('position', position);
-    formDataToSend.append('partylist', partylist);
-    formDataToSend.append('credentials', credentials);
-    formDataToSend.append('platform', platform);
+
 
     axios
-      .post('http://localhost:5000/api/candidates/', formDataToSend)
+      .post('http://localhost:5000/api/candidates/', formData)
       .then((response) => {
         console.log(response.data);
         setSuccess('Register Successfully');
@@ -67,7 +59,7 @@ function Sample() {
         setSuccess('');
       });
   };
-  console.log(formData.image)
+
   const {isAddCandidateModal, openAddCandidateModal, closeAddCandidateModal} = useContext(MyContext)
   return(
     <>
@@ -90,8 +82,8 @@ function Sample() {
                         </div>
                       </div>
                       <div className='relative mx-auto bg-orange-600 w-[137px] h-[137px] flex items-center rounded-full'>
-                        <div className=" w-32 h-32 bg-orange-100 rounded-full overflow-hidden border-4 border-white flex justify-center items-center mx-auto">
-                            <div><img id="imagePreview" src="/profile.png" alt="" /></div>
+                        <div className=" w-32 h-32 bg-blue-200 rounded-full overflow-hidden border-4 border-white flex justify-center items-center mx-auto">
+                            <div ><img  src="/profile.png" alt="" /></div>
                         </div>
                         <div className="">
                             <label htmlFor="imageInput" className="absolute bottom-1 right-0 rounded-full w-10 h-10 bg-slate-600 hover:bg-slate-700 p-2 text-white cursor-pointer flex justify-center items-center">
@@ -171,4 +163,4 @@ function Sample() {
   )
 }
 
-export default Sample;
+export default AddCandidateModal;
