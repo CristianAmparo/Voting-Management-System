@@ -2,7 +2,9 @@ import React, { useState, useEffect, useContext } from 'react';
 import { MyContext } from '../context/MyContext';
 import axios from 'axios';
 
-function AddCandidateModal() {
+function EditCandidateModal() {
+  const {candidateId, closeEditCandidateModal} = useContext(MyContext)
+  const [id , setID] = useState(candidateId)
   const [success, setSuccess] = useState('');
   const [error, setError] = useState('');
   const [formData, setFormData] = useState({
@@ -15,6 +17,17 @@ function AddCandidateModal() {
   });
 
   const { name, image, position, partylist, credentials, platform } = formData;
+
+   useEffect(() => {
+        axios.get(`http://localhost:5000/api/candidates/candidate/${id}`)
+        .then((response) => {
+          setFormData(response.data[0]);
+
+        })
+        .catch((error) => {
+            console.error('Error fetching data:', error);
+        })
+    }, []);
 
   const handleChange = (e) => {
     if (e.target.name === 'image') {
@@ -55,10 +68,9 @@ function AddCandidateModal() {
     formDataToSend.append('platform', platform);
 
     axios
-      .post('http://localhost:5000/api/candidates/', formDataToSend)
+      .put(`http://localhost:5000/api/candidates/${id}`, formDataToSend)
       .then((response) => {
-        console.log(response.data);
-        setSuccess('Register Successfully');
+        setSuccess(response.data.message);
         closeAddCandidateModal();
         setError('');
       })
@@ -90,17 +102,17 @@ function AddCandidateModal() {
                           />
                         </div>
                       </div>
-                      <a className='icon absolute top-5 right-10 cursor-pointer' onClick={closeAddCandidateModal}><img src="/closeModal.png" alt="" /></a>
+                      <a className='icon absolute top-5 right-10 cursor-pointer' onClick={closeEditCandidateModal}><img src="/closeModal.png" alt="" /></a>
                       <div className='relative mx-auto bg-orange-600 w-[137px] h-[137px] flex items-center rounded-full'>
                         <div className=" w-32 h-32 bg-orange-100 rounded-full overflow-hidden border-4 border-white flex justify-center items-center mx-auto">
-                            <div><img id="imagePreview" src="/profile.png" alt="" /></div>
+                            <div><img id="imagePreview" src={`http://localhost:5000/uploads/${image}`} alt="" /></div>
                         </div>
                         <div className="">
                             <label htmlFor="imageInput" className="absolute bottom-1 right-0 rounded-full w-10 h-10 bg-slate-600 hover:bg-slate-700 p-2 text-white cursor-pointer flex justify-center items-center">
                                 <img className="w-5 h-5 object-center" src="/editProfile.png" alt="" />
                                 <span className="sr-only">Choose an image to upload</span>
                             </label>
-                            <input type="file" name="image" id="imageInput" className="hidden h-full w-full cursor-pointer" accept=".png, .jpg, .jpeg" onChange={handleChange} /></div>
+                            <input type="file" name="image" id="imageInput" className="hidden h-full w-full cursor-pointer" accept=".png, .jpg, .jpeg" onChange={handleChange} />                         </div>
                       </div>
                       <div className='w-80 mx-auto'>
                         <div>
@@ -162,7 +174,7 @@ function AddCandidateModal() {
                         {success !== '' && <h1>{success}</h1>}
                         {error !== '' && <h1 className='text-red-700'>{error}</h1>}
                       </div>
-                      <button type="submit" className="w-full text-white bg-orange-600 hover:bg-orange-700 focus:ring-1 font-medium rounded-lg text-lg px-5 py-2.5 text-center">Add Candidate</button>
+                      <button type="submit" className="w-full text-white bg-orange-600 hover:bg-orange-700 focus:ring-1 font-medium rounded-lg text-lg px-5 py-2.5 text-center">Update Candidate</button>
                    
                   </form>
               </div>
@@ -173,4 +185,4 @@ function AddCandidateModal() {
   )
 }
 
-export default AddCandidateModal;
+export default EditCandidateModal;

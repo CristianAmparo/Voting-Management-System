@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const multer = require('multer');
 const path = require('path'); // Add this line to require the path module
-const { getCandidates, addCandidate, updateCandidate, deleteCandidate } = require('../controller/candidateController');
+const { getCandidates, getCandidate, addCandidate, updateCandidate, deleteCandidate } = require('../controller/candidateController');
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -18,8 +18,9 @@ const upload = multer({
 });
 
 router.get('/', getCandidates);
+router.get('/candidate/:id', getCandidate);
 router.post('/', upload.single('image'), addCandidate);
-router.put('/:id', updateCandidate);
+router.put('/:id', upload.single('image'), updateCandidate);
 router.delete('/:id', deleteCandidate);
 
 module.exports = router;
