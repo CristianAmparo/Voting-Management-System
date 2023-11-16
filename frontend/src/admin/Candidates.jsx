@@ -7,7 +7,6 @@ import EditCandidateModal from './editCandidateModal';
 const Candidates = () => {
   const [data, setData] = useState([]);
   const {isAddCandidateModal, openAddCandidateModal, editCandidate, isEditCandidateModal} = useContext(MyContext)
-  console.log(isEditCandidateModal)
   useEffect(() => {
     axios.get('http://localhost:5000/api/candidates/')
       .then((response) => {
@@ -33,15 +32,16 @@ const Candidates = () => {
   const tableBody = data.map((data) => (
     <tr className='border-b border-gray-200' key={data.id}>
       <td className='py-3 px-6 text-center'>{data.id}</td>
-      <td className='py-3 px-6 text-left'>{data.image}</td>
       <td className='py-3 px-6 text-left'>{data.name}</td>
+      <td className='py-3 px-6 text-left'>{data.partylist}</td>
       <td className='py-3 px-6 text-left'>{data.position}</td>
+      <td className='py-3 px-6 text-left'>{data.image}</td>
       <td className="py-3 px-6 text-center space-x-2 flex justify-center">
-        <button onClick={() => editCandidate(data.id)} className="flex items-center bg-indigo-500 text-white px-4 py-2 rounded focus:outline-none hover:bg-indigo-600 gap-1">
+        <button onClick={() => editCandidate(data.id)} className="flex items-center justify-center bg-indigo-500 text-white px-4 py-2 rounded focus:outline-none hover:bg-indigo-600 gap-1">
             <img className='w-3 h-3' src="/edit.png" alt="" />
             Edit
         </button>
-        <button onClick={() => handleDelete(data.id)} className="flex items-center bg-red-500 text-white px-4 py-2 rounded focus:outline-none hover:bg-red-600 gap-1">
+        <button onClick={() => handleDelete(data.id)} className="flex items-center justify-center bg-red-500 text-white px-4 py-2 rounded focus:outline-none hover:bg-red-600 gap-1">
             <img  className='w-3 h-3'src="/delete.png" alt="" />
             Delete 
         </button>
@@ -51,21 +51,24 @@ const Candidates = () => {
 
   return (
     <>
-      <section className='fixed top-20 left-0 xl:left-72 bottom-0 right-0 flex flex-col px-2 md:px-10 py-10 overflow-x-auto'>
-        <div className=' '>
-          <div className="w-max bg-white p-2 lg:w-2/3 mx-auto">
-            <div className=' p-5 w-screen flex justify-between'>
-            <button className="bg-orange-600 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded" onClick={openAddCandidateModal}>Add Candidate</button>
-            <div>search</div>
+      <section className='fixed top-20 left-0 xl:left-72 bottom-0 right-0 flex flex-col justify-center xl:px-20 md:px-10 sm:px-2  py-10 overflow-x-auto'>
+        <div>
+          <div className="w-full bg-white px-2 md:px-10 h-full pb-10 mx-auto rounded-3xl shadow-2xl">
+            <div className=' p-5 w-full flex justify-between items-center '>
+             <h1 className="text-2xl font-bold leading-tight tracking-tight text-gray-900 md:text-4xl text-left"><span className='text-orange-600'>Candidates</span> Table</h1>
+             <button onClick={openAddCandidateModal} className="flex items-center bg-green-600 text-white px-4 py-2 rounded focus:outline-none hover:bg-green-700 gap-1">
+                <img className='w-3 h-3' src="/edit.png" alt="" /> Add
+            </button>
             </div>
-            <div className="shadow-md rounded mb-6 overflow-x-auto">
+            <div className="shadow-md rounded mb-6 overflow-auto">
               <table className="min-w-full bg-white">
                 <thead>
                   <tr className="bg-orange-700 text-white">
                     <th className="sticky top-0 py-3 px-6 text-center">id</th>
-                    <th className="py-3 px-6 text-left">Image</th>
                     <th className="py-3 px-6 text-left">Name</th>
+                    <th className="py-3 px-6 text-left">Partylist</th>
                     <th className="py-3 px-6 text-left">Position</th>
+                    <th className="py-3 px-6 text-left">Image</th>
                     <th className="py-3 px-6 text-center">Action</th>
                   </tr>
                 </thead>

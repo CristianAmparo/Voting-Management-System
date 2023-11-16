@@ -89,8 +89,8 @@ function Dashboard() {
         
 
         
-        <section className='p-5 xl:px-20'>
-          <h1 className=' pb-5 text-4xl font-sans text-orange-500 tracking-wider font-bold titleShadow underline-offset-4 underline'>Dashboard</h1>
+        <section className='p-5 '>
+          <h1 className="text-2xl font-bold leading-tight tracking-tight text-gray-900 md:text-4xl text-left pb-5"><span className='text-orange-600'>Dashboard</span> Page</h1>
           <div className=' text-white flex flex-col md:flex-row gap-5 items-center'>
             <div className='flex gap-5'>
             <div className='px-4 py-2 bg-secondary-100 shadow-lg rounded-3xl w-44 md:w-56 h-32'>

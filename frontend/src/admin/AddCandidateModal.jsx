@@ -5,6 +5,7 @@ import axios from 'axios';
 function AddCandidateModal() {
   const [success, setSuccess] = useState('');
   const [error, setError] = useState('');
+  const {closeAddCandidateModal} = useContext(MyContext)
   const [formData, setFormData] = useState({
     name: '',
     image: null,
@@ -69,7 +70,6 @@ function AddCandidateModal() {
       });
   };
 
-  const {closeAddCandidateModal} = useContext(MyContext)
   return(
     <>
     <section >

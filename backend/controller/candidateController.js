@@ -18,6 +18,7 @@ const getCandidate = asyncHandler(async (req, res) => {
 // Add candidate - POST
 const addCandidate = asyncHandler(async (req, res) => {
     const { name, position, partylist, platform, credentials } = req.body;
+    console.log(req.file)
     const image = req.file ? req.file.filename : null;
 
     // Check if required fields are provided
@@ -41,13 +42,20 @@ const addCandidate = asyncHandler(async (req, res) => {
 // Update candidate - PUT
 const updateCandidate = asyncHandler(async (req, res) => {
     const { id } = req.params;
-    const { name, position, partylist, platform, credentials } = req.body;
-    const image = req.file ? req.file.filename : null;
-    if (!name || !position || !image || !partylist || !platform || !credentials) {
+    const { name, position, partylist, image, platform, credentials } = req.body;
+
+    if (image) {
+        newImage = image
+    } else {
+        newImage = req.file.filename
+    }
+
+
+    if (!name || !position || !newImage || !partylist || !platform || !credentials) {
         return res.status(400).json({ error: 'Please fill out all the fields' });
     }
 
-    await db.promise().execute('UPDATE tbl_candidates SET name = ?, position = ?, image = ?, platform = ?, credentials = ?, partylist = ? WHERE id = ?', [name, position, image, platform, credentials, partylist, id]);
+    await db.promise().execute('UPDATE tbl_candidates SET name = ?, position = ?, image = ?, platform = ?, credentials = ?, partylist = ? WHERE id = ?', [name, position, newImage, platform, credentials, partylist, id]);
     res.json({ message: 'Candidate Updated' });
 });
 

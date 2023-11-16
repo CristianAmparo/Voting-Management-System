@@ -9,7 +9,7 @@ function EditCandidateModal() {
   const [error, setError] = useState('');
   const [formData, setFormData] = useState({
     name: '',
-    image: null,
+    image: '',
     position: '',
     partylist: '',
     credentials: '',
@@ -66,22 +66,25 @@ function EditCandidateModal() {
     formDataToSend.append('partylist', partylist);
     formDataToSend.append('credentials', credentials);
     formDataToSend.append('platform', platform);
-
-    axios
-      .put(`http://localhost:5000/api/candidates/${id}`, formDataToSend)
+   
+    axios.put(`http://localhost:5000/api/candidates/${id}`, formDataToSend)
       .then((response) => {
-        setSuccess(response.data.message);
-        closeAddCandidateModal();
-        setError('');
-      })
-      .catch((error) => {
-        console.log(error.response.data.error);
-        setError(error.response.data.error);
-        setSuccess('');
-      });
-  };
+      setSuccess(response.data.message);
+      setError('');
 
-  const {closeAddCandidateModal} = useContext(MyContext)
+      const timeoutId = setTimeout(() => {
+        closeEditCandidateModal();
+      }, 1500);
+      return () => clearTimeout(timeoutId);
+      })
+
+      .catch((error) => {
+      console.log(error.response.data.error);
+      setError(error.response.data.error);
+      setSuccess('');
+      });
+    }
+
   return(
     <>
     <section >
@@ -171,7 +174,7 @@ function EditCandidateModal() {
                         </div>
                       </div>
                       <div className='text-center w-full'> 
-                        {success !== '' && <h1>{success}</h1>}
+                        {success !== '' && <h1 className='text-green-700'>{success}</h1>}
                         {error !== '' && <h1 className='text-red-700'>{error}</h1>}
                       </div>
                       <button type="submit" className="w-full text-white bg-orange-600 hover:bg-orange-700 focus:ring-1 font-medium rounded-lg text-lg px-5 py-2.5 text-center">Update Candidate</button>
