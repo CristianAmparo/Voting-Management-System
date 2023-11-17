@@ -31,7 +31,7 @@ const countVote = asyncHandler(async (req, res) => {
         ORDER BY
             CASE 
                 WHEN tbl_candidates.position = 'President' THEN 1
-                WHEN tbl_candidates.position = 'Vice' THEN 2
+                WHEN tbl_candidates.position = 'Vice President' THEN 2
                 WHEN tbl_candidates.position = 'Secretary' THEN 3
                 ELSE 4
             END,

@@ -39,7 +39,7 @@ const VoteTally = () => {
         const uniquePositions = [...new Set(responseData.map((item) => item.position))];
 
         // Create a BarChart component for each unique position
-        const charts = uniquePositions.map((position) => {
+          const charts = uniquePositions.map((position) => {
           const positionData = responseData.filter((item) => item.position === position);
           const uData = positionData.map((item) => item.vote_count);
           const xLabels = positionData.map((item) => item.name);

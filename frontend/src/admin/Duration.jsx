@@ -27,6 +27,7 @@ const {closeDurationModal} = useContext(MyContext)
       .put('http://localhost:5000/api/votes/voteEnd', { startDate, endDate })
       .then(response => {
         console.log(response.data);
+        closeDurationModal();
       })
       .catch(error => {
         console.error('Error updating election settings:', error);
