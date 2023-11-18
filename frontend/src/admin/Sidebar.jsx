@@ -29,7 +29,7 @@ const Sidebar = () => {
                 </Link>
             </li>
             <li>
-                <Link  className="sidebarList" to="">
+                <Link to="/admin/sample"  className="sidebarList">
                   <img className='icon ' src="/results.png" alt="" />
                   <span className="flex-1 ms-3 whitespace-nowrap">Result</span>
                   <span className="inline-flex items-center justify-center w-3 h-3 p-3 ms-3 text-sm font-medium rounded-full bg-orange-700 text-white">3</span>
