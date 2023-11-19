@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext} from 'react';
 import axios from 'axios';
-import { MyContext } from '../context/MyContext';
+import { MyContext } from '../../context/MyContext';
 
 function Duration() {
 const [startDate, setStartDate] = useState('');

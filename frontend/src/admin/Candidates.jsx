@@ -1,9 +1,9 @@
 import React, { useEffect, useState, useContext } from "react";
 import DataTable from "react-data-table-component";
 import axios from "axios";
-import AddCandidateModal from './AddCandidateModal';
+import AddCandidateModal from './modal/AddCandidateModal';
+import EditCandidateModal from './modal/editCandidateModal';
 import { MyContext } from '../context/MyContext';
-import EditCandidateModal from './editCandidateModal';
 
 
 const Candidates=()=> {

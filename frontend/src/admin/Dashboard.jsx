@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, useContext } from 'react';
 import axios from 'axios';
 import VoteTally2 from './VoteTally2';
-import Duration from './Duration';
+import Duration from './modal/Duration';
 import { MyContext } from '../context/MyContext';
 
 function Dashboard() {
