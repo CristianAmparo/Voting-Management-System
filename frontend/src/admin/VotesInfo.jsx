@@ -10,16 +10,26 @@ const Sample=()=> {
   const [filter, setFilter] = useState([]);
 
 
-  useEffect(() => {
-    axios.get('http://localhost:5000/api/votes/')
-      .then((response) => {
-        setData(response.data);
-        setFilter(response.data);
-      })
-      .catch((error) => {
-        console.error('Error fetching data:', error);
-      });
-  }, []);
+ 
+    const fetchData = async () => {
+    try {
+      const response = await axios.get('http://localhost:5000/api/votes');
+      setData(response.data);
+      setFilter(response.data);
+    }
+      
+      catch (error) {
+      console.error('Error fetching data:', error);
+      }};
+      
+    useEffect(() => {
+      fetchData();
+      
+      const intervalId = setInterval(fetchData, 5000);
+      return () => {
+        clearInterval(intervalId);
+      };
+    }, []);
 
 
   const columns = [

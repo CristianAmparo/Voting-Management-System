@@ -74,7 +74,7 @@ function EditCandidateModal() {
 
       const timeoutId = setTimeout(() => {
         closeEditCandidateModal();
-      }, 1500);
+      }, 1200);
       return () => clearTimeout(timeoutId);
       })
 

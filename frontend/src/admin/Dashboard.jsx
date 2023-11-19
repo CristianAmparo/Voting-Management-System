@@ -11,7 +11,7 @@ function Dashboard() {
     const totalVotesCount = votesCountdata ? (votesCountdata.votes_count || 0).toString().padStart(2, '0') : '00';
     const totalUsersCount = usersCountdata ? (usersCountdata.voters_count || 0).toString().padStart(2, '0') : '00';
     const [remainingTime, setRemainingTime] = useState(0);
-    const countdownRef = useRef(null);
+    const countdownRef = useRef();
     const {isDurationModalOpen, openDurationModal} = useContext(MyContext) 
 
     useEffect(() => {
@@ -21,17 +21,13 @@ function Dashboard() {
         .then(response => {    
           const remainingTimeInSeconds = Math.floor(response.data.remainingTime / 1000);
           setRemainingTime(remainingTimeInSeconds);
-          startCountdown();
         })
         .catch(error => {
           console.error('Error getting remaining time:', error);
         });
 
-      return () => {
-        // Clear the interval when the component unmounts
-        clearInterval(countdownRef.current);
-      };
-    }, []);
+   
+    }, [isDurationModalOpen]);
 
       const formatTime = (timeInSeconds) => {
       const days = Math.floor(timeInSeconds / 86400);
@@ -50,12 +46,13 @@ function Dashboard() {
       }
     };
 
-    const startCountdown = () => {
-      // Update the remaining time every second
+    useEffect(() => {
+  
       countdownRef.current = setInterval(() => {
         setRemainingTime(prevRemainingTime => prevRemainingTime - 1);
       }, 1000);
-    };
+         return () => clearInterval(countdownRef.current);
+    },[]) 
     
 
     useEffect(() => {

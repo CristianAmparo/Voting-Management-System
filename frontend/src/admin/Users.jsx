@@ -1,12 +1,12 @@
 import React, { useEffect, useState, useContext } from "react";
 import DataTable from "react-data-table-component";
 import axios from "axios";
-import AddCandidateModal from './AddCandidateModal';
-import { MyContext } from '../context/MyContext';
-import EditCandidateModal from './editCandidateModal';
+import AddCandidateModal from './modal/AddCandidateModal';
+import { MyContext } from "../context/MyContext";
+import EditCandidateModal from './modal/editCandidateModal';
 
 
-const Candidates=()=> {
+const Users=()=> {
   const [data, setData] = useState([]);
   const [search, setSearch] = useState('');
   const [filter, setFilter] = useState([]);
@@ -147,4 +147,4 @@ const Candidates=()=> {
     </React.Fragment>
   );
 }
-export default Candidates;
+export default Users;

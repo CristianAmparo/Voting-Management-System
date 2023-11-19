@@ -100,7 +100,7 @@ const BallotPage = () => {
     <>
     <Header />
     <section className='fixed inset-0 top-20  h-screen w-full overflow-y-auto'>
-        <div>
+        <div className='p-5'>
           <h1 className="text-2xl font-bold leading-tight tracking-tight text-gray-900 md:text-4xl text-center"><span className='text-orange-600'>Election</span> Page</h1> 
         </div>
         <form className='flex flex-col gap-5 justify-center items-center p-2'>
@@ -126,4 +126,4 @@ const BallotPage = () => {
   )
 }
 
-export default BallotPage
+export default BallotPage;

@@ -6,12 +6,12 @@ import EditCandidateModal from './modal/editCandidateModal';
 import { MyContext } from '../context/MyContext';
 
 
+
 const Candidates=()=> {
   const [data, setData] = useState([]);
   const [search, setSearch] = useState('');
   const [filter, setFilter] = useState([]);
   const {isAddCandidateModal, openAddCandidateModal, editCandidate, isEditCandidateModal} = useContext(MyContext)
-
 
   useEffect(() => {
     axios.get('http://localhost:5000/api/candidates/')
@@ -22,7 +22,7 @@ const Candidates=()=> {
       .catch((error) => {
         console.error('Error fetching data:', error);
       });
-  }, []);
+  }, [editCandidate, isAddCandidateModal]);
 
  const handleDelete = (id) => {
   axios.delete(`http://localhost:5000/api/candidates/${id}`)

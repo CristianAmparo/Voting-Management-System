@@ -103,7 +103,7 @@ const addVote = asyncHandler(async (req, res) => {
         return res.status(400).json({ error: 'Please fill out all the fields' });
     }
 
-    const query = 'INSERT INTO tbl_vote (user_id, president, vice, secretary, treasurer, first_rep) VALUES (?, ?, ?, ?, ?, ?';
+    const query = 'INSERT INTO tbl_vote (user_id, president, vice, secretary, treasurer, first_rep) VALUES (?, ?, ?, ?, ?, ?)';
 
     try {
         await db.promise().execute(query, [user_id, president, vice, secretary, treasurer, first_rep]);

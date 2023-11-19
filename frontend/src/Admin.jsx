@@ -7,6 +7,7 @@ import Duration from './admin/modal/Duration';
 import Sample from "./admin/Sample"
 import VotesInfo from './admin/VotesInfo';
 import Candidates from './admin/Candidates';
+import Users from './admin/Users';
 
 
 
@@ -20,6 +21,7 @@ const Admin = () => {
         <Route path="/sample" element={<Sample />} />
         <Route path='/voteinfo' element={<VotesInfo />} />
         <Route path='/candidates' element={<Candidates />} />
+        <Route path='/users' element={<Users />} />
         
 
 
