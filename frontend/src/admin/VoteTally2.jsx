@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import ReactApexChart from 'react-apexcharts';
+const apiVotes = import.meta.env.VITE_apiVotes 
+
 
 const VoteTally2 = () => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
     axios
-      .get('http://localhost:5000/api/votes/count')
+      .get(`${apiVotes}/count`)
       .then((response) => {
         const responseData = response.data;
         setData(responseData);

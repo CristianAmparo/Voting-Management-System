@@ -4,9 +4,13 @@ import axios from "axios";
 import AddCandidateModal from './modal/AddCandidateModal';
 import { MyContext } from "../context/MyContext";
 import EditCandidateModal from './modal/editCandidateModal';
+import Authorization from './Authorization';
+const apiUsers = import.meta.env.VITE_apiUsers 
+const apiCandidates = import.meta.env.VITE_apiCandidates 
 
 
 const Users=()=> {
+  Authorization()
   const [data, setData] = useState([]);
   const [search, setSearch] = useState('');
   const [filter, setFilter] = useState([]);
@@ -14,7 +18,7 @@ const Users=()=> {
 
 
   useEffect(() => {
-    axios.get('http://localhost:5000/api/users/')
+    axios.get(`${apiUsers}/`)
       .then((response) => {
         setData(response.data);
         setFilter(response.data);
@@ -25,7 +29,7 @@ const Users=()=> {
   }, []);
 
  const handleDelete = (id) => {
-  axios.delete(`http://localhost:5000/api/candidates/${id}`)
+  axios.delete(`${apiUsers}/${id}`)
     .then((response) => {
       const newdata = data.filter((item) => item.id !== id);
       setData(newdata);

@@ -1,10 +1,15 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { useContext } from 'react';
+import { MyContext } from './context/MyContext';
+const key = import.meta.env.VITE_adminKey;
+const apiUsers = import.meta.env.VITE_apiUsers 
 
 
 function Register() {
-const navigate = useNavigate();
+  const {setUserData} = useContext(MyContext)
+  const navigate = useNavigate();
   const [success, setSuccess] = useState('');
   const [error, setError] = useState('');
   const [formData, setFormData] = useState({
@@ -25,17 +30,16 @@ const navigate = useNavigate();
     e.preventDefault();
    
 
-    axios.post('http://localhost:5000/api/users/login', formData)
+    axios.post(`${apiUsers}/login`, formData)
       .then((response) => {
-        if (response && response.data) {
           setSuccess('Login Successfully');
           setError('');
-          navigate("/");
+          if(response.data.username === key){
+            navigate("/admin/");
+          }else{
+            navigate("/user");
+          }
           localStorage.setItem('myData', JSON.stringify(response.data));
-        } else {
-          console.log('Response or data is undefined');
-          setError('An error occurred during login');
-        }
       })
       .catch((error) => {
         console.log(error.response.data);

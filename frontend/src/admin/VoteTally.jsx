@@ -7,6 +7,8 @@ const VoteTally = () => {
   const [chartComponents, setChartComponents] = useState([]);
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
   const [graphSize, setGraphSize] = useState({ width: 500, height: 300 }); // Initial graph size
+  const apiVotes = import.meta.env.VITE_apiVotes 
+
 
   useEffect(() => {
     // Update graph size based on screen width
@@ -30,7 +32,7 @@ const VoteTally = () => {
 
   useEffect(() => {
     axios
-      .get('http://localhost:5000/api/votes/count')
+      .get(`${apiVotes}/count`)
       .then((response) => {
         const responseData = response.data;
         setData(responseData);

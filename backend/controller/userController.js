@@ -20,7 +20,8 @@ const countUser = asyncHandler(async (req, res) => {
 // Register a user - POST
 const registerUser = asyncHandler(async (req, res) => {
     const { fname, lname, username, password } = req.body;
-    if (!fname || !lname || !username || !password) {
+    const image = req.file ? req.file.filename : null;
+    if (!image || !fname || !lname || !username || !password) {
         return res.status(400).json({ error: 'Please fill out all the fields' });
     }
 
@@ -34,9 +35,9 @@ const registerUser = asyncHandler(async (req, res) => {
 
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
-        const name = fname + " " + lname;
-        const query = 'INSERT INTO tbl_users (name, username, password) VALUES (?, ?, ?)';
-        await db.promise().execute(query, [name, username, hashedPassword]);
+        const name = `${fname} ${lname}`;
+        const query = 'INSERT INTO tbl_users (image, name, username, password) VALUES (?, ?, ?, ?)';
+        await db.promise().execute(query, [image, name, username, hashedPassword]);
 
         return res.json({ message: 'Registration Successful' });
     } catch (error) {

@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import Header from './Header'
 import axios from 'axios'
+import Candidates from '../admin/Candidates'
+const apiCandidates = import.meta.env.VITE_apiCandidates 
+
 
 const BallotPage = () => {
     const [data, setData] = useState([])
@@ -29,7 +32,7 @@ const BallotPage = () => {
     console.log(selectedCandidates)
     useEffect(() => {
         axios
-        .get('http://localhost:5000/api/candidates')
+        .get(`${apiCandidates}`)
         .then((response) => {
             const responseData = response.data;
             setData(responseData);
@@ -39,7 +42,7 @@ const BallotPage = () => {
         });
     }, []);
 
-        //map all the position
+        //map all the position  
         const uniquePositions = [...new Set(data.map((item) => item.position))];
         const Position = uniquePositions.map((position) => {
         const positionData = data.filter((item) => item.position === position);
@@ -57,7 +60,7 @@ const BallotPage = () => {
                     className="hidden"
                 />
                 <label htmlFor={`abstain${position}`}>
-                    <div className={`cursor-pointer  hover:bg-orange-600 absolute top-2 right-2 bg-orange-500 text-white w-28 p-0.5 text-center rounded-xl font-bold border-2  ring-red-600'  ${selectedCandidates[position] === `abstain${position}` ? 'bg-green-700' : 'bg-orange-500'}`}>Abstain</div>
+                    <div className={`cursor-pointer  hover:bg-orange-600 absolute top-2 right-2  text-white w-28 p-0.5 text-center rounded-xl font-bold border-2  ring-red-600'  ${selectedCandidates[position] === `abstain${position}` ? 'bg-green-700' : 'bg-orange-500'}`}>Abstain</div>
                 </label>
                 <div className='h-max flex sm:flex-row flex-col md:items-center justify-evenly gap-5'>
                    {positionData.map((item) => { //map all data on each position

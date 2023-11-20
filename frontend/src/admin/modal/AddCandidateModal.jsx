@@ -42,7 +42,7 @@ function AddCandidateModal() {
       }));
     }
   };
-
+  
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -76,7 +76,7 @@ function AddCandidateModal() {
   return(
     <>
     <section >
-      <div className="flex flex-col absolute inset-0 backdrop-blur-lg items-center justify-center px-6 py-8 mx-auto lg:py-0">
+      <div className="flex flex-col absolute inset-0 backdrop-blur-sm bg-backdrop items-center justify-center px-6 py-8 mx-auto lg:py-0">
           <div className="relative w-full bg-white rounded-3xl shadow-xl md:mt-0 sm:max-w-md xl:p-0 ">
               <div className=" space-y-4 pt-14 p-8">
                   <form className="space-y-2 " onSubmit={handleSubmit} >

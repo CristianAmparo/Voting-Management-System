@@ -37,7 +37,7 @@ const {closeDurationModal} = useContext(MyContext)
 
   return (
     <section>
-      <div className='absolute inset-0 flex  justify-center backdrop-blur-md pt-36 z-20'>
+      <div className='absolute inset-0 flex  justify-center backdrop-blur-sm pt-36 z-20'>
       <div className='px-4 py-2 bg-white h-max shadow-2xl rounded-3xl w-96'>
         <div className="max-w-md mx-auto text-black pt-5 px-2 space-y-5">
           <h1 className="text-2xl font-bold leading-tight tracking-tight text-gray-900 md:text-4xl text-center"><span className='text-orange-600'>Duration</span> Settings</h1>          <div>

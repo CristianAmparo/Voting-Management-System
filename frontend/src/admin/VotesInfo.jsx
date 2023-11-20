@@ -1,10 +1,12 @@
 import React, { useEffect, useState, useContext } from "react";
 import DataTable from "react-data-table-component";
 import axios from "axios";
-
+import Authorization from './Authorization';
+const apiVotes= import.meta.env.VITE_apiVotes
 
 
 const Sample=()=> {
+  Authorization()
   const [data, setData] = useState([]);
   const [search, setSearch] = useState('');
   const [filter, setFilter] = useState([]);
@@ -13,7 +15,7 @@ const Sample=()=> {
  
     const fetchData = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/votes');
+      const response = await axios.get(`${apiVotes}`);
       setData(response.data);
       setFilter(response.data);
     }

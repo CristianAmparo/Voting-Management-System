@@ -1,9 +1,8 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
+import { BrowserRouter as Router, Routes, Route} from "react-router-dom"
 import Headers from './component//Header';
 import Sidebar from './component/Sidebar';
 import Dashboard from './admin/Dashboard';
-import Duration from './admin/modal/Duration';
 import Sample from "./admin/Sample"
 import VotesInfo from './admin/VotesInfo';
 import Candidates from './admin/Candidates';

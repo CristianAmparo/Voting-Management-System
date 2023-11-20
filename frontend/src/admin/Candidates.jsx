@@ -4,10 +4,10 @@ import axios from "axios";
 import AddCandidateModal from './modal/AddCandidateModal';
 import EditCandidateModal from './modal/editCandidateModal';
 import { MyContext } from '../context/MyContext';
-
-
+import Authorization from './Authorization';
 
 const Candidates=()=> {
+  Authorization()
   const [data, setData] = useState([]);
   const [search, setSearch] = useState('');
   const [filter, setFilter] = useState([]);
@@ -30,7 +30,6 @@ const Candidates=()=> {
       const newdata = data.filter((item) => item.id !== id);
       setData(newdata);
       setFilter(newdata);
-      alert(response.data.message); // You might want to handle the response appropriately
     })
     .catch((error) => {
       console.error(`Error deleting user with id ${id}:`, error);

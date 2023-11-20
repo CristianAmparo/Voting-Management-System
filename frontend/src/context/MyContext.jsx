@@ -1,11 +1,15 @@
 import React, { createContext, useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom';
 
 const MyContext = createContext();
 
 const MyContextProvider = ({children}) => {
+    const [userData, setUserData] = useState(() => {
+    return JSON.parse(localStorage.getItem('myData')) || null;
+    });
     const [isSidebarOpen, setSidebarOpen] = useState(() => {
     return JSON.parse(localStorage.getItem('isSidebarOpen')) || false;
-  });
+    });
     const [isDurationModalOpen, setIsDurationModalOpen] = useState(false);
     const [isAddCandidateModal, setIsAddCandidateModal] = useState(false);
     const [isEditCandidateModal, setIsEditCandidateModal] = useState(false);
@@ -13,10 +17,10 @@ const MyContextProvider = ({children}) => {
     const [candidateId, setCandidateId] = useState('')
 
     useEffect(() => {
-      // Save the value to local storage whenever it changes
       localStorage.setItem('isSidebarOpen', JSON.stringify(isSidebarOpen));
     }, [isSidebarOpen]);
 
+  
     const toggleSidebar = () => {
             setSidebarOpen(!isSidebarOpen);
         };
@@ -42,7 +46,6 @@ const MyContextProvider = ({children}) => {
       setIsEditCandidateModal(true);
     }
 
-
     const closeEditCandidateModal = () => {
       setIsEditCandidateModal(false);
     };
@@ -50,6 +53,7 @@ const MyContextProvider = ({children}) => {
       return (
         <MyContext.Provider 
           value={{
+            setUserData,
             toggleSidebar, isSidebarOpen, isDurationModalOpen, 
             openDurationModal, closeDurationModal, isAddCandidateModal,
             openAddCandidateModal, closeAddCandidateModal, editCandidate,
