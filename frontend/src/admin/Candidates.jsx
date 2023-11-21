@@ -5,6 +5,7 @@ import AddCandidateModal from './modal/AddCandidateModal';
 import EditCandidateModal from './modal/editCandidateModal';
 import { MyContext } from '../context/MyContext';
 import Authorization from './Authorization';
+const apiCandidates = import.meta.env.VITE_apiCandidates;
 
 const Candidates=()=> {
   Authorization()
@@ -13,19 +14,27 @@ const Candidates=()=> {
   const [filter, setFilter] = useState([]);
   const {isAddCandidateModal, openAddCandidateModal, editCandidate, isEditCandidateModal} = useContext(MyContext)
 
-  useEffect(() => {
-    axios.get('http://localhost:5000/api/candidates/')
-      .then((response) => {
-        setData(response.data);
-        setFilter(response.data);
-      })
-      .catch((error) => {
-        console.error('Error fetching data:', error);
-      });
-  }, [editCandidate, isAddCandidateModal]);
+  
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(`${apiCandidates}/`);
+      setData(response.data);
+      setFilter(response.data);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+    };
+
+    useEffect(() => {
+      fetchData();
+      const intervalId = setInterval(fetchData, 3000);
+      return () => {
+        clearInterval(intervalId);
+      };
+    }, []);
 
  const handleDelete = (id) => {
-  axios.delete(`http://localhost:5000/api/candidates/${id}`)
+  axios.delete(`${apiCandidates}/${id}`)
     .then((response) => {
       const newdata = data.filter((item) => item.id !== id);
       setData(newdata);
@@ -93,24 +102,29 @@ const Candidates=()=> {
     setFilter(result);
   }, [search, data]);
 
-  const tableHeaderStyle = {
-    headCells: {
-      style: {
-        fontWeight: "bold",
-        fontSize: "14px",
-        backgroundColor: "#c2410c",
-        color: "white",
-      },
+  const customStyles = {
+  headCells: {
+    style: {
+      fontWeight: 'bold',
+      fontSize: '14px',
+      backgroundColor: '#c2410c',
+      color: 'white',
     },
-  };
+  },
+  table: {
+    style: {
+      maxHeight: '720px', 
+    },
+  },
+};
 
   return (
     <React.Fragment>
 
-      <section className="fixed top-20 left-0 xl:left-72 right-0 flex flex-col justify-center xl:px-15 md:px-5 px-2  py-10 ">
-        <div className="bg-white px-2 rounded-lg">
-        <DataTable className="w-full  z-0  border border-black shadow-lg"
-          customStyles={tableHeaderStyle}
+      <section className="fixed top-20 left-0 xl:left-72 right-0 flex flex-col  justify-center xl:px-15 md:px-5 px-2  py-10">
+        <div className="bg-white px-2 rounded-lg" >
+        <DataTable className="w-full z-0  border border-black shadow-lg"
+          customStyles={customStyles}
           columns={columns}
           data={filter}
           pagination

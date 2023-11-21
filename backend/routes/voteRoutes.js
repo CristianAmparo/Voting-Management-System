@@ -4,7 +4,7 @@ const { getVote, myVote, countTotalVotes, addVote, updateVote, countVote, voteEn
 
 
 router.get('/', getVote);// See all votes
-router.post('/', addVote);// Add vote
+router.post('/:user_id', addVote);// Add vote
 router.get('/count', countVote);// See all votes
 router.get('/totalVotes', countTotalVotes);// See total votes
 router.get('/voteEnd', voteEnd);// See end of election

@@ -19,23 +19,27 @@ const countVote = asyncHandler(async (req, res) => {
             tbl_candidates
         LEFT JOIN
             tbl_vote
-         ON
-            tbl_candidates.name = tbl_vote.president
-            OR tbl_candidates.name = tbl_vote.vice
-            OR tbl_candidates.name = tbl_vote.secretary
-            OR tbl_candidates.name = tbl_vote.treasurer
-            OR tbl_candidates.name = tbl_vote.first_rep
+        ON
+            tbl_candidates.name = tbl_vote.President
+            OR tbl_candidates.name = tbl_vote.Vice_President
+            OR tbl_candidates.name = tbl_vote.Secretary
+            OR tbl_candidates.name = tbl_vote.Treasurer
+            OR tbl_candidates.name = tbl_vote.Auditor
+            OR tbl_candidates.name = tbl_vote.Peace_Officer
         GROUP BY
             tbl_candidates.name,
             tbl_candidates.position
         ORDER BY
-            CASE 
+            CASE
                 WHEN tbl_candidates.position = 'President' THEN 1
-                WHEN tbl_candidates.position = 'Vice President' THEN 2
+                WHEN tbl_candidates.position = 'Vice_President' THEN 2
                 WHEN tbl_candidates.position = 'Secretary' THEN 3
-                ELSE 4
+                WHEN tbl_candidates.position = 'Treasurer' THEN 4
+                WHEN tbl_candidates.position = 'Peace_Officer' THEN 5
+                ELSE 6
             END,
-            tbl_candidates.position ASC; `;
+            tbl_candidates.name ASC;;
+             `;
     const [results] = await db.promise().query(query);
     res.json(results);
 });
@@ -97,16 +101,18 @@ const myVote = asyncHandler(async (req, res) => {
 
 // Register a vote - POST
 const addVote = asyncHandler(async (req, res) => {
-    const { user_id, president, vice, secretary, treasurer, first_rep } = req.body;
+    const { user_id } = req.params;
+    const { President, Vice_President, Secretary, Treasurer, Auditor, Peace_Officer } = req.body;
 
-    if (!user_id || !president || !vice || !secretary || !treasurer || !first_rep) {
+    console.log(req.body, req.params)
+    if (!President || !Vice_President || !Secretary || !Treasurer || !Auditor || !Peace_Officer) {
         return res.status(400).json({ error: 'Please fill out all the fields' });
     }
 
-    const query = 'INSERT INTO tbl_vote (user_id, president, vice, secretary, treasurer, first_rep) VALUES (?, ?, ?, ?, ?, ?)';
+    const query = 'INSERT INTO tbl_vote ( user_id, President, Vice_President, Secretary, Treasurer, Auditor, Peace_Officer) VALUES (?, ?, ?, ?, ?, ?, ?)';
 
     try {
-        await db.promise().execute(query, [user_id, president, vice, secretary, treasurer, first_rep]);
+        await db.promise().execute(query, [user_id, President, Vice_President, Secretary, Treasurer, Auditor, Peace_Officer]);
         res.json({ message: 'Vote submitted successfully' });
     } catch (err) {
         console.error('Error creating a vote: ', err);
@@ -117,16 +123,16 @@ const addVote = asyncHandler(async (req, res) => {
 // Update a vote - PUT
 const updateVote = asyncHandler(async (req, res) => {
     const { user_id } = req.params;
-    const { president, vice, secretary, treasurer, first_rep } = req.body;
+    const { President, Vice_President, Secretary, Treasurer, Auditor, Peace_Officer } = req.body;
 
-    if (!user_id || !president || !vice || !secretary || !treasurer || !first_rep) {
+    if (!President || !Vice_President || !Secretary || !Treasurer || !Auditor || !Peace_Officer) {
         return res.status(400).json({ error: 'Please fill out all the fields' });
     }
 
-    const query = 'UPDATE tbl_vote SET president = ?, vice = ?, secretary = ?, treasurer = ?, first_rep = ? WHERE user_id = ?';
+    const query = 'UPDATE tbl_vote SET President = ?, Vice_President = ?, Secretary = ?, Treasurer = ?, Auditor = ?, Peace_Officer = ? WHERE user_id = ?';
 
     try {
-        await db.promise().query(query, [president, vice, secretary, treasurer, first_rep, user_id]);
+        await db.promise().query(query, [President, Vice_President, Secretary, Treasurer, Auditor, Peace_Officer, user_id]);
         res.json({ message: 'Vote Updated' });
     } catch (err) {
         console.error('Error updating a vote: ', err);

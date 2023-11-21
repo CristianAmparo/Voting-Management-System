@@ -106,7 +106,8 @@ function EditCandidateModal() {
                             <option value="Vice_President">Vice President</option>
                             <option value="Secretary">Secretary</option>
                             <option value="Treasurer">Treasurer</option>
-                            <option value="First_rep">First Representative</option>
+                            <option value="Auditor">Auditor</option>
+                            <option value="Peace_Officer">Peace_Officer</option>
                           </select>
                         </div>
                       </div>

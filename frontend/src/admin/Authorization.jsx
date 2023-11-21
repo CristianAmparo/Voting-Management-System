@@ -23,7 +23,7 @@ const Authorization = () => {
     return () => clearInterval(intervalId);
   }, []);
 
-  return null; // This component doesn't render anything
+  return null; 
 };
 
 export default Authorization;

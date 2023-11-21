@@ -18,7 +18,37 @@ function Dashboard() {
   const countdownRef = useRef();
   const {isDurationModalOpen, openDurationModal} = useContext(MyContext) 
 
-  useEffect(() => {
+    const fetchTotalVotes = async () => {
+    try {
+      const response = await axios.get(`${apiVotes}/totalVotes`);
+      setVotesCountdata(response.data[0])
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+    };
+    const fetchTotalUsers = async () => {
+    try {
+      const response = await axios.get(`${apiUsers}/countUsers`);
+      setUsersCountdata(response.data[0])
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+    };
+
+    useEffect(() => {
+      fetchTotalVotes();
+      fetchTotalUsers
+       const intervalId = setInterval(() => {
+        fetchTotalVotes();
+        fetchTotalUsers();
+      }, 3000);
+      return () => {
+        clearInterval(intervalId);
+      };
+    }, []);
+
+
+    useEffect(() => {
       axios.get(`${apiVotes}/voteEnd`)
         .then(response => {    
           const remainingTimeInSeconds = Math.floor(response.data.remainingTime / 1000);
@@ -47,7 +77,6 @@ function Dashboard() {
     };
 
     useEffect(() => {
-  
       countdownRef.current = setInterval(() => {
         setRemainingTime(prevRemainingTime => prevRemainingTime - 1);
       }, 1000);
@@ -55,26 +84,7 @@ function Dashboard() {
     },[]) 
     
 
-    useEffect(() => {
-        axios.get(`${apiVotes}/totalVotes`)
-        .then((response) => {
-          setVotesCountdata(response.data[0]);
-
-        })
-        .catch((error) => {
-            console.error('Error fetching data:', error);
-        })
-    }, []);
-    useEffect(() => {
-        axios.get(`${apiUsers}/countUsers`)
-        .then((response) => {
-          setUsersCountdata(response.data[0]);
-
-        })
-        .catch((error) => {
-            console.error('Error fetching data:', error);
-        })
-    }, []);
+   
 
     
 

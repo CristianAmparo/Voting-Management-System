@@ -83,16 +83,21 @@ const Sample=()=> {
     setFilter(result);
   }, [search, data]);
 */
-  const tableHeaderStyle = {
-    headCells: {
-      style: {
-        fontWeight: "bold",
-        fontSize: "14px",
-        backgroundColor: "#c2410c",
-        color: "white",
-      },
+  const customStyles = {
+  headCells: {
+    style: {
+      fontWeight: 'bold',
+      fontSize: '14px',
+      backgroundColor: '#c2410c',
+      color: 'white',
     },
-  };
+  },
+  table: {
+    style: {
+      maxHeight: '720px', 
+    },
+  },
+};
 
   return (
     <React.Fragment>
@@ -100,7 +105,7 @@ const Sample=()=> {
       <section className="fixed top-20 left-0 xl:left-72 right-0 flex flex-col justify-center xl:px-15 md:px-5 px-2  py-10 ">
         <div className="bg-white px-2 rounded-md">
         <DataTable className="w-full  border border-black shadow-lg z-0"
-          customStyles={tableHeaderStyle}
+          customStyles={customStyles}
           columns={columns}
           data={filter}
           pagination

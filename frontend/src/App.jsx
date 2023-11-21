@@ -2,7 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Login from "./Login";
 import Register from "./Register";
 import Admin from "./Admin";
-import BallotPage from "./user/BallotPage";
+import User from "./User";
 
 function App() {
   return (
@@ -11,7 +11,7 @@ function App() {
         <Route path='/' element={<Login />} />
         <Route path='/register' element={<Register />} />
         <Route path='/admin/*' element={<Admin />} />
-        <Route path='/user' element={<BallotPage />} />
+        <Route path='/user/*' element={<User />} />
       </Routes>
     </Router>
   );

@@ -7,17 +7,25 @@ const apiVotes = import.meta.env.VITE_apiVotes
 const VoteTally2 = () => {
   const [data, setData] = useState([]);
 
-  useEffect(() => {
-    axios
-      .get(`${apiVotes}/count`)
-      .then((response) => {
-        const responseData = response.data;
-        setData(responseData);
-      })
-      .catch((error) => {
-        console.error('Error fetching data:', error);
-      });
-  }, []);
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(`${apiVotes}/count`);
+      setData(response.data);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+    };
+
+    useEffect(() => {
+      fetchData();
+      const intervalId = setInterval(fetchData, 3000);
+      return () => {
+        clearInterval(intervalId);
+      };
+    }, []);
+    
+
+  
 
   const uniquePositions = [...new Set(data.map((item) => item.position))];
 

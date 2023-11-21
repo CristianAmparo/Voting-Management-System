@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route} from "react-router-dom"
+import { Routes, Route} from "react-router-dom"
 import Headers from './component//Header';
 import Sidebar from './component/Sidebar';
 import Dashboard from './admin/Dashboard';
