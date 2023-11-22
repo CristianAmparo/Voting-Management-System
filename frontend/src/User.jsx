@@ -6,6 +6,7 @@ import Header from './user/Header';
 import ElectionEnded from './user/ElectionEnded';
 import ContentPage from './user/ContentPage';
 import UpdateResponse from './user/UpdateResponse';
+import AccountModal from './user/accountModal';
 
 const User = () => {
   return (
@@ -17,6 +18,7 @@ const User = () => {
         <Route path='/doneVoting' element={<DoneVoting />} />
         <Route path='/updateResponse' element={<UpdateResponse />} />
         <Route path='/electionEnded' element={<ElectionEnded />} />
+        <Route path='/sample' element={<AccountModal />} />
       </Routes>
     </>
   );

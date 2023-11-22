@@ -26,9 +26,10 @@ function Dashboard() {
       console.error('Error fetching data:', error);
     }
     };
+
     const fetchTotalUsers = async () => {
     try {
-      const response = await axios.get(`${apiUsers}/countUsers`);
+      const response = await axios.get(`${apiVotes}/totalVoters`);
       setUsersCountdata(response.data[0])
     } catch (error) {
       console.error('Error fetching data:', error);
@@ -36,8 +37,6 @@ function Dashboard() {
     };
 
     useEffect(() => {
-      fetchTotalVotes();
-      fetchTotalUsers
        const intervalId = setInterval(() => {
         fetchTotalVotes();
         fetchTotalUsers();
@@ -46,7 +45,6 @@ function Dashboard() {
         clearInterval(intervalId);
       };
     }, []);
-
 
     useEffect(() => {
       axios.get(`${apiVotes}/voteEnd`)

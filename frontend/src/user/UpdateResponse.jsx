@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import Header from './Header';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
+import UserAuthorization from './userAuthorization';
 
 // Assuming that 'Candidates' and other necessary components are imported here
 
@@ -10,8 +11,8 @@ const apiCandidates = import.meta.env.VITE_apiCandidates;
 const apiVotes = import.meta.env.VITE_apiVotes;
 
 const UpdateResponse = () => {
-	const navigate = useNavigate();
-	const [userID, setUserId] = useState(JSON.parse(localStorage.getItem('myData')).id);
+	UserAuthorization();
+	const [userID, setUserId] = useState(() => JSON.parse(localStorage.getItem('myData'))?.id || null);
 	const [data, setData] = useState([]);
 	const [success, setSuccess] = useState('');
 	const [error, setError] = useState('');
@@ -26,6 +27,8 @@ const UpdateResponse = () => {
     Peace_Officer: null,
     });
     const [isChecked, setIsChecked] = useState(false);
+
+	
 
     useEffect(() => {
     axios.get(`${apiVotes}/${userID}`)
@@ -50,22 +53,7 @@ const UpdateResponse = () => {
     }, []);
 
    
-	// Effect for user authorization check
-	useEffect(() => {
-		const checkAuthorization = () => {
-			const myDataString = localStorage.getItem('myData'); // Get user data from local storage
-			// If user data is available, set user ID, If not available, navigate to the login page
-			if (myDataString) {
-				setUserId(JSON.parse(myDataString).id);
-			} else {
-				navigate('/');
-			}
-		};
-		checkAuthorization();
 
-		const intervalId = setInterval(checkAuthorization, 5000); // Set up interval for periodic authorization checks
-		return () => clearInterval(intervalId); // Cleanup interval on component unmount
-	}, []);
 
 	// Effect to fetch candidate data
         useEffect(() => {

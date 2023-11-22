@@ -51,6 +51,12 @@ const countTotalVotes = asyncHandler(async (req, res) => {
     res.json(results);
 });
 
+const countTotalVoters = asyncHandler(async (req, res) => {
+    const query = `SELECT COUNT(tbl_users.id) AS voters_count from tbl_users;`;
+    const [results] = await db.promise().query(query);
+    res.json(results);
+});
+
 //Election End
 const voteEnd = asyncHandler(async (req, res) => {
     // Assuming you have a table called "election_settings" with columns "start_date" and "end_date"
@@ -161,6 +167,7 @@ module.exports = {
     getVote,
     countVote,
     countTotalVotes,
+    countTotalVoters,
     myVote,
     addVote,
     updateVote,

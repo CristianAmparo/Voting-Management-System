@@ -13,6 +13,7 @@ const MyContextProvider = ({children}) => {
     const [isDurationModalOpen, setIsDurationModalOpen] = useState(false);
     const [isAddCandidateModal, setIsAddCandidateModal] = useState(false);
     const [isEditCandidateModal, setIsEditCandidateModal] = useState(false);
+    const [accountModal, setAccountModal] = useState(false);
 
     const [candidateId, setCandidateId] = useState('')
 
@@ -50,10 +51,12 @@ const MyContextProvider = ({children}) => {
       setIsEditCandidateModal(false);
     };
 
+
+
       return (
         <MyContext.Provider 
           value={{
-            setUserData,
+            setUserData, accountModal, setAccountModal,
             toggleSidebar, isSidebarOpen, isDurationModalOpen, 
             openDurationModal, closeDurationModal, isAddCandidateModal,
             openAddCandidateModal, closeAddCandidateModal, editCandidate,

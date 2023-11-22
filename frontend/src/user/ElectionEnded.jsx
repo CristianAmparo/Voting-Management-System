@@ -1,7 +1,9 @@
 import React from 'react'
+import UserAuthorization from './userAuthorization';
 
 
 const ElectionEnded = () => {
+  UserAuthorization();
   return (
     <>
     
