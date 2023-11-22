@@ -49,27 +49,27 @@ const Sample=()=> {
   },
   {
     name: "President",
-    selector: (row) => row.president,
+    selector: (row) => row.President,
     sortable: true,
   },
   {
     name: "Vice President",
-    selector: (row) => row.vice,
+    selector: (row) => row.Vice_President,
     sortable: true,
   },
   {
     name: "Secretary",
-    selector: (row) => row.secretary,
+    selector: (row) => row.Secretary,
     sortable: true,
   },
     {
     name: "Treasurer",
-    selector: (row) => row.treasurer,
+    selector: (row) => row.Treasurer,
     sortable: true,
   },
     {
     name: "First_Rep",
-    selector: (row) => row.first_rep,
+    selector: (row) => row.Peace_Officer,
     sortable: true,
   },
 

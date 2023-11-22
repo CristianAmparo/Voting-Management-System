@@ -5,6 +5,7 @@ import BallotPage from './user/BallotPage';
 import Header from './user/Header';
 import ElectionEnded from './user/ElectionEnded';
 import ContentPage from './user/ContentPage';
+import UpdateResponse from './user/UpdateResponse';
 
 const User = () => {
   return (
@@ -14,6 +15,7 @@ const User = () => {
         <Route path="/" element={<ContentPage />} />
         <Route path="/votingPage" element={<BallotPage />} />
         <Route path='/doneVoting' element={<DoneVoting />} />
+        <Route path='/updateResponse' element={<UpdateResponse />} />
         <Route path='/electionEnded' element={<ElectionEnded />} />
       </Routes>
     </>

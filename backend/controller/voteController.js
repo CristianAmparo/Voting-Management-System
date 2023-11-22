@@ -35,7 +35,7 @@ const countVote = asyncHandler(async (req, res) => {
                 WHEN tbl_candidates.position = 'Vice_President' THEN 2
                 WHEN tbl_candidates.position = 'Secretary' THEN 3
                 WHEN tbl_candidates.position = 'Treasurer' THEN 4
-                WHEN tbl_candidates.position = 'Peace_Officer' THEN 5
+                WHEN tbl_candidates.position = 'Auditor' THEN 5
                 ELSE 6
             END,
             tbl_candidates.name ASC;;
@@ -95,7 +95,12 @@ const myVote = asyncHandler(async (req, res) => {
     const { user_id } = req.params;
     const query = 'SELECT * FROM tbl_vote WHERE user_id = ?';
     const [results] = await db.promise().query(query, [user_id]);
-    res.json(results);
+    if (results.length > 0) {
+        res.json(results);
+    } else {
+        res.json(false);
+    }
+
 });
 
 
@@ -104,21 +109,33 @@ const addVote = asyncHandler(async (req, res) => {
     const { user_id } = req.params;
     const { President, Vice_President, Secretary, Treasurer, Auditor, Peace_Officer } = req.body;
 
-    console.log(req.body, req.params)
+    // Validate the input
     if (!President || !Vice_President || !Secretary || !Treasurer || !Auditor || !Peace_Officer) {
         return res.status(400).json({ error: 'Please fill out all the fields' });
     }
 
-    const query = 'INSERT INTO tbl_vote ( user_id, President, Vice_President, Secretary, Treasurer, Auditor, Peace_Officer) VALUES (?, ?, ?, ?, ?, ?, ?)';
-
     try {
+        // Check if the user has already voted
+        const query1 = 'SELECT * FROM tbl_vote WHERE user_id = ?';
+        const [voteExist] = await db.promise().execute(query1, [user_id]);
+
+        if (voteExist.length > 0) {
+            return res.status(400).json({ error: 'You already voted' });
+        }
+
+        // Insert the vote into the database
+        const query = 'INSERT INTO tbl_vote (user_id, President, Vice_President, Secretary, Treasurer, Auditor, Peace_Officer) VALUES (?, ?, ?, ?, ?, ?, ?)';
         await db.promise().execute(query, [user_id, President, Vice_President, Secretary, Treasurer, Auditor, Peace_Officer]);
+
+        // Respond with success
         res.json({ message: 'Vote submitted successfully' });
     } catch (err) {
+        // Handle errors
         console.error('Error creating a vote: ', err);
-        res.status(500).json({ error: 'An error occurred. Please try again' });
+        res.status(500).json({ error: err });
     }
 });
+
 
 // Update a vote - PUT
 const updateVote = asyncHandler(async (req, res) => {

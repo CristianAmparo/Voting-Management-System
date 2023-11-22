@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 const DoneVoting = () => {
   return (
@@ -10,9 +11,9 @@ const DoneVoting = () => {
         </div>
         <div className='relative flex  flex-col justify-center mx-auto bg-orange-50 shadow-xl w-full md:w-5/6 lg:w-2/3 xl:w-1/2 h-max p-12 rounded-3xl'>
             <h1 className='text-xl md:text-2xl font-bold text-center'>Your response has been added! </h1>
-            <button className= "bg-orange-500 hover:bg-orange-700 w-max mx-auto  cursor-pointer transition duration-300 text-white font-bold rounded-3xl px-5 py-2">
-                 Edit Response
-            </button>
+            <Link to={'/user/updateResponse'} className='w-full flex'>
+              <button className= "bg-orange-500 hover:bg-orange-700 w-max mx-auto  cursor-pointer transition duration-300 text-white font-bold rounded-3xl px-5 py-2"> Edit Response</button>
+            </Link>
         </div>        
       
     </section>

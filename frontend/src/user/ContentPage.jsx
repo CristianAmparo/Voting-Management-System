@@ -18,7 +18,6 @@ const ContentPage = () => {
 
 	useEffect(() => {
 		fetchData();
-		console.log(data);
 		const intervalId = setInterval(fetchData, 5000);
 
 		// Cleanup interval on component unmount
@@ -58,12 +57,12 @@ const ContentPage = () => {
                                     <div><div className='w-80 bg-gray-500 h-0.5 mx-auto '></div></div>
                                     <div className='w-max mx-auto'>
                                         <div className='text-lg p-0.5 text-center text-gray-500 font-bold'>Achievements/Credentials</div>
-                                        <textarea className="w-72 p-2 text-center h-24">{item.credentials}</textarea>
+                                        <textarea className="w-72 p-2 text-center h-24" defaultValue={item.credentials}></textarea>
                                     </div>
                                     <div className='pt-3'><div className='w-80 bg-gray-500 h-0.5 mx-auto '></div></div>
                                     <div className='w-max mx-auto'>
                                         <div className='text-lg p-0.5 text-center text-gray-500 font-bold'>Platforms/Goals</div>
-                                        <textarea className="w-72 p-2 text-center h-24">{item.platform}</textarea>
+                                        <textarea className="w-72 p-2 text-center h-24" defaultValue={item.platform}></textarea>
                                     </div>
                                 </div>
                             </div>

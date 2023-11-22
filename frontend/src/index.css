@@ -40,6 +40,14 @@
         @apply flex-1 ms-3 whitespace-nowrap;
     }
 
+    .durationText {
+        @apply opacity-0
+    }
+
+    .duration:hover .durationText {
+        @apply block transition-opacity duration-300 opacity-100
+    }
+
     .graph {
 
         display: grid;

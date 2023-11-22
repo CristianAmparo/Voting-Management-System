@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Header from './Header';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 // Assuming that 'Candidates' and other necessary components are imported here
 
@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router-dom';
 const apiCandidates = import.meta.env.VITE_apiCandidates;
 const apiVotes = import.meta.env.VITE_apiVotes;
 
-const BallotPage = () => {
+const UpdateResponse = () => {
 	const navigate = useNavigate();
 	const [userID, setUserId] = useState(JSON.parse(localStorage.getItem('myData')).id);
 	const [data, setData] = useState([]);
@@ -18,28 +18,38 @@ const BallotPage = () => {
     const [remainingTime, setRemainingTime] = useState(0);
     const countdownRef = useRef();
 	const [selectedCandidates, setSelectedCandidates] = useState({
-		President: null,
-		Vice_President: null,
-		Secretary: null,
-		Treasurer: null,
-		Auditor: null,
-		Peace_Officer: null,
-	});
-	const [isChecked, setIsChecked] = useState(false);
-	useEffect(()=>{
-		axios.get(`${apiVotes}/${userID}`)
-			.then(response => {
-				if(response.data){
-					console.log(response.data , userID);
-					navigate('/user/doneVoting');
-				}
+    President: null,
+    Vice_President: null,
+    Secretary: null,
+    Treasurer: null,
+    Auditor: null,
+    Peace_Officer: null,
+    });
+    const [isChecked, setIsChecked] = useState(false);
 
-			});
-	},[])
-	
-	
+    useEffect(() => {
+    axios.get(`${apiVotes}/${userID}`)
+        .then(response => {
+        if (response.data) {
+            const { President, Vice_President, Secretary, Treasurer, Auditor, Peace_Officer } = response.data[0];
+            setSelectedCandidates(prevState => ({
+            ...prevState,
+            President,
+            Vice_President,
+            Secretary,
+            Treasurer,
+            Auditor,
+            Peace_Officer,
+            }));
+        }
+        })
+        .catch(error => {
+        // Handle errors (log or show an error message)
+        console.error('Error fetching data:', error);
+        });
+    }, []);
 
-
+   
 	// Effect for user authorization check
 	useEffect(() => {
 		const checkAuthorization = () => {
@@ -51,16 +61,15 @@ const BallotPage = () => {
 				navigate('/');
 			}
 		};
-
 		checkAuthorization();
-		
 
 		const intervalId = setInterval(checkAuthorization, 5000); // Set up interval for periodic authorization checks
 		return () => clearInterval(intervalId); // Cleanup interval on component unmount
 	}, []);
 
 	// Effect to fetch candidate data
-        const fetchData = async () => {
+        useEffect(() => {
+            const fetchData = async () => {
             try {
                 const response = await axios.get(apiCandidates);
                 setData(response.data);
@@ -68,11 +77,8 @@ const BallotPage = () => {
                 console.error('Error fetching data:', error);
             }
         }
-
-        useEffect(() => {
             fetchData();
             const intervalId = setInterval(fetchData, 5000);
-
 
             return () => {
                 clearInterval(intervalId);
@@ -138,18 +144,16 @@ const BallotPage = () => {
 		e.preventDefault(); // Prevent the default form submission
 		const formDataToSend = selectedCandidates;
 		axios
-			.post(`${apiVotes}/${userID}`, formDataToSend) // Submit the form data to the API
+			.put(`${apiVotes}/${userID}`, formDataToSend) // Submit the form data to the API
 			.then((response) => {
 				setSuccess(response.data.message);
+				alert(response.data.message);
 				setError('');
 				navigate('/user/doneVoting');
 			})
 			.catch((error) => {
 				// Handle error
 				console.log(error.response.data.error);
-				if(error.response.data.error === 'You already voted'){
-					navigate('/user/doneVoting')
-				}
 				setError(error.response.data.error);
 				alert(error.response.data.error);
 				setSuccess('');
@@ -254,8 +258,9 @@ const BallotPage = () => {
 							I confirm that I have reviewed and agree with the provided information
 						</label>
 					</div>
-					<div className="flex w-full md:w-5/6 lg:w-2/3 xl:w-1/2 justify-end ">
-						<input type="submit" value="Submit" disabled={!isChecked} className={`${isChecked ? "bg-orange-500 hover:bg-orange-700  cursor-pointer" : "bg-gray-500"} transition duration-300 text-white text-lg font-bold rounded-xl px-10 py-2`} />
+					<div className="flex w-full md:w-5/6 lg:w-2/3 xl:w-1/2 justify-end gap-2">
+                        <Link to={'/user/doneVoting'}><div className="border-2 border-orange-500 hover:border-orange-700 bg-white text-orange-700 cursor-pointer transition duration-300  text-lg font-bold rounded-xl px-5 py-2">Cancel</div></Link>
+						<input type="submit" value="Update" disabled={!isChecked} className={`${isChecked ? "bg-orange-500 hover:bg-orange-700  cursor-pointer" : "bg-gray-500"} transition duration-300 text-white text-lg font-bold rounded-xl px-5 py-2`} />
 					</div>
 				</form>
 			</section>
@@ -264,4 +269,4 @@ const BallotPage = () => {
 	);
 }
 
-export default BallotPage;
+export default UpdateResponse;
