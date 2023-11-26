@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { MyContext } from '../context/MyContext';
 const apiUsers = import.meta.env.VITE_apiUsers 
@@ -10,8 +10,7 @@ function AccountModal() {
   	const [userID, setUserId] = useState(JSON.parse(localStorage.getItem('myData')).id);
     const [success, setSuccess] = useState('');
     const [error, setError] = useState('');
-    const {accountModal, setAccountModal} = useContext(MyContext);
-    const [changePass, setChangePass] = useState(false);
+    const {accountModal, toggleAccountModal} = useContext(MyContext);
     const [formData, setFormData] = useState({
         image: null,
         fname: '',
@@ -33,7 +32,7 @@ useEffect(() => {
       setFormData((prev) => ({
         ...prev,
         image: image,
-        fname: fname || '', // Provide a default value if fname is falsy
+        fname: fname,
         lname: lname,
         username: username
       }));
@@ -103,7 +102,7 @@ useEffect(() => {
       <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto h-screen lg:py-0">
           <div className="w-full bg-white rounded-lg shadow-xl md:mt-0 sm:max-w-md xl:p-0 ">
               <div className="p-6 space-y-4 sm:p-8">
-                  <h1 className="text-2xl font-bold leading-tight tracking-tight text-gray-900  text-center">User <span className='text-orange-600'>Account</span></h1>
+                  <h1 className="text-2xl font-bold leading-tight tracking-tight text-gray-900  text-center">Account <span className='text-orange-600'>Settings</span></h1>
 
                   <form className="space-y-2 " onSubmit={handleSubmit} >
                       <div className='relative mx-auto bg-orange-600 w-[137px] h-[137px] flex items-center rounded-full'>
@@ -187,7 +186,7 @@ useEffect(() => {
                       </div>
                       <button type="submit" className="w-full text-white bg-orange-600 hover:bg-orange-700  font-medium rounded-lg text-sm px-5 py-2.5 text-center">Update Account</button>
 
-                      <button type='button' className="w-full text-orange-700 border-2 border-orange-600 hover:border-orange-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center" onClick={()=> setAccountModal(!accountModal)}>Cancel</button>
+                      <button type='button' className="w-full text-orange-700 border-2 border-orange-600 hover:border-orange-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center" onClick={ toggleAccountModal}>Cancel</button>
                   </form>
               </div>
           </div>

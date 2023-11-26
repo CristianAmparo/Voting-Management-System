@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import Header from './Header';
 import axios from 'axios';
 import UserAuthorization from './userAuthorization';
+import { useNavigate } from 'react-router-dom';
 
 // Assuming that 'Candidates' and other necessary components are imported here
 
@@ -11,6 +12,7 @@ const apiVotes = import.meta.env.VITE_apiVotes;
 
 const BallotPage = () => {
 	UserAuthorization();
+	const navigate = useNavigate();
 	const [userID, setUserId] = useState(() => JSON.parse(localStorage.getItem('myData'))?.id || null);
 	const [data, setData] = useState([]);
 	const [success, setSuccess] = useState('');
@@ -211,7 +213,7 @@ const BallotPage = () => {
                         <img className='w-5 h-5' src="/duration.png" alt="" />
                         <span className='lg:text-xl text-lg  pl-2 font-bold '>
                         {remainingTime < 0 ? (
-                            <div className='lg:text-4xl text-lg '>Election Ended</div>
+                            <div className='lg:text-xl text-lg '>Election Ended</div>
                         ) : (
                             <span>{formatTime(remainingTime)}</span>
                         )}

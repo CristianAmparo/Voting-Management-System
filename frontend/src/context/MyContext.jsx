@@ -50,13 +50,16 @@ const MyContextProvider = ({children}) => {
     const closeEditCandidateModal = () => {
       setIsEditCandidateModal(false);
     };
+    const toggleAccountModal = () => {
+      setAccountModal(!accountModal);
+    };
 
 
 
       return (
         <MyContext.Provider 
           value={{
-            setUserData, accountModal, setAccountModal,
+            setUserData, accountModal, toggleAccountModal,
             toggleSidebar, isSidebarOpen, isDurationModalOpen, 
             openDurationModal, closeDurationModal, isAddCandidateModal,
             openAddCandidateModal, closeAddCandidateModal, editCandidate,

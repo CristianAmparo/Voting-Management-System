@@ -7,6 +7,7 @@ import Sample from "./admin/Sample"
 import VotesInfo from './admin/VotesInfo';
 import Candidates from './admin/Candidates';
 import Users from './admin/Users';
+import Result from './admin/Result';
 
 
 
@@ -17,7 +18,7 @@ const Admin = () => {
       <Sidebar />
       <Routes>
         <Route path="/" element={<Dashboard />} />
-        <Route path="/sample" element={<Sample />} />
+        <Route path="/sample" element={<Result />} />
         <Route path='/voteinfo' element={<VotesInfo />} />
         <Route path='/candidates' element={<Candidates />} />
         <Route path='/users' element={<Users />} />

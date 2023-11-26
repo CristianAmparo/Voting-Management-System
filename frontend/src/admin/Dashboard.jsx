@@ -6,7 +6,6 @@ import Duration from './modal/Duration';
 import { MyContext } from '../context/MyContext';
 import Authorization from './Authorization';
 const apiVotes = import.meta.env.VITE_apiVotes 
-const apiUsers = import.meta.env.VITE_apiUsers
 
 function Dashboard() {
   Authorization()

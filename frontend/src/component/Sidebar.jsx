@@ -1,20 +1,27 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useContext } from 'react';
 import { MyContext } from '../context/MyContext';
+import AccountModal from '../user/accountModal';
 
 const Sidebar = () => {
- const {isSidebarOpen} = useContext(MyContext)
+  const navigate = useNavigate()
+  const {isSidebarOpen, accountModal, toggleAccountModal} = useContext(MyContext)
   const [dropDown, setDropDown] = useState(false); // Initial state is open
   const toggleDropDown = () => {
       setDropDown(!dropDown);
   };
+
+  const logout = () => {
+        localStorage.removeItem('myData');
+        navigate("/");
+  }
   return (
     <>
     <aside  className={`fixed top-20 left-0 z-40 w-full md:w-72 h-screen transition-transform ${
           isSidebarOpen ? 'translate-x-0' : '-translate-x-full'
         } xl:translate-x-0`}>
-      <div className="h-full px-3 py-4 overflow-y-auto bg-gray-800">
+      <div className="h-full px-3 py-4 bg-gray-800">
           <ul className="space-y-2 font-medium">
             <li>
                 <Link className="sidebarList" to="/admin">
@@ -32,7 +39,6 @@ const Sidebar = () => {
                 <Link to="/admin/sample"  className="sidebarList">
                   <img className='icon ' src="/results.png" alt="" />
                   <span className="flex-1 ms-3 whitespace-nowrap">Result</span>
-                  <span className="inline-flex items-center justify-center w-3 h-3 p-3 ms-3 text-sm font-medium rounded-full bg-orange-700 text-white">3</span>
                 </Link>
             </li>
             <li>
@@ -50,17 +56,21 @@ const Sidebar = () => {
                       </li>
                 </ul>
             </li>
-             <li>
-                <Link  className="sidebarList" to="/admin/voteinfo">
+             <li className="sidebarList cursor-pointer" onClick={toggleAccountModal}>
                   <img className='icon ' src="/admin.png" alt="" />
                   <span className="flex-1 ms-3 whitespace-nowrap">Account Settings</span>
-                </Link>
+            </li>
+            <li className="sidebarList cursor-pointer" onClick={logout}>
+                  <img className='icon ' src="/logout.png" alt="" />
+                  <span className="flex-1 ms-3 whitespace-nowrap">Logout</span> 
             </li>
             
           
           </ul>
       </div>
+      
     </aside>
+      {accountModal && <AccountModal />}
     </>
   )
 }

@@ -1,12 +1,12 @@
 import React, { useEffect, useState, useContext } from "react";
 import DataTable from "react-data-table-component";
 import axios from "axios";
-import AddCandidateModal from './modal/AddCandidateModal';
 import { MyContext } from "../context/MyContext";
+import AddCandidateModal from './modal/AddCandidateModal';
 import EditCandidateModal from './modal/editCandidateModal';
 import Authorization from './Authorization';
 const apiUsers = import.meta.env.VITE_apiUsers 
-const apiCandidates = import.meta.env.VITE_apiCandidates 
+
 
 
 const Users=()=> {
@@ -14,6 +14,7 @@ const Users=()=> {
   const [data, setData] = useState([]);
   const [search, setSearch] = useState('');
   const [filter, setFilter] = useState([]);
+  const {accountModal, setAccountModal} = useContext(MyContext)
   const {isAddCandidateModal, openAddCandidateModal, editCandidate, isEditCandidateModal} = useContext(MyContext)
 
 
@@ -49,7 +50,6 @@ const Users=()=> {
     sortable: true,
     center: "true",
 
-    style: {},
   },
   {
     name: "Name",
@@ -57,18 +57,20 @@ const Users=()=> {
     sortable: true,
   },
   {
-    name: "Position",
+    name: "Username",
     selector: (row) => row.username,
     sortable: true,
   },
   {
-    name: "Partylist",
+    name: "Password",
     selector: (row) => row.password,
     sortable: true,
   },
   {
     name: "Image",
     selector: (row) => row.image,
+    //cell: (row) => <div className="w-10 h-10 flex items-center rounded-full overflow-hidden"><img src={`http://localhost:5000/uploads/${row.image}`} alt="" /></div>
+
   },
   {
     name: "Action",
@@ -78,10 +80,6 @@ const Users=()=> {
     },
     cell: (row) => (
       <div className="flex gap-1">
-        <button onClick={() => editCandidate(row.id)} className="flex items-center justify-center bg-indigo-500 text-white px-4 py-2 rounded focus:outline-none hover:bg-indigo-600 gap-1">
-          <img className='w-3 h-3' src="/edit.png" alt="" />
-          Edit
-        </button>
         <button onClick={() => handleDelete(row.id)} className="flex items-center justify-center bg-red-500 text-white px-4 py-2 rounded focus:outline-none hover:bg-red-600 gap-1">
           <img  className='w-3 h-3' src="/delete.png" alt="" />
           Delete 
@@ -139,9 +137,6 @@ const Users=()=> {
                     value={search}
                     onChange={(e) => setSearch(e.target.value)}
                   />
-                  <button onClick={openAddCandidateModal} className="flex items-center bg-green-600 text-white px-4 py-2 rounded focus:outline-none text-sm hover:bg-green-700 gap-1">
-                      <img className='w-3 h-3' src="/add.png" alt="" /> Add
-                  </button>
                 </div>
               </div>
             </div>
@@ -151,8 +146,6 @@ const Users=()=> {
         />
         </div>
       </section>
-          {isAddCandidateModal? <AddCandidateModal /> : ''}
-          {isEditCandidateModal? <EditCandidateModal /> : ''}
     </React.Fragment>
   );
 }

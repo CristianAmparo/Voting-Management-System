@@ -12,8 +12,13 @@ const getVote = asyncHandler(async (req, res) => {
 const countVote = asyncHandler(async (req, res) => {
     const query = `
         SELECT
+            tbl_candidates.id,
             tbl_candidates.name,
             tbl_candidates.position,
+            tbl_candidates.image,
+            tbl_candidates.platform,
+            tbl_candidates.credentials,
+            tbl_candidates.partylist,
             COUNT(tbl_vote.id) AS vote_count
         FROM
             tbl_candidates
