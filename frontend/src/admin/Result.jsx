@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import Authorization from './Authorization';
-const apiVotes = import.meta.env.VITE_apiVotes;
+const apiHost = import.meta.env.VITE_host
 
 const Result = () => {
     Authorization()
@@ -10,7 +10,7 @@ const Result = () => {
     const countdownRef = useRef();
     const fetchData = async () => {
     try {
-      const response = await axios.get(`${apiVotes}/count`);
+      const response = await axios.get(`${apiHost}api/votes/count`);
       setData(response.data);
     } catch (error) {
       console.error('Error fetching data:', error);
@@ -61,7 +61,7 @@ const Result = () => {
                 </div>
                 <div className='relative mx-auto bg-orange-600 w-[137px] h-[137px] flex items-center rounded-full'>
                     <div className=" w-32 h-32 bg-orange-100 rounded-full overflow-hidden border-4 border-white flex justify-center items-center mx-auto">
-                        <div><img src={`http://localhost:5000/uploads/${candidate.image}`} alt="" /></div>
+                        <div><img src={`${apiHost}uploads/${candidate.image}`} alt="" /></div>
                     </div>
                 </div>
                 <div className='-space-y-2'>
@@ -83,7 +83,7 @@ const Result = () => {
       ));
 
     useEffect(() => {
-      axios.get(`${apiVotes}/voteEnd`)
+      axios.get(`${apiHost}api/votes/voteEnd`)
         .then(response => {    
           const remainingTimeInSeconds = Math.floor(response.data.remainingTime / 1000);
           setRemainingTime(remainingTimeInSeconds);

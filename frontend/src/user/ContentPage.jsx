@@ -3,7 +3,7 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import UserAuthorization from './userAuthorization';
 
-const apiCandidates = import.meta.env.VITE_apiCandidates;
+const apiHost = import.meta.env.VITE_host
 
 const ContentPage = () => {
 	UserAuthorization();
@@ -11,7 +11,7 @@ const ContentPage = () => {
 
 	const fetchData = async () => {
 		try {
-			const response = await axios.get(apiCandidates);
+			const response = await axios.get(`${apiHost}api/candidates/`);
 			setData(response.data);
 		} catch (error) {
 			console.error('Error fetching data:', error);
@@ -49,7 +49,7 @@ const ContentPage = () => {
                                     </div>
                                     <div className='relative mx-auto bg-orange-600 w-[137px] h-[137px] flex items-center rounded-full'>
                                         <div className=" w-32 h-32 bg-orange-100 rounded-full overflow-hidden border-4 border-white flex justify-center items-center mx-auto">
-                                            <div><img src={`http://localhost:5000/uploads/${item.image}`} alt="" /></div>
+                                            <div><img src={`${apiHost}uploads/${item.image}`} alt="" /></div>
                                         </div>
                                     </div>
                                     <div className='-space-y-2'>

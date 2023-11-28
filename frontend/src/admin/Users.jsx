@@ -2,10 +2,8 @@ import React, { useEffect, useState, useContext } from "react";
 import DataTable from "react-data-table-component";
 import axios from "axios";
 import { MyContext } from "../context/MyContext";
-import AddCandidateModal from './modal/AddCandidateModal';
-import EditCandidateModal from './modal/editCandidateModal';
 import Authorization from './Authorization';
-const apiUsers = import.meta.env.VITE_apiUsers 
+const apiHost = import.meta.env.VITE_host
 
 
 
@@ -14,12 +12,11 @@ const Users=()=> {
   const [data, setData] = useState([]);
   const [search, setSearch] = useState('');
   const [filter, setFilter] = useState([]);
-  const {accountModal, setAccountModal} = useContext(MyContext)
-  const {isAddCandidateModal, openAddCandidateModal, editCandidate, isEditCandidateModal} = useContext(MyContext)
+
 
 
   useEffect(() => {
-    axios.get(`${apiUsers}/`)
+    axios.get(`${apiHost}api/users/`)
       .then((response) => {
         setData(response.data);
         setFilter(response.data);
@@ -30,7 +27,7 @@ const Users=()=> {
   }, []);
 
  const handleDelete = (id) => {
-  axios.delete(`${apiUsers}/${id}`)
+  axios.delete(`${apiHost}api/users/${id}`)
     .then((response) => {
       const newdata = data.filter((item) => item.id !== id);
       setData(newdata);
@@ -69,7 +66,7 @@ const Users=()=> {
   {
     name: "Image",
     selector: (row) => row.image,
-    //cell: (row) => <div className="w-10 h-10 flex items-center rounded-full overflow-hidden"><img src={`http://localhost:5000/uploads/${row.image}`} alt="" /></div>
+    //cell: (row) => <div className="w-10 h-10 flex items-center rounded-full overflow-hidden"><img src={`${uploads}/${row.image}`} alt="" /></div>
 
   },
   {

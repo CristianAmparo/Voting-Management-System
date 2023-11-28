@@ -2,7 +2,8 @@ import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { MyContext } from '../context/MyContext';
-const apiUsers = import.meta.env.VITE_apiUsers 
+const apiHost = import.meta.env.VITE_host
+
 
 
 function AccountModal() {
@@ -23,7 +24,7 @@ function AccountModal() {
   const { fname, lname, image, username, password, password2 } = formData;
 
 useEffect(() => {
-  axios.get(`${apiUsers}/${userID}`)
+  axios.get(`${apiHost}api/users/${userID}`)
     .then((response) => {
       const { image, name, username } = response.data[0];
       const fullName = name.split(" ");
@@ -84,7 +85,7 @@ useEffect(() => {
       console.log(formDataToSend)
   
       axios
-        .put(`${apiUsers}/${userID}`, formDataToSend)
+        .put(`${apiHost}api/users/${userID}`, formDataToSend)
         .then((response) => {
           setSuccess(response.data.message);
           setError('');
@@ -107,7 +108,7 @@ useEffect(() => {
                   <form className="space-y-2 " onSubmit={handleSubmit} >
                       <div className='relative mx-auto bg-orange-600 w-[137px] h-[137px] flex items-center rounded-full'>
                         <div className=" w-32 h-32 bg-orange-100 rounded-full overflow-hidden border-4 border-white flex justify-center items-center mx-auto">
-                            <div><img id="imagePreview" src={`${image ? 'http://localhost:5000/uploads/' + image : '/profile.png'}`} alt="" /></div>
+                            <div><img id="imagePreview" src={`${image ? `${apiHost}uploads/` + image : '/profile.png'}`} alt="" /></div>
                         </div>
                         <div className="">
                             <label htmlFor="imageInput" className="absolute bottom-1 right-0 rounded-full w-10 h-10 bg-slate-600 hover:bg-slate-700 p-2 text-white cursor-pointer flex justify-center items-center">

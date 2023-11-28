@@ -4,11 +4,11 @@ import axios from 'axios';
 import UserAuthorization from './userAuthorization';
 import { useNavigate } from 'react-router-dom';
 
+
 // Assuming that 'Candidates' and other necessary components are imported here
 
 // API endpoints for candidates and votes
-const apiCandidates = import.meta.env.VITE_apiCandidates;
-const apiVotes = import.meta.env.VITE_apiVotes;
+const apiHost = import.meta.env.VITE_host
 
 const BallotPage = () => {
 	UserAuthorization();
@@ -29,7 +29,7 @@ const BallotPage = () => {
 	});
 	const [isChecked, setIsChecked] = useState(false);
 	useEffect(()=>{
-		axios.get(`${apiVotes}/${userID}`)
+		axios.get(`${apiHost}api/votes/${userID}`)
 			.then(response => {
 				if(response.data){
 					console.log(response.data , userID);
@@ -47,7 +47,7 @@ const BallotPage = () => {
 	// Effect to fetch candidate data
         const fetchData = async () => {
             try {
-                const response = await axios.get(apiCandidates);
+                const response = await axios.get(`${apiHost}api/candidates`);
                 setData(response.data);
             } catch (error) {
                 console.error('Error fetching data:', error);
@@ -66,7 +66,7 @@ const BallotPage = () => {
 
 
     useEffect(() => {
-      axios.get(`${apiVotes}/voteEnd`)
+      axios.get(`${apiHost}api/votes/voteEnd`)
         .then(response => {    
           const remainingTimeInSeconds = Math.floor(response.data.remainingTime / 1000);
           setRemainingTime(remainingTimeInSeconds);
@@ -123,7 +123,7 @@ const BallotPage = () => {
 		e.preventDefault(); // Prevent the default form submission
 		const formDataToSend = selectedCandidates;
 		axios
-			.post(`${apiVotes}/${userID}`, formDataToSend) // Submit the form data to the API
+			.post(`${apiHost}api/votes/${userID}`, formDataToSend) // Submit the form data to the API
 			.then((response) => {
 				setSuccess(response.data.message);
 				setError('');
@@ -170,7 +170,7 @@ const BallotPage = () => {
 								<div className=' flex sm:flex-col gap-2 md:gap-0  items-center'>
 									<div className=' bg-orange-600 w-[86px] h-[86px] flex items-center rounded-full -mb-1'>
 										<div className=" w-20 h-20 bg-orange-100 rounded-full overflow-hidden border-2 border-white flex justify-center items-center mx-auto">
-											<img src={`http://localhost:5000/uploads/${item.image}`} alt="" />
+											<img src={`${apiHost}uploads/${item.image}`} alt="" />
 										</div>
 									</div>
 									<div className='sm:text-center '>

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-const apiUsers = import.meta.env.VITE_apiUsers 
+const apiHost = import.meta.env.VITE_host
 
 
 function Register() {
@@ -60,7 +60,7 @@ function Register() {
       console.log(formDataToSend)
   
       axios
-        .post(`${apiUsers}/`, formDataToSend)
+        .post(`${apiHost}api/users/`, formDataToSend)
         .then((response) => {
           setSuccess(response.data.message);
           setError('');

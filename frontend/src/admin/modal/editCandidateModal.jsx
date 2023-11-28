@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { MyContext } from '../../context/MyContext';
 import axios from 'axios';
+const apiHost = import.meta.env.VITE_host
 
 function EditCandidateModal() {
   const {candidateId, closeEditCandidateModal} = useContext(MyContext)
@@ -19,7 +20,7 @@ function EditCandidateModal() {
   const { name, image, position, partylist, credentials, platform } = formData;
 
    useEffect(() => {
-        axios.get(`http://localhost:5000/api/candidates/candidate/${id}`)
+        axios.get(`${apiHost}api/candidates/candidate/${id}`)
         .then((response) => {
           setFormData(response.data[0]);
 
@@ -67,7 +68,7 @@ function EditCandidateModal() {
     formDataToSend.append('credentials', credentials);
     formDataToSend.append('platform', platform);
    
-    axios.put(`http://localhost:5000/api/candidates/${id}`, formDataToSend)
+    axios.put(`${apiHost}api/candidates/${id}`, formDataToSend)
       .then((response) => {
       setSuccess(response.data.message);
       setError('');
@@ -114,7 +115,7 @@ function EditCandidateModal() {
                       <a className='icon absolute top-5 right-10 cursor-pointer' onClick={closeEditCandidateModal}><img src="/closeModal.png" alt="" /></a>
                       <div className='relative mx-auto bg-orange-600 w-[137px] h-[137px] flex items-center rounded-full'>
                         <div className=" w-32 h-32 bg-orange-100 rounded-full overflow-hidden border-4 border-white flex justify-center items-center mx-auto">
-                            <div><img id="imagePreview" src={`http://localhost:5000/uploads/${image}`} alt="" /></div>
+                            <div><img id="imagePreview" src={`${apiHost}/uploads/${image}`} alt="" /></div>
                         </div>
                         <div className="">
                             <label htmlFor="imageInput" className="absolute bottom-1 right-0 rounded-full w-10 h-10 bg-slate-600 hover:bg-slate-700 p-2 text-white cursor-pointer flex justify-center items-center">

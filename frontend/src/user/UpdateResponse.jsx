@@ -1,14 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Header from './Header';
 import axios from 'axios';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import UserAuthorization from './userAuthorization';
 
 // Assuming that 'Candidates' and other necessary components are imported here
 
-// API endpoints for candidates and votes
-const apiCandidates = import.meta.env.VITE_apiCandidates;
-const apiVotes = import.meta.env.VITE_apiVotes;
+
+const apiHost = import.meta.env.VITE_host
 
 const UpdateResponse = () => {
 	UserAuthorization();
@@ -31,7 +30,7 @@ const UpdateResponse = () => {
 	
 
     useEffect(() => {
-    axios.get(`${apiVotes}/${userID}`)
+    axios.get(`${apiHost}api/votes/${userID}`)
         .then(response => {
         if (response.data) {
             const { President, Vice_President, Secretary, Treasurer, Auditor, Peace_Officer } = response.data[0];
@@ -59,7 +58,7 @@ const UpdateResponse = () => {
         useEffect(() => {
             const fetchData = async () => {
             try {
-                const response = await axios.get(apiCandidates);
+                const response = await axios.get(`${apiHost}/api/candidates`);
                 setData(response.data);
             } catch (error) {
                 console.error('Error fetching data:', error);
@@ -75,7 +74,7 @@ const UpdateResponse = () => {
 
 
     useEffect(() => {
-      axios.get(`${apiVotes}/voteEnd`)
+      axios.get(`${apiHost}api/votes/voteEnd`)
         .then(response => {    
           const remainingTimeInSeconds = Math.floor(response.data.remainingTime / 1000);
           setRemainingTime(remainingTimeInSeconds);
@@ -132,7 +131,7 @@ const UpdateResponse = () => {
 		e.preventDefault(); // Prevent the default form submission
 		const formDataToSend = selectedCandidates;
 		axios
-			.put(`${apiVotes}/${userID}`, formDataToSend) // Submit the form data to the API
+			.put(`${apiHost}api/votes/${userID}`, formDataToSend) // Submit the form data to the API
 			.then((response) => {
 				setSuccess(response.data.message);
 				alert(response.data.message);
@@ -177,7 +176,7 @@ const UpdateResponse = () => {
 								<div className=' flex sm:flex-col gap-2 md:gap-0  items-center'>
 									<div className=' bg-orange-600 w-[86px] h-[86px] flex items-center rounded-full -mb-1'>
 										<div className=" w-20 h-20 bg-orange-100 rounded-full overflow-hidden border-2 border-white flex justify-center items-center mx-auto">
-											<img src={`http://localhost:5000/uploads/${item.image}`} alt="" />
+											<img src={`${apiHost}/uploads/${item.image}`} alt="" />
 										</div>
 									</div>
 									<div className='sm:text-center '>

@@ -4,11 +4,10 @@ import axios from 'axios';
 import { useContext } from 'react';
 import { MyContext } from './context/MyContext';
 const key = import.meta.env.VITE_adminKey;
-const apiUsers = import.meta.env.VITE_apiUsers 
+const apiHost = import.meta.env.VITE_host
 
 
 function Register() {
-  const {setUserData} = useContext(MyContext)
   const navigate = useNavigate();
   const [success, setSuccess] = useState('');
   const [error, setError] = useState('');
@@ -30,7 +29,7 @@ function Register() {
     e.preventDefault();
    
 
-    axios.post(`${apiUsers}/login`, formData)
+    axios.post(`${apiHost}api/users/login`, formData)
       .then((response) => {
           setSuccess('Login Successfully');
           setError('');

@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { MyContext } from '../../context/MyContext';
 import axios from 'axios';
+const apiHost = import.meta.env.VITE_host
 
 function AddCandidateModal() {
   const [success, setSuccess] = useState('');
@@ -56,7 +57,7 @@ function AddCandidateModal() {
     formDataToSend.append('platform', platform);
 
     axios
-      .post('http://localhost:5000/api/candidates/', formDataToSend)
+      .post(`${apiHost}api/candidates/`, formDataToSend)
       .then((response) => {
         setSuccess(response.data.message);
         setError('');

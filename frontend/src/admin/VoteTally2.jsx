@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import ReactApexChart from 'react-apexcharts';
-const apiVotes = import.meta.env.VITE_apiVotes 
+const apiHost = import.meta.env.VITE_host
 
 
 const VoteTally2 = () => {
@@ -9,7 +9,7 @@ const VoteTally2 = () => {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get(`${apiVotes}/count`);
+      const response = await axios.get(`${apiHost}api/votes/count`);
       setData(response.data);
     } catch (error) {
       console.error('Error fetching data:', error);
