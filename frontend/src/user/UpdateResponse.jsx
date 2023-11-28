@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Header from './Header';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import UserAuthorization from './userAuthorization';
 
 // Assuming that 'Candidates' and other necessary components are imported here
@@ -11,6 +11,7 @@ const apiHost = import.meta.env.VITE_host
 
 const UpdateResponse = () => {
 	UserAuthorization();
+	const navigate = useNavigate();
 	const [userID, setUserId] = useState(() => JSON.parse(localStorage.getItem('myData'))?.id || null);
 	const [data, setData] = useState([]);
 	const [success, setSuccess] = useState('');
@@ -58,7 +59,7 @@ const UpdateResponse = () => {
         useEffect(() => {
             const fetchData = async () => {
             try {
-                const response = await axios.get(`${apiHost}/api/candidates`);
+                const response = await axios.get(`${apiHost}api/candidates`);
                 setData(response.data);
             } catch (error) {
                 console.error('Error fetching data:', error);

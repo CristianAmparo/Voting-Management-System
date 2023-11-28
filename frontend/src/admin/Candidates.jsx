@@ -5,7 +5,7 @@ import AddCandidateModal from './modal/AddCandidateModal';
 import EditCandidateModal from './modal/editCandidateModal';
 import { MyContext } from '../context/MyContext';
 import Authorization from './Authorization';
-const apiCandidates = import.meta.env.VITE_apiCandidates;
+const apiHost = import.meta.env.VITE_host
 
 const Candidates=()=> {
   Authorization()
@@ -17,7 +17,7 @@ const Candidates=()=> {
   
   const fetchData = async () => {
     try {
-      const response = await axios.get(`${apiCandidates}/`);
+      const response = await axios.get(`${apiHost}api/candidates/`);
       setData(response.data);
       setFilter(response.data);
     } catch (error) {
@@ -34,7 +34,7 @@ const Candidates=()=> {
     }, []);
 
  const handleDelete = (id) => {
-  axios.delete(`${apiCandidates}/${id}`)
+  axios.delete(`${apiHost}api/candidates/${id}`)
     .then((response) => {
       const newdata = data.filter((item) => item.id !== id);
       setData(newdata);
