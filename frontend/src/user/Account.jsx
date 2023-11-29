@@ -85,6 +85,12 @@ useEffect(() => {
         .then((response) => {
           setSuccess(response.data.message);
           setError('');
+
+          const timeoutId = setTimeout(() => {
+            toggleAccountModal();
+            }, 1300);
+            return () => clearTimeout(timeoutId);
+
           })
         .catch((error) => {
           console.log(error);
