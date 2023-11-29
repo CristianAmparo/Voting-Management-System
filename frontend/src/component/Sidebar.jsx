@@ -4,6 +4,7 @@ import { useContext } from 'react';
 import { MyContext } from '../context/MyContext';
 import AccountModal from '../user/accountModal';
 
+
 const Sidebar = () => {
   const navigate = useNavigate()
   const {isSidebarOpen, accountModal, toggleAccountModal} = useContext(MyContext)

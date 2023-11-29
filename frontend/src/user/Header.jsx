@@ -1,8 +1,9 @@
 import React, { useContext, useState } from 'react'
-import AccountModal from './accountModal'
+
 import { useNavigate } from 'react-router-dom'
 import UserAuthorization from './userAuthorization'
 import { MyContext } from '../context/MyContext'
+import AccountModal from './accountModal'
 
 const Header = () => {
   UserAuthorization();
