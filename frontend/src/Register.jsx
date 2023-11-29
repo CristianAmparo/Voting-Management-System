@@ -100,7 +100,7 @@ function Register() {
                             <input type="file" name="image" id="imageInput" className="hidden h-full w-full cursor-pointer" accept=".png, .jpg, .jpeg" onChange={handleChange} />
                           </div>
                       </div>
-                      <div className='flex w-full justify-between'>
+                      <div className='flex w-full justify-between gap-2'>
                         <div>
                           <label htmlFor="email" className="label ">First Name</label>
                           <input 
