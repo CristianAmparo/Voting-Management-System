@@ -160,7 +160,7 @@ const BallotPage = () => {
 					className="hidden"
 				/>
 				<label htmlFor={`abstain${position}`}>
-					<div className={`cursor-pointer  hover:bg-orange-600 absolute top-2 right-2  text-white w-28 p-0.5 text-center rounded-xl font-bold border-2  ring-red-600'  ${selectedCandidates[position] === `abstain${position}` ? 'bg-green-700' : 'bg-orange-500'}`}>Abstain</div>
+					<div className={`cursor-pointer hover:bg-green-700 md:hover:bg-orange-600 absolute top-2 right-2  text-white w-28 p-0.5 text-center rounded-xl font-bold border-2  ring-red-600'  ${selectedCandidates[position] === `abstain${position}` ? 'bg-green-700' : 'bg-orange-500'}`}>Abstain</div>
 				</label>
 				<div className='h-max flex flex-wrap sm:flex-row flex-col md:items-center justify-evenly gap-5'>
 					{positionData.map((item) => {
@@ -188,7 +188,7 @@ const BallotPage = () => {
 											className="hidden"
 										/>
 										<label htmlFor={item.name}>
-											<div className={`cursor-pointer  hover:bg-orange-600 w-32 sm:mx-auto text-white text-center p-1 rounded-lg font-bold transition duration-300  ${selectedCandidates[position] === item.name ? 'bg-green-700' : 'bg-orange-500'}`}>
+											<div className={`cursor-pointer  hover:bg-green-700 md:hover:bg-orange-600 w-32 sm:mx-auto text-white text-center p-1 rounded-lg font-bold transition duration-300  ${selectedCandidates[position] === item.name ? 'bg-green-700' : 'bg-orange-500'}`}>
 												{selectedCandidates[position] === item.name ? 'Voted' : 'Vote'}</div>
 										</label>
 									</div>

@@ -62,6 +62,11 @@ const Sample=()=> {
     selector: (row) => row.Secretary,
     sortable: true,
   },
+  {
+    name: "Auditor",
+    selector: (row) => row.Auditor,
+    sortable: true,
+  },
     {
     name: "Treasurer",
     selector: (row) => row.Treasurer,

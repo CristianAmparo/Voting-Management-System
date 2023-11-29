@@ -50,7 +50,7 @@ const Header = () => {
             </div>
             <div className='flex items-center '> 
               <div className='profile  flex justify-center w-10 cursor-pointer hover:scale-105' onClick={()=> setToggleProfile(!toggleProfile)}>
-                  <img className='w-8 h-8 md:w-10 md:h-10 rounded-full cursor-pointer hover:scale-105' src={profile ? `${apiHost}/uploads/${profile}`:'/profile.png'} alt=""/>
+                  <img className='w-8 h-8 md:w-10 md:h-10 rounded-full cursor-pointer hover:scale-105' src={profile ? `${apiHost}/uploads/${profile}`:`/profile.png`} alt=""/>
               </div>
             </div>
             {toggleProfile && 
