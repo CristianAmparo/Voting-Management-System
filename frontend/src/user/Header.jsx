@@ -1,14 +1,13 @@
 import React, { useContext, useState } from 'react'
-
 import { useNavigate } from 'react-router-dom'
-import UserAuthorization from './userAuthorization'
 import { MyContext } from '../context/MyContext'
-import AccountModal from './accountModal'
+import UserAuthorization from './userAuthorization'
+import Account from './Account'
+
 
 const Header = () => {
   UserAuthorization();
   const navigate = useNavigate();
- 	const [userName] = useState(() => JSON.parse(localStorage.getItem('myData'))?.name || null);
   const [toggleProfile, setToggleProfile] = useState(false)
   const {accountModal, toggleAccountModal} = useContext(MyContext)
   
@@ -45,7 +44,7 @@ const Header = () => {
         </div>
         
     </header>
-    {accountModal && <AccountModal />}
+    {accountModal && <Account />}
     
     </>
   )

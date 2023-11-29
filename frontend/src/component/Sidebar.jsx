@@ -2,7 +2,8 @@ import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 import { useContext } from 'react';
 import { MyContext } from '../context/MyContext';
-import AccountModal from '../user/accountModal';
+import Account from '../user/Account';
+
 
 
 const Sidebar = () => {
@@ -71,7 +72,7 @@ const Sidebar = () => {
       </div>
       
     </aside>
-      {accountModal && <AccountModal />}
+      {accountModal && <Account />}
     </>
   )
 }

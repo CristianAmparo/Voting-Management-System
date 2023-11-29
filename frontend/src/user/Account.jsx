@@ -1,17 +1,13 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { MyContext } from '../context/MyContext';
 const apiHost = import.meta.env.VITE_host
 
-
-
-function AccountModal() {
-  const navigate = useNavigate();
-  	const [userID, setUserId] = useState(JSON.parse(localStorage.getItem('myData')).id);
+const Account = () => {
+ const [userID, setUserId] = useState(JSON.parse(localStorage.getItem('myData')).id);
     const [success, setSuccess] = useState('');
     const [error, setError] = useState('');
-    const {accountModal, toggleAccountModal} = useContext(MyContext);
+    const {toggleAccountModal} = useContext(MyContext);
     const [formData, setFormData] = useState({
         image: null,
         fname: '',
@@ -197,4 +193,8 @@ useEffect(() => {
   );
 }
 
-export default AccountModal;
+export default Account;
+
+
+
+  	
