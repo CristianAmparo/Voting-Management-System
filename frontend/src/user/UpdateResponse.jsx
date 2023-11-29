@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import Header from './Header';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
-import UserAuthorization from './userAuthorization';
+import UserAuth from './UserAuth';
 
 // Assuming that 'Candidates' and other necessary components are imported here
 
@@ -10,7 +10,7 @@ import UserAuthorization from './userAuthorization';
 const apiHost = import.meta.env.VITE_host
 
 const UpdateResponse = () => {
-	UserAuthorization();
+	UserAuth();
 	const navigate = useNavigate();
 	const [userID, setUserId] = useState(() => JSON.parse(localStorage.getItem('myData'))?.id || null);
 	const [data, setData] = useState([]);

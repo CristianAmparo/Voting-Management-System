@@ -1,12 +1,12 @@
 import React, { useContext, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { MyContext } from '../context/MyContext'
-import UserAuthorization from './userAuthorization'
 import Account from './Account'
+import UserAuth from './UserAuth'
 
 
 const Header = () => {
-  UserAuthorization();
+  UserAuth();
   const navigate = useNavigate();
   const [toggleProfile, setToggleProfile] = useState(false)
   const {accountModal, toggleAccountModal} = useContext(MyContext)

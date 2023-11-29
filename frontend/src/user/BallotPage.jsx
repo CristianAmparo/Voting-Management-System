@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Header from './Header';
 import axios from 'axios';
-import UserAuthorization from './userAuthorization';
 import { useNavigate } from 'react-router-dom';
+import UserAuth from './UserAuth';
 
 
 // Assuming that 'Candidates' and other necessary components are imported here
@@ -11,7 +11,7 @@ import { useNavigate } from 'react-router-dom';
 const apiHost = import.meta.env.VITE_host
 
 const BallotPage = () => {
-	UserAuthorization();
+	UserAuth
 	const navigate = useNavigate();
 	const [userID, setUserId] = useState(() => JSON.parse(localStorage.getItem('myData'))?.id || null);
 	const [data, setData] = useState([]);

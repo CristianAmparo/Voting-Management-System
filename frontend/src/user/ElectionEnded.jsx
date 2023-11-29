@@ -1,9 +1,9 @@
 import React from 'react'
-import UserAuthorization from './userAuthorization';
+import UserAuth from './UserAuth';
 
 
 const ElectionEnded = () => {
-  UserAuthorization();
+  UserAuth();
   return (
     <>
     

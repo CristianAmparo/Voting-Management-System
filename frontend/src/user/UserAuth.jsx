@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const UserAuthorization = () => {
+const UserAuth = () => {
     const navigate = useNavigate();
 
     const checkAuthorization = () => {
@@ -20,4 +20,6 @@ const UserAuthorization = () => {
 
     return null; 
     };
-export default UserAuthorization;
+
+export default UserAuth
+
