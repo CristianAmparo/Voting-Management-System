@@ -31,14 +31,18 @@ function Register() {
 
     axios.post(`${apiHost}api/users/login`, formData)
       .then((response) => {
-          setSuccess('Login Successfully');
           setError('');
-          if(response.data.username === key){
-            navigate("/admin/");
+          if(response.data.username){
+            localStorage.setItem('myData', JSON.stringify(response.data));
+            if(response.data.username === key){
+              setSuccess('Login Successfully');
+              navigate("/admin/");
+            }else{
+              navigate("/user");
+            }
           }else{
-            navigate("/user");
+            setError('Something went wrong')
           }
-          localStorage.setItem('myData', JSON.stringify(response.data));
       })
       .catch((error) => {
         console.log(error.response.data);
