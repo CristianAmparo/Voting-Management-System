@@ -34,10 +34,9 @@ function Register() {
           setSuccess('Login Successfully');
           setError('');
           if(response.data.username === key){
-            navigate("/user");
+            navigate("/admin/");
           }else{
-            navigate("/admin");
-            
+            navigate("/user");
           }
           localStorage.setItem('myData', JSON.stringify(response.data));
       })
