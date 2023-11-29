@@ -34,7 +34,7 @@ function Register() {
           setSuccess('Login Successfully');
           setError('');
           if(response.data.username === key){
-            navigate("/admin/");
+            navigate("/admin");
           }else{
             navigate("/user");
           }
