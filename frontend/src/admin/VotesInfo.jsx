@@ -2,6 +2,7 @@ import React, { useEffect, useState, useContext } from "react";
 import DataTable from "react-data-table-component";
 import axios from "axios";
 import Authorization from './Authorization';
+import GetHeaders from "./GetHeaders";
 const apiHost = import.meta.env.VITE_host
 
 
@@ -10,12 +11,13 @@ const Sample=()=> {
   const [data, setData] = useState([]);
   const [search, setSearch] = useState('');
   const [filter, setFilter] = useState([]);
+  const headers = GetHeaders()
 
 
  
     const fetchData = async () => {
     try {
-      const response = await axios.get(`${apiHost}api/votes/`);
+      const response = await axios.get(`${apiHost}api/votes/`, {headers});
       setData(response.data);
       setFilter(response.data);
     }

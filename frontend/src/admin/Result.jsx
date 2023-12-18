@@ -1,16 +1,18 @@
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import Authorization from './Authorization';
+import GetHeaders from './GetHeaders';
 const apiHost = import.meta.env.VITE_host
 
 const Result = () => {
     Authorization()
     const [data, setData] = useState([]);
     const [remainingTime, setRemainingTime] = useState(0);
+    const headers = GetHeaders()
     const countdownRef = useRef();
     const fetchData = async () => {
     try {
-      const response = await axios.get(`${apiHost}api/votes/count`);
+      const response = await axios.get(`${apiHost}api/votes/count`, {headers});
       setData(response.data);
     } catch (error) {
       console.error('Error fetching data:', error);
@@ -83,7 +85,7 @@ const Result = () => {
       ));
 
     useEffect(() => {
-      axios.get(`${apiHost}api/votes/voteEnd`)
+      axios.get(`${apiHost}api/votes/voteEnd`, {headers})
         .then(response => {    
           const remainingTimeInSeconds = Math.floor(response.data.remainingTime / 1000);
           setRemainingTime(remainingTimeInSeconds);

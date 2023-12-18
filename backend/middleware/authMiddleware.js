@@ -9,7 +9,7 @@ const authenticateUser = asyncHandler(async (req, res, next) => {
     const token = extractTokenFromHeaders(req);
 
     if (!token) {
-        return res.status(401).json({ error: 'Unauthorized' });
+        return res.status(401).json({ error: 'Unauthorized, no token' });
     }
 
     try {
@@ -22,7 +22,7 @@ const authenticateUser = asyncHandler(async (req, res, next) => {
     }
 });
 
-// Authorization middleware for admin role
+// Authorization middleware for admin
 const authorizeAdmin = asyncHandler(async (req, res, next) => {
     if (req.user && req.user.username === 'admin@gmail.com') {
         next();
@@ -31,12 +31,14 @@ const authorizeAdmin = asyncHandler(async (req, res, next) => {
     }
 });
 
-// Authorization middleware for user role
+// Authorization middleware for user
 const authorizeUser = asyncHandler(async (req, res, next) => {
-    if (req.user) {
+    // Check if the user is updating their own account
+    console.log(req.params.id, req.user.id)
+    if (req.user.id && req.params.id && req.params.id == req.user.id) {
         next();
     } else {
-        return res.status(403).json({ error: 'Forbidden - User access required' });
+        return res.status(403).json({ error: 'Forbidden - You can only update your own account' });
     }
 });
 

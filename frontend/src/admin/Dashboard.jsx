@@ -5,7 +5,8 @@ import VoteTally2 from './VoteTally2';
 import Duration from './modal/Duration';
 import { MyContext } from '../context/MyContext';
 import Authorization from './Authorization';
-import getAuthHeaders from './GetAuthHeaders';
+import GetHeaders from './GetHeaders';
+
 const apiHost = import.meta.env.VITE_host
 
 function Dashboard() {
@@ -17,7 +18,7 @@ function Dashboard() {
   const [remainingTime, setRemainingTime] = useState(0);
   const countdownRef = useRef();
   const {isDurationModalOpen, openDurationModal} = useContext(MyContext) 
-  const headers = getAuthHeaders()
+  const headers = GetHeaders()
 
     const fetchTotalVotes = async () => {
     try {

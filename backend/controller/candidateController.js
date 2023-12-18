@@ -18,8 +18,11 @@ const getCandidate = asyncHandler(async (req, res) => {
 // Add candidate - POST
 const addCandidate = asyncHandler(async (req, res) => {
     const { name, position, partylist, platform, credentials } = req.body;
-
     const image = req.file ? req.file.filename : null;
+
+
+
+    console.log('Request Body:', req.body);
 
     // Check if required fields are provided
     if (!name || !position || !image || !partylist || !platform || !credentials) {

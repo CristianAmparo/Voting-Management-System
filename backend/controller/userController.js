@@ -69,8 +69,6 @@ const updateUser = asyncHandler(async (req, res) => {
         newImage = req.file.filename;
     }
 
-    console.log(req.body, newImage);
-
     if (!newImage || !fname || !lname || !username || !password) {
         return res.status(400).json({ error: 'Please fill out all the fields' });
     }
@@ -99,7 +97,6 @@ const updateUser = asyncHandler(async (req, res) => {
 const loginUser = asyncHandler(async (req, res) => {
     try {
         const { username, password } = req.body;
-        console.log(username, password)
 
         if (!username || !password) {
             return res.status(400).json({ error: 'Please fill out all the fields' });

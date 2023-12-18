@@ -1,18 +1,20 @@
 import React, { useState, useEffect, useContext} from 'react';
 import axios from 'axios';
 import { MyContext } from '../../context/MyContext';
+import GetHeaders from '../GetHeaders';
 const apiHost = import.meta.env.VITE_host
 
 function Duration() {
 const [startDate, setStartDate] = useState('');
 const [endDate, setEndDate] = useState('');
 const {closeDurationModal} = useContext(MyContext)
+const headers = GetHeaders()
 
 
   useEffect(() => {
     // Make a GET request to fetch the election settings
     axios
-      .get(`${apiHost}api/votes/voteEnd`)
+      .get(`${apiHost}api/votes/voteEnd`, {headers})
       .then(response => {
         const { electionStartDate, electionEndDate } = response.data;
         setStartDate(electionStartDate);
@@ -25,7 +27,7 @@ const {closeDurationModal} = useContext(MyContext)
   const handleUpdateSettings = () => {
     // Make a PUT request to update the election settings
     axios
-      .put(`${apiHost}api/votes/voteEnd`, { startDate, endDate })
+      .put(`${apiHost}api/votes/voteEnd`, { startDate, endDate }, {headers})
       .then(response => {
         console.log(response.data);
         closeDurationModal();

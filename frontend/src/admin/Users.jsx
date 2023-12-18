@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useContext } from "react";
 import DataTable from "react-data-table-component";
 import axios from "axios";
-import { MyContext } from "../context/MyContext";
 import Authorization from './Authorization';
+import GetHeaders from "./GetHeaders";
 const apiHost = import.meta.env.VITE_host
 
 
@@ -12,11 +12,12 @@ const Users=()=> {
   const [data, setData] = useState([]);
   const [search, setSearch] = useState('');
   const [filter, setFilter] = useState([]);
+  const headers = GetHeaders()
 
 
 
   useEffect(() => {
-    axios.get(`${apiHost}api/users/`)
+    axios.get(`${apiHost}api/users/`, {headers})
       .then((response) => {
         setData(response.data);
         setFilter(response.data);
@@ -27,7 +28,7 @@ const Users=()=> {
   }, []);
 
  const handleDelete = (id) => {
-  axios.delete(`${apiHost}api/users/${id}`)
+  axios.delete(`${apiHost}api/users/${id}`, {headers})
     .then((response) => {
       const newdata = data.filter((item) => item.id !== id);
       setData(newdata);

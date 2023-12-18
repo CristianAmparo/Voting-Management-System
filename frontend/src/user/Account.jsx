@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import { MyContext } from '../context/MyContext';
+import GetHeaders from '../admin/GetHeaders';
 const apiHost = import.meta.env.VITE_host
 
 const Account = () => {
@@ -8,6 +9,7 @@ const Account = () => {
     const [success, setSuccess] = useState('');
     const [error, setError] = useState('');
     const {toggleAccountModal} = useContext(MyContext);
+    const headers = GetHeaders()
     const [formData, setFormData] = useState({
         image: null,
         fname: '',
@@ -20,7 +22,7 @@ const Account = () => {
   const { fname, lname, image, username, password, password2 } = formData;
 
 useEffect(() => {
-  axios.get(`${apiHost}api/users/${userID}`)
+  axios.get(`${apiHost}api/users/${userID}`, {headers})
     .then((response) => {
       const { image, name, username } = response.data[0];
       const fullName = name.split(" ");

@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import ReactApexChart from 'react-apexcharts';
+import GetHeaders from './GetHeaders';
 const apiHost = import.meta.env.VITE_host
 
 
 const VoteTally2 = () => {
   const [data, setData] = useState([]);
+  const headers = GetHeaders()
 
   const fetchData = async () => {
     try {
-      const response = await axios.get(`${apiHost}api/votes/count`);
+      const response = await axios.get(`${apiHost}api/votes/count`, {headers});
       setData(response.data);
     } catch (error) {
       console.error('Error fetching data:', error);

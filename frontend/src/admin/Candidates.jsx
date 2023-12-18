@@ -5,7 +5,8 @@ import AddCandidateModal from './modal/AddCandidateModal';
 import EditCandidateModal from './modal/editCandidateModal';
 import { MyContext } from '../context/MyContext';
 import Authorization from './Authorization';
-import getAuthHeaders from "./GetAuthHeaders";
+import GetHeaders from "./GetHeaders";
+
 const apiHost = import.meta.env.VITE_host
 
 const Candidates=()=> {
@@ -14,12 +15,12 @@ const Candidates=()=> {
   const [search, setSearch] = useState('');
   const [filter, setFilter] = useState([]);
   const {isAddCandidateModal, openAddCandidateModal, editCandidate, isEditCandidateModal} = useContext(MyContext)
+  const headers = GetHeaders()
 
   
   const fetchData = async () => {
  
     try {
-      const headers = getAuthHeaders()
       const response = await axios.get(`${apiHost}api/candidates/`, {headers});
       setData(response.data);
       setFilter(response.data);
@@ -37,7 +38,7 @@ const Candidates=()=> {
     }, []);
 
  const handleDelete = (id) => {
-  axios.delete(`${apiHost}api/candidates/${id}`)
+  axios.delete(`${apiHost}api/candidates/${id}`, {headers})
     .then((response) => {
       const newdata = data.filter((item) => item.id !== id);
       setData(newdata);
