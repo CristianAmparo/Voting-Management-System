@@ -1,5 +1,6 @@
 const db = require('../db');
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 const asyncHandler = require('express-async-handler');
 
 // Get list of users/voters
@@ -96,18 +97,33 @@ const updateUser = asyncHandler(async (req, res) => {
 
 // Login a user - POST
 const loginUser = asyncHandler(async (req, res) => {
-    const { username, password } = req.body;
-    if (!username || !password) {
-        return res.status(400).json({ error: 'Please fill out all the fields' });
-    }
+    try {
+        const { username, password } = req.body;
+        console.log(username, password)
 
-    const query = 'SELECT * FROM tbl_users WHERE username = ?';
-    const [user] = await db.promise().execute(query, [username]);
+        if (!username || !password) {
+            return res.status(400).json({ error: 'Please fill out all the fields' });
+        }
 
-    if (user.length > 0 && (await bcrypt.compare(password, user[0].password))) {
-        res.status(201).json(user[0]);
-    } else {
-        res.status(400).json({ error: 'Invalid Username or Password' });
+        const query = 'SELECT * FROM tbl_users WHERE username = ?';
+        const [user] = await db.promise().execute(query, [username]);
+
+        if (user.length > 0 && (await bcrypt.compare(password, user[0].password))) {
+            const token = jwt.sign(
+                { id: user[0].id, username: user[0].username },
+                'samplekey',
+                {
+                    expiresIn: '24h', // Token expiration time
+                }
+            );
+
+            res.status(201).json({ user: user[0], token });
+        } else {
+            res.status(401).json({ error: 'Invalid Username or Password' });
+        }
+    } catch (error) {
+        console.error('Login error:', error);
+        res.status(500).json({ error: error });
     }
 });
 

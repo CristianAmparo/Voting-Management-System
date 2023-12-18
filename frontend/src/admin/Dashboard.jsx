@@ -5,6 +5,7 @@ import VoteTally2 from './VoteTally2';
 import Duration from './modal/Duration';
 import { MyContext } from '../context/MyContext';
 import Authorization from './Authorization';
+import getAuthHeaders from './GetAuthHeaders';
 const apiHost = import.meta.env.VITE_host
 
 function Dashboard() {
@@ -16,10 +17,11 @@ function Dashboard() {
   const [remainingTime, setRemainingTime] = useState(0);
   const countdownRef = useRef();
   const {isDurationModalOpen, openDurationModal} = useContext(MyContext) 
+  const headers = getAuthHeaders()
 
     const fetchTotalVotes = async () => {
     try {
-      const response = await axios.get(`${apiHost}api/votes/totalVotes`);
+      const response = await axios.get(`${apiHost}api/votes/totalVotes`, {headers});
       setVotesCountdata(response.data[0])
     } catch (error) {
       console.error('Error fetching data:', error);
@@ -28,7 +30,7 @@ function Dashboard() {
 
     const fetchTotalUsers = async () => {
     try {
-      const response = await axios.get(`${apiHost}api/votes/totalVoters`);
+      const response = await axios.get(`${apiHost}api/votes/totalVoters`, {headers});
       setUsersCountdata(response.data[0])
     } catch (error) {
       console.error('Error fetching data:', error);
@@ -46,7 +48,7 @@ function Dashboard() {
     }, []);
 
     useEffect(() => {
-      axios.get(`${apiHost}api/votes/voteEnd`)
+      axios.get(`${apiHost}api/votes/voteEnd`, {headers})
         .then(response => {    
           const remainingTimeInSeconds = Math.floor(response.data.remainingTime / 1000);
           setRemainingTime(remainingTimeInSeconds);

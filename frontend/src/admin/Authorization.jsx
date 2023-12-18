@@ -26,4 +26,5 @@ const Authorization = () => {
   return null; 
 };
 
-export default Authorization;
+
+export default  Authorization;

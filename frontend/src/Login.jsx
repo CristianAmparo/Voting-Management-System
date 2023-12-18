@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { useContext } from 'react';
-import { MyContext } from './context/MyContext';
 const key = import.meta.env.VITE_adminKey;
 const apiHost = import.meta.env.VITE_host
 
@@ -29,25 +27,35 @@ function Register() {
     e.preventDefault();
    
 
-    axios.post(`${apiHost}api/users/login`, formData)
-      .then((response) => {
-          setError('');
-          if(response.data.username){
-            localStorage.setItem('myData', JSON.stringify(response.data));
-            if(response.data.username === key){
-              setSuccess('Login Successfully');
-              navigate("/admin/");
-            }else{
-              navigate("/user");
-            }
-          }else{
-            setError('Something went wrong')
-          }
-      })
-      .catch((error) => {
-        console.log(error.response.data);
-        setError(error.response.data.error);
-      });
+   axios.post(`${apiHost}api/users/login`, formData)
+    .then((response) => {
+      setError('');
+
+      if (response.data.user && response.data.token) {
+        const { id, name, username, image } = response.data.user;
+        const token = response.data.token;
+
+        const userData = { id, name, username, image, token };
+        console.log(userData)
+        localStorage.setItem('myData', JSON.stringify(userData));
+
+        console.log(response.data.user.username);
+
+        if (response.data.user.username === key) {
+          setSuccess('Login Successfully');
+          navigate("/admin/");
+        } else {
+          navigate("/user");
+        }
+      } else {
+        setError('Something went wrong');
+      }
+    })
+    .catch((error) => {
+      console.log(error.response.data);
+      setError(error.response.data.error);
+    });
+
 
   };
 

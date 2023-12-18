@@ -5,6 +5,7 @@ import AddCandidateModal from './modal/AddCandidateModal';
 import EditCandidateModal from './modal/editCandidateModal';
 import { MyContext } from '../context/MyContext';
 import Authorization from './Authorization';
+import getAuthHeaders from "./GetAuthHeaders";
 const apiHost = import.meta.env.VITE_host
 
 const Candidates=()=> {
@@ -16,8 +17,10 @@ const Candidates=()=> {
 
   
   const fetchData = async () => {
+ 
     try {
-      const response = await axios.get(`${apiHost}api/candidates/`);
+      const headers = getAuthHeaders()
+      const response = await axios.get(`${apiHost}api/candidates/`, {headers});
       setData(response.data);
       setFilter(response.data);
     } catch (error) {
