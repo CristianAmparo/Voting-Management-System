@@ -34,7 +34,6 @@ const authorizeAdmin = asyncHandler(async (req, res, next) => {
 // Authorization middleware for user
 const authorizeUser = asyncHandler(async (req, res, next) => {
     // Check if the user is updating their own account
-    console.log(req.params.id, req.user.id)
     if (req.user.id && req.params.id && req.params.id == req.user.id) {
         next();
     } else {

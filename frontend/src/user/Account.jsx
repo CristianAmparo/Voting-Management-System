@@ -104,9 +104,9 @@ useEffect(() => {
   return (
     <>
       <section className="absolute inset-0 backdrop-blur-sm bg-backdrop z-40">
-      <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto h-screen lg:py-0">
+      <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto h-screen">
           <div className="w-full bg-white rounded-lg shadow-xl md:mt-0 sm:max-w-md xl:p-0 ">
-              <div className="p-6 space-y-4 sm:p-8">
+              <div className="p-6 xl:space-y-4 sm:p-8">
                   <h1 className="text-2xl font-bold leading-tight tracking-tight text-gray-900  text-center">Account <span className='text-orange-600'>Settings</span></h1>
 
                   <form className="space-y-2 " onSubmit={handleSubmit} >

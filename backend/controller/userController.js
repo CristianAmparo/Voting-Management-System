@@ -5,10 +5,11 @@ const asyncHandler = require('express-async-handler');
 
 // Get list of users/voters
 const getUsers = asyncHandler(async (req, res) => {
-    const query = 'SELECT * FROM tbl_users';
+    const query = 'SELECT * FROM tbl_users WHERE username NOT IN (\'admin@gmail.com\')';
     const [results] = await db.promise().query(query);
     res.json(results);
 });
+
 
 
 
@@ -30,10 +31,34 @@ const getMe = asyncHandler(async (req, res) => {
 
 // Register a user - POST
 const registerUser = asyncHandler(async (req, res) => {
-    const { fname, lname, username, password } = req.body;
+    const { fname, lname, username, password, password2 } = req.body;
     const image = req.file ? req.file.filename : null;
-    if (!image || !fname || !lname || !username || !password) {
-        return res.status(400).json({ error: 'Please fill out all the fields' });
+    if (!image) {
+        return res.status(400).json({ error: 'Please upload an image' });
+    }
+
+    if (!fname) {
+        return res.status(400).json({ error: 'Please provide the first name' });
+    }
+
+    if (!lname) {
+        return res.status(400).json({ error: 'Please provide the last name' });
+    }
+
+    if (!username) {
+        return res.status(400).json({ error: 'Please provide the username' });
+    }
+
+    if (!password) {
+        return res.status(400).json({ error: 'Please provide the password' });
+    }
+
+    if (!password2) {
+        return res.status(400).json({ error: 'Please retype your password' });
+    }
+
+    if (password !== password2) {
+        return res.status(400).json({ error: 'Password do no match' });
     }
 
     try {
@@ -99,7 +124,7 @@ const loginUser = asyncHandler(async (req, res) => {
         const { username, password } = req.body;
 
         if (!username || !password) {
-            return res.status(400).json({ error: 'Please fill out all the fields' });
+            return res.status(400).json({ error: 'Please provide both username and password' });
         }
 
         const query = 'SELECT * FROM tbl_users WHERE username = ?';
@@ -129,9 +154,29 @@ const loginUser = asyncHandler(async (req, res) => {
 // Delete a user - DELETE
 const deleteUser = asyncHandler(async (req, res) => {
     const { id } = req.params;
-    const query = 'DELETE FROM tbl_users WHERE id = ?';
-    await db.promise().execute(query, [id]);
-    res.json({ message: 'User Deleted' });
+
+    // Use a transaction to ensure atomicity (both deletes succeed or fail together)
+    await db.promise().beginTransaction();
+
+    try {
+        // Delete user from tbl_users
+        const deleteUserQuery = 'DELETE FROM tbl_users WHERE id = ?';
+        await db.promise().execute(deleteUserQuery, [id]);
+
+        // Delete related votes from tbl_votes
+        const deleteVotesQuery = 'DELETE FROM tbl_vote WHERE user_id = ?';
+        await db.promise().execute(deleteVotesQuery, [id]);
+
+        // Commit the transaction if both deletes succeed
+        await db.promise().commit();
+
+        res.json({ message: 'User Deleted' });
+    } catch (error) {
+        // Rollback the transaction if there's an error
+        await db.promise().rollback();
+        console.error(error);
+        res.status(500).json({ message: 'Error deleting user' });
+    }
 });
 
 module.exports = {

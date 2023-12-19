@@ -3,6 +3,7 @@ import Header from './Header';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import UserAuth from './UserAuth';
+import GetHeaders from '../admin/GetHeaders';
 
 // Assuming that 'Candidates' and other necessary components are imported here
 
@@ -18,6 +19,7 @@ const UpdateResponse = () => {
 	const [error, setError] = useState('');
     const [remainingTime, setRemainingTime] = useState(0);
     const countdownRef = useRef();
+	const headers = GetHeaders();
 	const [selectedCandidates, setSelectedCandidates] = useState({
     President: null,
     Vice_President: null,
@@ -31,7 +33,7 @@ const UpdateResponse = () => {
 	
 
     useEffect(() => {
-    axios.get(`${apiHost}api/votes/${userID}`)
+    axios.get(`${apiHost}api/votes/${userID}`, {headers})
         .then(response => {
         if (response.data) {
             const { President, Vice_President, Secretary, Treasurer, Auditor, Peace_Officer } = response.data[0];
@@ -59,7 +61,7 @@ const UpdateResponse = () => {
         useEffect(() => {
             const fetchData = async () => {
             try {
-                const response = await axios.get(`${apiHost}api/candidates`);
+                const response = await axios.get(`${apiHost}api/candidates`, {headers});
                 setData(response.data);
             } catch (error) {
                 console.error('Error fetching data:', error);
@@ -75,7 +77,7 @@ const UpdateResponse = () => {
 
 
     useEffect(() => {
-      axios.get(`${apiHost}api/votes/voteEnd`)
+      axios.get(`${apiHost}api/votes/voteEnd`, {headers})
         .then(response => {    
           const remainingTimeInSeconds = Math.floor(response.data.remainingTime / 1000);
           setRemainingTime(remainingTimeInSeconds);
@@ -132,7 +134,7 @@ const UpdateResponse = () => {
 		e.preventDefault(); // Prevent the default form submission
 		const formDataToSend = selectedCandidates;
 		axios
-			.put(`${apiHost}api/votes/${userID}`, formDataToSend) // Submit the form data to the API
+			.put(`${apiHost}api/votes/${userID}`, formDataToSend , {headers}) // Submit the form data to the API
 			.then((response) => {
 				setSuccess(response.data.message);
 				alert(response.data.message);

@@ -4,6 +4,7 @@ import { MyContext } from '../context/MyContext'
 import Account from './Account'
 import UserAuth from './UserAuth'
 import axios from 'axios'
+import GetHeaders from '../admin/GetHeaders'
 const apiHost = import.meta.env.VITE_host
 
 
@@ -14,6 +15,7 @@ const Header = () => {
   const [toggleProfile, setToggleProfile] = useState(false)
   const {accountModal, toggleAccountModal} = useContext(MyContext)
   const [profile, setProfile] = useState('');
+  const headers = GetHeaders()
   const [userID] = useState(() => {
   const storedData = localStorage.getItem('myData');
     return storedData ? JSON.parse(storedData).id : null;
@@ -26,7 +28,7 @@ const Header = () => {
 
    const fetchData = async () => {
     try {
-      const response = await axios.get(`${apiHost}api/users/${userID}`);
+      const response = await axios.get(`${apiHost}api/users/${userID}`, {headers});
       setProfile(response.data[0].image);
     } catch (error) {
       console.error('Error fetching data:', error);

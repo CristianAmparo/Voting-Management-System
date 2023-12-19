@@ -47,9 +47,6 @@ function Register() {
 
     const handleSubmit = (e) => {
     e.preventDefault();
-    if(password !== password2) {
-      setError('Password do not match')
-    }else{
       // Simulate an API request to handle form submission
       const formDataToSend = new FormData();
       formDataToSend.append('fname', fname);
@@ -57,6 +54,7 @@ function Register() {
       formDataToSend.append('image', image);
       formDataToSend.append('username', username);
       formDataToSend.append('password', password);
+      formDataToSend.append('password2', password2);
       console.log(formDataToSend)
   
       axios
@@ -75,7 +73,6 @@ function Register() {
           setError(error.response.data.error);
           setSuccess('');
        });
-    }
    };
 
   return (

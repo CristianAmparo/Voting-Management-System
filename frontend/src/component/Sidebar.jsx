@@ -38,7 +38,7 @@ const Sidebar = () => {
                 </Link>
             </li>
             <li>
-                <Link to="/admin/sample"  className="sidebarList">
+                <Link to="/admin/result"  className="sidebarList">
                   <img className='icon ' src="/results.png" alt="" />
                   <span className="flex-1 ms-3 whitespace-nowrap">Result</span>
                 </Link>

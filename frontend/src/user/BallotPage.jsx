@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Header from './Header';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import UserAuth from './UserAuth';
+import GetHeaders from '../admin/GetHeaders';
 
 
 // Assuming that 'Candidates' and other necessary components are imported here
@@ -19,6 +20,7 @@ const BallotPage = () => {
 	const [error, setError] = useState('');
     const [remainingTime, setRemainingTime] = useState(0);
     const countdownRef = useRef();
+	const headers = GetHeaders()
 	const [selectedCandidates, setSelectedCandidates] = useState({
 		President: null,
 		Vice_President: null,
@@ -29,7 +31,7 @@ const BallotPage = () => {
 	});
 	const [isChecked, setIsChecked] = useState(false);
 	useEffect(()=>{
-		axios.get(`${apiHost}api/votes/${userID}`)
+		axios.get(`${apiHost}api/votes/${userID}`, {headers})
 			.then(response => {
 				if(response.data){
 					console.log(response.data , userID);
@@ -47,7 +49,7 @@ const BallotPage = () => {
 	// Effect to fetch candidate data
         const fetchData = async () => {
             try {
-                const response = await axios.get(`${apiHost}api/candidates`);
+                const response = await axios.get(`${apiHost}api/candidates`, {headers});
                 setData(response.data);
             } catch (error) {
                 console.error('Error fetching data:', error);
@@ -66,7 +68,7 @@ const BallotPage = () => {
 
 
     useEffect(() => {
-      axios.get(`${apiHost}api/votes/voteEnd`)
+      axios.get(`${apiHost}api/votes/voteEnd`, {headers})
         .then(response => {    
           const remainingTimeInSeconds = Math.floor(response.data.remainingTime / 1000);
           setRemainingTime(remainingTimeInSeconds);
@@ -123,7 +125,7 @@ const BallotPage = () => {
 		e.preventDefault(); // Prevent the default form submission
 		const formDataToSend = selectedCandidates;
 		axios
-			.post(`${apiHost}api/votes/${userID}`, formDataToSend) // Submit the form data to the API
+			.post(`${apiHost}api/votes/${userID}`, formDataToSend, {headers}) // Submit the form data to the API
 			.then((response) => {
 				setSuccess(response.data.message);
 				setError('');
@@ -205,9 +207,9 @@ const BallotPage = () => {
 		<>
 			<Header />
 			<section className='fixed inset-0 pt-20 pb-10  h-full w-full overflow-y-auto'>
-				<div className='p-5'>
-					<h1 className="text-3xl font-bold leading-tight tracking-tight text-gray-900 md:text-4xl "><span className='text-orange-600'>Election</span> Page</h1>
-				</div>
+				<button className='px-5 py-3 relative'>
+					<Link to="/user"><img className='w-10 hover:scale-105' src="/back.png" alt="" /></Link>
+				</button>
 
                 <div className='absolute duration top-24 right-5  py-3 px-4 flex items-center cursor-help justify-center h-max bg-orange-600 text-white shadow-lg rounded-xl w-max'>
                         <img className='w-5 h-5' src="/duration.png" alt="" />
@@ -222,6 +224,9 @@ const BallotPage = () => {
                 </div>
 
 				<form className='flex flex-col gap-5 justify-center items-center p-2' onSubmit={handleSubmit}>
+					<div>
+						<h1 className="text-3xl font-bold leading-tight tracking-tight text-gray-900 md:text-4xl "><span className='text-orange-600'>Ballot</span> Page</h1>
+					</div>
 					{Position}
 					<div className=" w-full md:w-5/6 lg:w-2/3 xl:w-1/2 text-xs sm:text-sm lg:text-[16px]">
 						<div className='text-center w-full'>

@@ -17,7 +17,7 @@ const Admin = () => {
       <Sidebar />
       <Routes>
         <Route path="/" element={<Dashboard />} />
-        <Route path="/sample" element={<Result />} />
+        <Route path="/result" element={<Result />} />
         <Route path='/voteinfo' element={<VotesInfo />} />
         <Route path='/candidates' element={<Candidates />} />
         <Route path='/users' element={<Users />} />
