@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { MyContext } from '../../context/MyContext';
+import Swal from 'sweetalert2';
 import axios from 'axios';
 const apiHost = import.meta.env.VITE_host
 
@@ -56,35 +57,62 @@ function EditCandidateModal() {
     }
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
 
-    // Simulate an API request to handle form submission
-    const formDataToSend = new FormData();
-    formDataToSend.append('name', name);
-    formDataToSend.append('image', image);
-    formDataToSend.append('position', position);
-    formDataToSend.append('partylist', partylist);
-    formDataToSend.append('credentials', credentials);
-    formDataToSend.append('platform', platform);
-   
-    axios.put(`${apiHost}api/candidates/${id}`, formDataToSend)
-      .then((response) => {
-      setSuccess(response.data.message);
-      setError('');
+const handleSubmit = (e) => {
+  e.preventDefault();
 
-      const timeoutId = setTimeout(() => {
-        closeEditCandidateModal();
-      }, 1200);
-      return () => clearTimeout(timeoutId);
-      })
+  // Display a SweetAlert2 confirmation dialog
+  Swal.fire({
+    icon: 'question',
+    title: 'UPDATE CANDIDATE',
+    text: 'Are you sure you want to update this candidate?',
+    showCancelButton: true,
+    confirmButtonText: 'Yes, update',
+    cancelButtonText: 'No, cancel',
+  }).then((result) => {
+    // If the user confirms the update
+    if (result.isConfirmed) {
+      // Simulate an API request to handle form submission
+      const formDataToSend = new FormData();
+      formDataToSend.append('name', name);
+      formDataToSend.append('image', image);
+      formDataToSend.append('position', position);
+      formDataToSend.append('partylist', partylist);
+      formDataToSend.append('credentials', credentials);
+      formDataToSend.append('platform', platform);
 
-      .catch((error) => {
-      console.log(error.response.data.error);
-      setError(error.response.data.error);
-      setSuccess('');
-      });
+      axios
+        .put(`${apiHost}api/candidates/${id}`, formDataToSend)
+        .then((response) => {
+          // Display a SweetAlert2 success message
+          Swal.fire({
+            icon: 'success',
+            title: 'Success!',
+            text: response.data.message,
+          });
+
+          // Clear form data or perform any other necessary actions
+
+          const timeoutId = setTimeout(() => {
+            closeEditCandidateModal();
+          }, 1200);
+          return () => clearTimeout(timeoutId);
+        })
+        .catch((error) => {
+          // Display a SweetAlert2 error message
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: error.response.data.error,
+          });
+
+          // Clear success message and set error message
+          setSuccess('');
+        });
     }
+  });
+};
+
 
   return(
     <>

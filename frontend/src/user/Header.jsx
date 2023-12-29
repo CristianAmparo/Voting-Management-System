@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { MyContext } from '../context/MyContext'
 import Account from './Account'
 import UserAuth from './UserAuth'
+import Swal from 'sweetalert2';
 import axios from 'axios'
 import GetHeaders from '../admin/GetHeaders'
 const apiHost = import.meta.env.VITE_host
@@ -22,9 +23,31 @@ const Header = () => {
   });
   
   const logout = () => {
+  // Display a SweetAlert2 confirmation dialog
+    Swal.fire({
+      icon: 'question',
+      title: 'Logout',
+      text: 'Are you sure you want to log out?',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, logout',
+      cancelButtonText: 'Cancel',
+    }).then((result) => {
+      // If the user confirms the logout
+      if (result.isConfirmed) {
+        // Remove user data from local storage
         localStorage.removeItem('myData');
+
+        // Display a SweetAlert2 success message
+        Swal.fire({
+          icon: 'success',
+          title: 'Logged out successfully',
+        });
+
+        // Navigate to the home route
         navigate("/");
-  }
+      }
+    });
+};
 
    const fetchData = async () => {
     try {

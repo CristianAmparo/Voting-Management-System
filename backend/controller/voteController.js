@@ -104,7 +104,7 @@ const updateVoteEnd = asyncHandler(async (req, res) => {
 // Get user vote for preview
 const myVote = asyncHandler(async (req, res) => {
     const { id } = req.params;
-    const query = 'SELECT * FROM tbl_vote WHERE id = ?';
+    const query = 'SELECT * FROM tbl_vote WHERE user_id = ?';
     const [results] = await db.promise().query(query, [id]);
     if (results.length > 0) {
         res.json(results);
@@ -127,7 +127,7 @@ const addVote = asyncHandler(async (req, res) => {
 
     try {
         // Check if the user has already voted
-        const query1 = 'SELECT * FROM tbl_vote WHERE id = ?';
+        const query1 = 'SELECT * FROM tbl_vote WHERE user_id = ?';
         const [voteExist] = await db.promise().execute(query1, [id]);
 
         if (voteExist.length > 0) {
@@ -135,7 +135,7 @@ const addVote = asyncHandler(async (req, res) => {
         }
 
         // Insert the vote into the database
-        const query = 'INSERT INTO tbl_vote (id, President, Vice_President, Secretary, Treasurer, Auditor, Peace_Officer) VALUES (?, ?, ?, ?, ?, ?, ?)';
+        const query = 'INSERT INTO tbl_vote (user_id, President, Vice_President, Secretary, Treasurer, Auditor, Peace_Officer) VALUES (?, ?, ?, ?, ?, ?, ?)';
         await db.promise().execute(query, [id, President, Vice_President, Secretary, Treasurer, Auditor, Peace_Officer]);
 
         // Respond with success
@@ -157,7 +157,7 @@ const updateVote = asyncHandler(async (req, res) => {
         return res.status(400).json({ error: 'Please fill out all the fields' });
     }
 
-    const query = 'UPDATE tbl_vote SET President = ?, Vice_President = ?, Secretary = ?, Treasurer = ?, Auditor = ?, Peace_Officer = ? WHERE id = ?';
+    const query = 'UPDATE tbl_vote SET President = ?, Vice_President = ?, Secretary = ?, Treasurer = ?, Auditor = ?, Peace_Officer = ? WHERE user_id = ?';
 
     try {
         await db.promise().query(query, [President, Vice_President, Secretary, Treasurer, Auditor, Peace_Officer, id]);

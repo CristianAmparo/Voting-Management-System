@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext} from 'react';
+import Swal from 'sweetalert2';
 import axios from 'axios';
 import { MyContext } from '../../context/MyContext';
 import GetHeaders from '../GetHeaders';
@@ -24,18 +25,51 @@ const headers = GetHeaders()
         console.error('Error fetching election settings:', error);
       });
   }, []);
-  const handleUpdateSettings = () => {
-    // Make a PUT request to update the election settings
-    axios
-      .put(`${apiHost}api/votes/voteEnd`, { startDate, endDate }, {headers})
-      .then(response => {
-        console.log(response.data);
-        closeDurationModal();
-      })
-      .catch(error => {
-        console.error('Error updating election settings:', error);
-      });
-  };
+
+const handleUpdateSettings = () => {
+  // Display a SweetAlert2 confirmation dialog
+  Swal.fire({
+    icon: 'question',
+    title: 'UPDATE END DATE',
+    text: 'Are you sure you want to update election end date?',
+    showCancelButton: true,
+    confirmButtonText: 'Yes, update',
+    cancelButtonText: 'No, cancel',
+  }).then((result) => {
+    // If the user confirms the update
+    if (result.isConfirmed) {
+      // Make the API request to update election settings
+      axios
+        .put(`${apiHost}api/votes/voteEnd`, { startDate, endDate }, { headers })
+        .then(response => {
+          // Display a SweetAlert2 success message
+          Swal.fire({
+            icon: 'success',
+            title: 'Success!',
+            text: response.data.message,
+          });
+
+          // Log the response data
+          console.log(response.data);
+
+          // Close the modal
+          closeDurationModal();
+        })
+        .catch(error => {
+          // Display a SweetAlert2 error message
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: `Error updating election settings: ${error.response.data.error}`,
+          });
+
+          // Log the error
+          console.error('Error updating election settings:', error);
+        });
+    }
+  });
+};
+
 
 
   return (

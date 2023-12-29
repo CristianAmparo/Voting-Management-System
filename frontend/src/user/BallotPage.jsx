@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import Header from './Header';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 import UserAuth from './UserAuth';
 import GetHeaders from '../admin/GetHeaders';
 
@@ -84,7 +85,7 @@ const BallotPage = () => {
     }
 
       const formatTime = (timeInSeconds) => {
-      const days = Math.floor(timeInSeconds / 86400);
+		  const days = Math.floor(timeInSeconds / 86400);
       const hours = Math.floor((timeInSeconds % 86400) / 3600);
       const minutes = Math.floor((timeInSeconds % 3600) / 60);
       const seconds = timeInSeconds % 60;
@@ -121,27 +122,54 @@ const BallotPage = () => {
 	};
 
 	// Handle form submission
-	const handleSubmit = (e) => {
-		e.preventDefault(); // Prevent the default form submission
-		const formDataToSend = selectedCandidates;
-		axios
-			.post(`${apiHost}api/votes/${userID}`, formDataToSend, {headers}) // Submit the form data to the API
-			.then((response) => {
-				setSuccess(response.data.message);
-				setError('');
-				navigate('/user/doneVoting');
-			})
-			.catch((error) => {
-				// Handle error
-				console.log(error.response.data.error);
-				if(error.response.data.error === 'You already voted'){
-					navigate('/user/doneVoting')
-				}
-				setError(error.response.data.error);
-				alert(error.response.data.error);
-				setSuccess('');
-			});
-	};
+
+const handleSubmit = (e) => {
+  e.preventDefault(); // Prevent the default form submission
+  const formDataToSend = selectedCandidates;
+
+  axios
+    .post(`${apiHost}api/votes/${userID}`, formDataToSend, { headers })
+    .then((response) => {
+      // Display a SweetAlert2 success message
+      Swal.fire({
+        icon: 'success',
+        title: 'Success!',
+        text: response.data.message,
+      });
+
+      // Clear form data or perform any other necessary actions
+
+      // Navigate to the specified route after a successful submission
+      navigate('/user/doneVoting');
+    })
+    .catch((error) => {
+      // Handle error
+      console.log(error.response.data.error);
+
+      if (error.response.data.error === 'You already voted') {
+        // Display a SweetAlert2 success message for already voted scenario
+        Swal.fire({
+          icon: 'success',
+          title: 'You already voted',
+          text: 'Your vote has already been recorded.',
+        });
+
+        // Navigate to the specified route for already voted scenario
+        navigate('/user/doneVoting');
+      } else {
+        // Display a SweetAlert2 error message for other errors
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: error.response.data.error,
+        });
+      }
+
+      // Clear success message and set error message
+      setSuccess('');
+    });
+};
+
 
 	// Map all the positions
 	const uniquePositions = [...new Set(data.map((item) => item.position))];

@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 import axios from 'axios';
 const key = import.meta.env.VITE_adminKey;
 const apiHost = import.meta.env.VITE_host
 
 
-function Register() {
+function Login() {
   const navigate = useNavigate();
   const [success, setSuccess] = useState('');
   const [error, setError] = useState('');
@@ -23,41 +24,57 @@ function Register() {
     }));
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-   
 
-   axios.post(`${apiHost}api/users/login`, formData)
-    .then((response) => {
-      setError('');
+const handleSubmit = async (e) => {
+  e.preventDefault();
 
-      if (response.data.user && response.data.token) {
-        const { id, name, username, image } = response.data.user;
-        const token = response.data.token;
+  try {
+    const response = await axios.post(`${apiHost}api/users/login`, formData);
 
-        const userData = { id, name, username, image, token };
-        console.log(userData)
-        localStorage.setItem('myData', JSON.stringify(userData));
+    if (response.data.user && response.data.token) {
+      const { id, name, username, image } = response.data.user;
+      const token = response.data.token;
 
-        console.log(response.data.user.username);
+      const userData = { id, name, username, image, token };
+      console.log(userData);
+      localStorage.setItem('myData', JSON.stringify(userData));
 
-        if (response.data.user.username === key) {
-          setSuccess('Login Successfully');
-          navigate("/admin/");
-        } else {
-          navigate("/user");
-        }
+      console.log(response.data.user.username);
+
+      if (response.data.user.username === key) {
+        // Display a SweetAlert2 success message
+        Swal.fire({
+          icon: 'success',
+          title: 'Login Successfully',
+        });
+        // Navigate to the admin route
+        navigate("/admin/");
       } else {
-        setError('Something went wrong');
+        Swal.fire({
+          icon: 'success',
+          title: 'Login Successfully',
+        });
+        // Navigate to the user route
+        navigate("/user");
       }
-    })
-    .catch((error) => {
-      console.log(error.response.data);
-      setError(error.response.data.error);
+    } else {
+      // Display a SweetAlert2 error message
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Something went wrong',
+      });
+    }
+  } catch (error) {
+    // Display a SweetAlert2 error message
+    Swal.fire({
+      icon: 'error',
+      title: 'Error',
+      text: error.response ? error.response.data.error : 'An unexpected error occurred',
     });
+  }
+};
 
-
-  };
 
   return (
     <>
@@ -111,4 +128,4 @@ function Register() {
   );
 }
 
-export default Register;
+export default Login;

@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Header from './Header';
+import Swal from 'sweetalert2';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import UserAuth from './UserAuth';
@@ -13,10 +14,10 @@ const apiHost = import.meta.env.VITE_host
 const UpdateResponse = () => {
 	UserAuth();
 	const navigate = useNavigate();
-	const [userID, setUserId] = useState(() => JSON.parse(localStorage.getItem('myData'))?.id || null);
+	const [userID] = useState(() => JSON.parse(localStorage.getItem('myData'))?.id || null);
 	const [data, setData] = useState([]);
 	const [success, setSuccess] = useState('');
-	const [error, setError] = useState('');
+	const [error] = useState('');
     const [remainingTime, setRemainingTime] = useState(0);
     const countdownRef = useRef();
 	const headers = GetHeaders();
@@ -29,6 +30,8 @@ const UpdateResponse = () => {
     Peace_Officer: null,
     });
     const [isChecked, setIsChecked] = useState(false);
+
+	//console.log(userID)
 
 	
 
@@ -130,25 +133,56 @@ const UpdateResponse = () => {
 	};
 
 	// Handle form submission
-	const handleSubmit = (e) => {
-		e.preventDefault(); // Prevent the default form submission
-		const formDataToSend = selectedCandidates;
-		axios
-			.put(`${apiHost}api/votes/${userID}`, formDataToSend , {headers}) // Submit the form data to the API
-			.then((response) => {
-				setSuccess(response.data.message);
-				alert(response.data.message);
-				setError('');
-				navigate('/user/doneVoting');
-			})
-			.catch((error) => {
-				// Handle error
-				console.log(error.response.data.error);
-				setError(error.response.data.error);
-				alert(error.response.data.error);
-				setSuccess('');
-			});
-	};
+
+const handleSubmit = (e) => {
+  e.preventDefault(); // Prevent the default form submission
+
+  // Display a SweetAlert2 confirmation dialog
+  Swal.fire({
+    icon: 'question',
+    title: 'Confirmation',
+    text: 'Are you sure you want to update your vote?',
+    showCancelButton: true,
+    confirmButtonText: 'Yes, update',
+    cancelButtonText: 'No, cancel',
+  }).then((result) => {
+    // If the user confirms the submission
+    if (result.isConfirmed) {
+      const formDataToSend = selectedCandidates;
+
+      axios
+        .put(`${apiHost}api/votes/${userID}`, formDataToSend, { headers })
+        .then((response) => {
+          // Display a SweetAlert2 success message
+          Swal.fire({
+            icon: 'success',
+            title: 'Success!',
+            text: response.data.message,
+          });
+
+          // Clear form data or perform any other necessary actions
+
+          // Navigate to the specified route after a successful submission
+          navigate('/user/doneVoting');
+        })
+        .catch((error) => {
+          // Handle error
+          console.log(error.response.data.error);
+
+          // Display a SweetAlert2 error message
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: error.response.data.error,
+          });
+
+          // Clear success message and set error message
+          setSuccess('');
+        });
+    }
+  });
+};
+
 
 	// Map all the positions
 	const uniquePositions = [...new Set(data.map((item) => item.position))];

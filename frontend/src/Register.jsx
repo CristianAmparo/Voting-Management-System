@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import Swal from 'sweetalert2';
 const apiHost = import.meta.env.VITE_host
 
 
@@ -45,35 +46,45 @@ function Register() {
     }
   };
 
-    const handleSubmit = (e) => {
-    e.preventDefault();
-      // Simulate an API request to handle form submission
-      const formDataToSend = new FormData();
-      formDataToSend.append('fname', fname);
-      formDataToSend.append('lname', lname);
-      formDataToSend.append('image', image);
-      formDataToSend.append('username', username);
-      formDataToSend.append('password', password);
-      formDataToSend.append('password2', password2);
-      console.log(formDataToSend)
-  
-      axios
-        .post(`${apiHost}api/users/`, formDataToSend)
-        .then((response) => {
-          setSuccess(response.data.message);
-          setError('');
-  
-          const timeoutId = setTimeout(() => {
-            navigate('/');;
-          }, 1200);
-          return () => clearTimeout(timeoutId);
-  
-          })
-        .catch((error) => {
-          setError(error.response.data.error);
-          setSuccess('');
-       });
-   };
+const handleSubmit = (e) => {
+  e.preventDefault();
+
+  const formDataToSend = new FormData();
+  formDataToSend.append('fname', fname);
+  formDataToSend.append('lname', lname);
+  formDataToSend.append('image', image);
+  formDataToSend.append('username', username);
+  formDataToSend.append('password', password);
+  formDataToSend.append('password2', password2);
+
+  axios
+    .post(`${apiHost}api/users/`, formDataToSend)
+    .then((response) => {
+      // Display a SweetAlert2 success message
+      Swal.fire({
+        icon: 'success',
+        title: 'Success!',
+        text: response.data.message,
+      });
+
+      // Clear form data or perform any other necessary actions
+
+      const timeoutId = setTimeout(() => {
+        // Navigate to the desired route after a successful submission
+        navigate('/');
+      }, 1200);
+
+      return () => clearTimeout(timeoutId);
+    })
+    .catch((error) => {
+      // Display a SweetAlert2 error message
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: error.response.data.error,
+      });
+    });
+};
 
   return (
     <>

@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useContext } from "react";
 import DataTable from "react-data-table-component";
+import Swal from 'sweetalert2';
 import axios from "axios";
 import Authorization from './Authorization';
 import GetHeaders from "./GetHeaders";
@@ -27,18 +28,48 @@ const Users=()=> {
       });
   }, []);
 
- const handleDelete = (id) => {
-  axios.delete(`${apiHost}api/users/${id}`, {headers})
-    .then((response) => {
-      const newdata = data.filter((item) => item.id !== id);
-      setData(newdata);
-      setFilter(newdata);
-      alert(response.data.message); // You might want to handle the response appropriately
-    })
-    .catch((error) => {
-      console.error(`Error deleting user with id ${id}:`, error);
-    });
+
+const handleDelete = (id) => {
+  // Display a SweetAlert2 confirmation dialog
+  Swal.fire({
+    icon: 'question',
+    title: 'Confirmation',
+    text: 'Are you sure you want to delete this user?',
+    showCancelButton: true,
+    confirmButtonText: 'Yes, delete',
+    cancelButtonText: 'No, cancel',
+  }).then((result) => {
+    // If the user confirms the deletion
+    if (result.isConfirmed) {
+      // Make the API request to delete the user
+      axios
+        .delete(`${apiHost}api/users/${id}`, { headers })
+        .then((response) => {
+          // Display a SweetAlert2 success message
+          Swal.fire({
+            icon: 'success',
+            title: 'Success!',
+            text: response.data.message,
+          });
+
+          // Update local state to reflect the removal of the deleted user
+          const newdata = data.filter((item) => item.id !== id);
+          setData(newdata);
+          setFilter(newdata);
+        })
+        .catch((error) => {
+          // Display a SweetAlert2 error message
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: `Error deleting user with id ${id}: ${error.response.data.error}`,
+          });
+          console.error(`Error deleting user with id ${id}:`, error);
+        });
+    }
+  });
 };
+
 
 
   const columns = [

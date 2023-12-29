@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { MyContext } from '../../context/MyContext';
+import Swal from 'sweetalert2';
 import axios from 'axios';
 const apiHost = import.meta.env.VITE_host
 
@@ -44,35 +45,49 @@ function AddCandidateModal() {
     }
   };
   
-  const handleSubmit = (e) => {
-    e.preventDefault();
 
-    // Simulate an API request to handle form submission
-    const formDataToSend = new FormData();
-    formDataToSend.append('name', name);
-    formDataToSend.append('image', image);
-    formDataToSend.append('position', position);
-    formDataToSend.append('partylist', partylist);
-    formDataToSend.append('credentials', credentials);
-    formDataToSend.append('platform', platform);
+const handleSubmit = (e) => {
+  e.preventDefault();
 
-    axios
-      .post(`${apiHost}api/candidates/`, formDataToSend)
-      .then((response) => {
-        setSuccess(response.data.message);
-        setError('');
+  // Simulate an API request to handle form submission
+  const formDataToSend = new FormData();
+  formDataToSend.append('name', name);
+  formDataToSend.append('image', image);
+  formDataToSend.append('position', position);
+  formDataToSend.append('partylist', partylist);
+  formDataToSend.append('credentials', credentials);
+  formDataToSend.append('platform', platform);
 
-        const timeoutId = setTimeout(() => {
-          closeAddCandidateModal();
-        }, 1500);
-        return () => clearTimeout(timeoutId);
-        })
-      .catch((error) => {
-        console.log(error.response.data.error);
-        setError(error.response.data.error);
-        setSuccess('');
-     });
-   };
+  axios
+    .post(`${apiHost}api/candidates/`, formDataToSend)
+    .then((response) => {
+      // Display a SweetAlert2 success message
+      Swal.fire({
+        icon: 'success',
+        title: 'Success!',
+        text: response.data.message,
+      });
+
+      // Clear form data or perform any other necessary actions
+
+      const timeoutId = setTimeout(() => {
+        closeAddCandidateModal();
+      }, 1500);
+      return () => clearTimeout(timeoutId);
+    })
+    .catch((error) => {
+      // Display a SweetAlert2 error message
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: error.response.data.error,
+      });
+
+      // Clear success message and set error message
+      setSuccess('');
+    });
+};
+
 
   return(
     <>

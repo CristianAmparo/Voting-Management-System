@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useContext } from "react";
 import DataTable from "react-data-table-component";
+import Swal from 'sweetalert2';
 import axios from "axios";
 import AddCandidateModal from './modal/AddCandidateModal';
 import EditCandidateModal from './modal/editCandidateModal';
@@ -37,16 +38,46 @@ const Candidates=()=> {
       };
     }, []);
 
- const handleDelete = (id) => {
-  axios.delete(`${apiHost}api/candidates/${id}`, {headers})
-    .then((response) => {
-      const newdata = data.filter((item) => item.id !== id);
-      setData(newdata);
-      setFilter(newdata);
-    })
-    .catch((error) => {
-      console.error(`Error deleting user with id ${id}:`, error);
-    });
+
+const handleDelete = (id) => {
+  // Display a SweetAlert2 confirmation dialog
+  Swal.fire({
+    icon: 'question',
+    title: 'DELETE CANDIDATE',
+    text: 'Are you sure you want to delete this candidate?',
+    showCancelButton: true,
+    confirmButtonText: 'Yes, delete',
+    cancelButtonText: 'No, cancel',
+  }).then((result) => {
+    // If the user confirms the deletion
+    if (result.isConfirmed) {
+      // API request to delete the candidate
+      axios
+        .delete(`${apiHost}api/candidates/${id}`, { headers })
+        .then((response) => {
+          // Display a SweetAlert2 success message
+          Swal.fire({
+            icon: 'success',
+            title: 'Success!',
+            text: response.data.message,
+          });
+
+          // Update local state to reflect the removal of the deleted candidate
+          const newdata = data.filter((item) => item.id !== id);
+          setData(newdata);
+          setFilter(newdata);
+        })
+        .catch((error) => {
+          // Display a SweetAlert2 error message
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: `Error deleting candidate with id ${id}: ${error.response.data.error}`,
+          });
+          console.error(`Error deleting candidate with id ${id}:`, error);
+        });
+    }
+  });
 };
 
 

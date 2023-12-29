@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 import { useContext } from 'react';
 import { MyContext } from '../context/MyContext';
+import Swal from 'sweetalert2';
 import Account from '../user/Account';
 
 
@@ -14,10 +15,32 @@ const Sidebar = () => {
       setDropDown(!dropDown);
   };
 
-  const logout = () => {
-        localStorage.removeItem('myData');
-        navigate("/");
-  }
+    const logout = () => {
+    // Display a SweetAlert2 confirmation dialog
+      Swal.fire({
+        icon: 'question',
+        title: 'Logout',
+        text: 'Are you sure you want to log out?',
+        showCancelButton: true,
+        confirmButtonText: 'Yes, logout',
+        cancelButtonText: 'Cancel',
+      }).then((result) => {
+        // If the user confirms the logout
+        if (result.isConfirmed) {
+          // Remove user data from local storage
+          localStorage.removeItem('myData');
+
+          // Display a SweetAlert2 success message
+          Swal.fire({
+            icon: 'success',
+            title: 'Logged out successfully',
+          });
+
+          // Navigate to the home route
+          navigate("/");
+        }
+      });
+  };
   return (
     <>
     <aside  className={`fixed top-20 left-0 z-40 w-full md:w-72 h-screen transition-transform ${
