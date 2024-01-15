@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { MyContext } from '../../context/MyContext';
 import Swal from 'sweetalert2';
 import axios from 'axios';
+import GetHeaders from '../GetHeaders';
 const apiHost = import.meta.env.VITE_host
 
 function EditCandidateModal() {
@@ -9,6 +10,7 @@ function EditCandidateModal() {
   const [id , setID] = useState(candidateId)
   const [success, setSuccess] = useState('');
   const [error, setError] = useState('');
+  const headers = GetHeaders();
   const [formData, setFormData] = useState({
     name: '',
     image: '',
@@ -21,7 +23,7 @@ function EditCandidateModal() {
   const { name, image, position, partylist, credentials, platform } = formData;
 
    useEffect(() => {
-        axios.get(`${apiHost}api/candidates/candidate/${id}`)
+        axios.get(`${apiHost}api/candidates/candidate/${id}` , {headers})
         .then((response) => {
           setFormData(response.data[0]);
 

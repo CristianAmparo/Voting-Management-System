@@ -20,13 +20,24 @@ const addCandidate = asyncHandler(async (req, res) => {
     const { name, position, partylist, platform, credentials } = req.body;
     const image = req.file ? req.file.filename : null;
 
-
-
-    console.log('Request Body:', req.body);
-
     // Check if required fields are provided
-    if (!name || !position || !image || !partylist || !platform || !credentials) {
-        return res.status(400).json({ error: 'Please fill out all the fields' });
+    if (!name) {
+        return res.status(400).json({ error: 'Please input the candidate name' });
+    }
+    if (!position) {
+        return res.status(400).json({ error: 'Please input the candidate position' });
+    }
+    if (!image) {
+        return res.status(400).json({ error: 'Please input the candidate image' });
+    }
+    if (!partylist) {
+        return res.status(400).json({ error: 'Please input the candidate partylist' });
+    }
+    if (!platform) {
+        return res.status(400).json({ error: 'Please input the candidate platform' });
+    }
+    if (!credentials) {
+        return res.status(400).json({ error: 'Please input the candidate credentials' });
     }
 
     try {
@@ -55,8 +66,23 @@ const updateCandidate = asyncHandler(async (req, res) => {
     }
 
 
-    if (!name || !position || !newImage || !partylist || !platform || !credentials) {
-        return res.status(400).json({ error: 'Please fill out all the fields' });
+    if (!name) {
+        return res.status(400).json({ error: 'Please input the name of candidate' });
+    }
+    if (!position) {
+        return res.status(400).json({ error: 'Please input the candidate position' });
+    }
+    if (!newImage) {
+        return res.status(400).json({ error: 'Please input the candidate image' });
+    }
+    if (!partylist) {
+        return res.status(400).json({ error: 'Please input the candidate partylist' });
+    }
+    if (!platform) {
+        return res.status(400).json({ error: 'Please input the candidate platform' });
+    }
+    if (!credentials) {
+        return res.status(400).json({ error: 'Please input the candidate credentials' });
     }
 
     await db.promise().execute('UPDATE tbl_candidates SET name = ?, position = ?, image = ?, platform = ?, credentials = ?, partylist = ? WHERE id = ?', [name, position, newImage, platform, credentials, partylist, id]);

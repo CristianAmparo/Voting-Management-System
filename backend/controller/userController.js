@@ -109,7 +109,7 @@ const updateUser = asyncHandler(async (req, res) => {
 
         await db.promise().execute(query, values);
 
-        return res.json({ message: 'Updated Successful' });
+        return res.json({ message: 'Updated Successfully' });
     } catch (error) {
         console.error('Error updating user: ', error);
         return res.status(500).json({ error: error });
