@@ -4,10 +4,25 @@ const moment = require('moment')
 
 // Get list of votes
 const getVote = asyncHandler(async (req, res) => {
-    const query = 'SELECT * FROM tbl_vote';
-    const [results] = await db.promise().query(query);
+    // Extract query parameters
+    const { page = 1, limit = 50 } = req.query;
+    const offset = (page - 1) * limit;
+
+    // Build the SQL query
+    let query = 'SELECT * FROM tbl_vote';
+    const queryParams = [];
+
+    // Add pagination
+    query += ' LIMIT ? OFFSET ?';
+    queryParams.push(parseInt(limit), parseInt(offset));
+
+    // Execute the query
+    const [results] = await db.promise().query(query, queryParams);
+
+    // Send the results as JSON
     res.json(results);
 });
+
 // Count all votes for Each candidates on each position
 const countVote = asyncHandler(async (req, res) => {
     const query = `

@@ -4,7 +4,28 @@ const asyncHandler = require('express-async-handler');
 
 // Get list of Candidates
 const getCandidates = asyncHandler(async (req, res) => {
-    const [results] = await db.promise().query('SELECT * FROM tbl_candidates');
+    // Extract query parameters
+    const { page = 1, limit = 50, filterBy } = req.query;
+    const offset = (page - 1) * limit;
+
+    // Build the SQL query
+    let query = 'SELECT * FROM tbl_candidates';
+    const queryParams = [];
+
+    // Add filtering condition if filterBy is provided
+    if (filterBy) {
+        query += ' WHERE name LIKE ?';
+        queryParams.push(`%${filterBy}%`);
+    }
+
+    // Add pagination
+    query += ' LIMIT ? OFFSET ?';
+    queryParams.push(parseInt(limit), parseInt(offset));
+
+    // Execute the query
+    const [results] = await db.promise().query(query, queryParams);
+
+    // Send the results as JSON
     res.json(results);
 });
 

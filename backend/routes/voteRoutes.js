@@ -4,8 +4,8 @@ const { getVote, myVote, countTotalVotes, countTotalVoters, addVote, updateVote,
 const { authenticateUser, authorizeAdmin, authorizeUser } = require('../middleware/authMiddleware')
 
 
-router.post('/:id', authenticateUser, authorizeUser, addVote);// Add vote
 router.get('/', authenticateUser, authorizeAdmin, getVote);// See all votes
+router.post('/:id', authenticateUser, authorizeUser, addVote);// Add vote
 router.get('/:id', authenticateUser, authorizeUser, myVote);// See user vote
 router.put('/:id', authenticateUser, authorizeUser, updateVote);// Update user vote
 router.get('/count', authenticateUser, authorizeAdmin, countVote);// count all votes for each candidates on each position

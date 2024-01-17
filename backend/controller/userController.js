@@ -5,10 +5,31 @@ const asyncHandler = require('express-async-handler');
 
 // Get list of users/voters
 const getUsers = asyncHandler(async (req, res) => {
-    const query = 'SELECT * FROM tbl_users WHERE username NOT IN (\'admin@gmail.com\')';
-    const [results] = await db.promise().query(query);
+    // Extract query parameters
+    const { page = 1, limit = 50, filterBy } = req.query;
+    const offset = (page - 1) * limit;
+
+    // Build the SQL query
+    let query = 'SELECT * FROM tbl_users WHERE username NOT IN (?)';
+    const queryParams = ['admin@gmail.com'];
+
+    // Add filtering condition if filterBy is provided
+    if (filterBy) {
+        query += ' AND name LIKE ?';
+        queryParams.push(`%${filterBy}%`);
+    }
+
+    // Add pagination
+    query += ' LIMIT ? OFFSET ?';
+    queryParams.push(parseInt(limit), parseInt(offset));
+
+    // Execute the query
+    const [results] = await db.promise().query(query, queryParams);
+
+    // Send the results as JSON
     res.json(results);
 });
+
 
 
 
