@@ -64,7 +64,6 @@ const countTotalVoters = asyncHandler(async (req, res) => {
 
 //Election End
 const voteEnd = asyncHandler(async (req, res) => {
-    // Assuming you have a table called "election_settings" with columns "start_date" and "end_date"
     const selectQuery = `SELECT start_date, end_date FROM election_settings WHERE id = 1`;
 
     db.query(selectQuery, (err, result) => {
@@ -121,8 +120,23 @@ const addVote = asyncHandler(async (req, res) => {
     const { President, Vice_President, Secretary, Treasurer, Auditor, Peace_Officer } = req.body;
 
     // Validate the input
-    if (!President || !Vice_President || !Secretary || !Treasurer || !Auditor || !Peace_Officer) {
-        return res.status(400).json({ error: 'Please fill out all the fields' });
+    if (!President) {
+        return res.status(400).json({ error: 'Please fill out president field' });
+    }
+    if (!Vice_President) {
+        return res.status(400).json({ error: 'Please fill out vice president field' });
+    }
+    if (!Secretary) {
+        return res.status(400).json({ error: 'Please fill secretary field' });
+    }
+    if (!Treasurer) {
+        return res.status(400).json({ error: 'Please fill out treasurer field' });
+    }
+    if (!Auditor) {
+        return res.status(400).json({ error: 'Please fill out auditor field' });
+    }
+    if (!Peace_Officer) {
+        return res.status(400).json({ error: 'Please fill out peace officer field field' });
     }
 
     try {

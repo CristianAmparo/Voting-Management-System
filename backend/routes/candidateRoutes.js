@@ -7,7 +7,7 @@ const { authenticateUser, authorizeAdmin, authorizeUser } = require('../middlewa
 
 
 router.get('/', authenticateUser, getCandidates);
-router.get('/candidate/:id', authenticateUser, authorizeAdmin, getCandidate);
+router.get('/:id', authenticateUser, authorizeAdmin, getCandidate);
 router.post('/', upload.single('image'), addCandidate);
 router.put('/:id', upload.single('image'), updateCandidate);
 router.delete('/:id', authenticateUser, authorizeAdmin, deleteCandidate);

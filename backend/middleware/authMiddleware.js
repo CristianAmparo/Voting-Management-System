@@ -37,7 +37,7 @@ const authorizeUser = asyncHandler(async (req, res, next) => {
     if (req.user.id && req.params.id && req.params.id == req.user.id) {
         next();
     } else {
-        return res.status(403).json({ error: 'Forbidden - You can only update your own account' });
+        return res.status(403).json({ error: 'Forbidden - You can only get and update your own account' });
     }
 });
 

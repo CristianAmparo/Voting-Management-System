@@ -6,12 +6,12 @@ const { authenticateUser, authorizeAdmin, authorizeUser } = require('../middlewa
 
 router.post('/:id', authenticateUser, authorizeUser, addVote);// Add vote
 router.get('/', authenticateUser, authorizeAdmin, getVote);// See all votes
-router.get('/count', authenticateUser, authorizeAdmin, countVote);// See all votes
+router.get('/:id', authenticateUser, authorizeUser, myVote);// See user vote
+router.put('/:id', authenticateUser, authorizeUser, updateVote);// Update user vote
+router.get('/count', authenticateUser, authorizeAdmin, countVote);// count all votes for each candidates on each position
 router.get('/totalVotes', authenticateUser, authorizeAdmin, countTotalVotes);// See total votes
 router.get('/totalVoters', authenticateUser, authorizeAdmin, countTotalVoters);// See total voters/Users
-router.get('/voteEnd', authenticateUser, voteEnd);// See end of election
-router.get('/:id', authenticateUser, authorizeUser, myVote);// See all votes
+router.get('/voteEnd', authenticateUser, authorizeAdmin, voteEnd);// See end of election
 router.put('/voteEnd', authenticateUser, authorizeAdmin, updateVoteEnd);// Update end of election
-router.put('/:id', authenticateUser, authorizeUser, updateVote);// Update vote
 
 module.exports = router

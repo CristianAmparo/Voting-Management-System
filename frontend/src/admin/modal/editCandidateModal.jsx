@@ -23,7 +23,7 @@ function EditCandidateModal() {
   const { name, image, position, partylist, credentials, platform } = formData;
 
    useEffect(() => {
-        axios.get(`${apiHost}api/candidates/candidate/${id}` , {headers})
+        axios.get(`${apiHost}api/candidates/${id}` , {headers})
         .then((response) => {
           setFormData(response.data[0]);
 
