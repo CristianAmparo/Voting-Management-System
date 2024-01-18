@@ -185,7 +185,7 @@ const loginUser = asyncHandler(async (req, res) => {
 
             res.status(201).json({ user: user[0], token });
         } else {
-            res.status(401).json({ error: 'Invalid Username or Password' });
+            res.status(400).json({ error: 'The account is not existed' });
         }
     } catch (error) {
         console.error('Login error:', error);

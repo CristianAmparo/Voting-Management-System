@@ -62,7 +62,7 @@ const handleSubmit = async (e) => {
       Swal.fire({
         icon: 'error',
         title: 'Error',
-        text: 'Something went wrong',
+        text: error.response.data.error,
       });
     }
   } catch (error) {
@@ -70,7 +70,7 @@ const handleSubmit = async (e) => {
     Swal.fire({
       icon: 'error',
       title: 'Error',
-      text: 'An unexpected error occurred',
+      text: error.response.data.error,
     });
   }
 };
