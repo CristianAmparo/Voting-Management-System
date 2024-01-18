@@ -105,7 +105,7 @@ const registerUser = asyncHandler(async (req, res) => {
 // Update a user - PUT
 const updateUser = asyncHandler(async (req, res) => {
     const { id } = req.params;
-    const { image, fname, lname, username, password } = req.body;
+    const { image, fname, lname, username, password, password2 } = req.body;
 
     let newImage;
 
@@ -115,8 +115,32 @@ const updateUser = asyncHandler(async (req, res) => {
         newImage = req.file.filename;
     }
 
-    if (!newImage || !fname || !lname || !username || !password) {
-        return res.status(400).json({ error: 'Please fill out all the fields' });
+    if (!newImage) {
+        return res.status(400).json({ error: 'Please upload an image' });
+    }
+
+    if (!fname) {
+        return res.status(400).json({ error: 'Please provide the first name' });
+    }
+
+    if (!lname) {
+        return res.status(400).json({ error: 'Please provide the last name' });
+    }
+
+    if (!username) {
+        return res.status(400).json({ error: 'Please provide the username' });
+    }
+
+    if (!password) {
+        return res.status(400).json({ error: 'Please provide the password' });
+    }
+
+    if (!password2) {
+        return res.status(400).json({ error: 'Please retype your password' });
+    }
+
+    if (password !== password2) {
+        return res.status(400).json({ error: 'Password do no match' });
     }
 
     try {
@@ -124,7 +148,6 @@ const updateUser = asyncHandler(async (req, res) => {
         const hashedPassword = await bcrypt.hash(password, salt);
         const name = `${fname} ${lname}`;
         const query = 'UPDATE tbl_users SET image=?, name=?, username=?, password=? WHERE id=?';
-
 
         const values = [newImage, name, username, hashedPassword, id];
 
