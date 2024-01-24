@@ -60,7 +60,7 @@ const handleUpdateSettings = () => {
           Swal.fire({
             icon: 'error',
             title: 'Error',
-            text: `Error updating election settings: ${error.response.data.error}`,
+            text: error.response.data.error,
           });
 
           // Log the error
