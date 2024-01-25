@@ -3,6 +3,8 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const asyncHandler = require('express-async-handler');
 
+
+
 // Get list of users/voters
 const getUsers = asyncHandler(async (req, res) => {
     // Extract query parameters
