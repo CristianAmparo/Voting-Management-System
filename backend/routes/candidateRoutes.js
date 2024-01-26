@@ -2,9 +2,7 @@ const express = require('express');
 const router = express.Router();
 const upload = require('../middleware/uploadMiddleware')
 const { getCandidates, getCandidate, addCandidate, updateCandidate, deleteCandidate } = require('../controller/candidateController');
-const { authenticateUser, authorizeAdmin, authorizeUser } = require('../middleware/authMiddleware')
-
-
+const { authenticateUser, authorizeAdmin } = require('../middleware/authMiddleware')
 
 router.get('/', authenticateUser, getCandidates);
 router.get('/:id', authenticateUser, authorizeAdmin, getCandidate);
