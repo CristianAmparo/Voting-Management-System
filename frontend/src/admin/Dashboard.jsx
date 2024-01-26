@@ -83,11 +83,6 @@ function Dashboard() {
          return () => clearInterval(countdownRef.current);
     },[]) 
     
-
-   
-
-    
-
   return (
     <>
       <section className={`fixed top-20 left-0 xl:left-72  bottom-0 right-0 flex flex-col ${isDurationModalOpen? '' : 'overflow-y-auto'} `}>

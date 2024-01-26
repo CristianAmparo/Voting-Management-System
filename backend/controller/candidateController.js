@@ -9,7 +9,16 @@ const getCandidates = asyncHandler(async (req, res) => {
     const offset = (page - 1) * limit;
 
     // Build the SQL query
-    let query = 'SELECT * FROM tbl_candidates';
+    let query = `SELECT * FROM tbl_candidates ORDER BY
+    CASE
+        WHEN tbl_candidates.position = 'President' THEN 1
+        WHEN tbl_candidates.position = 'Vice_President' THEN 2
+        WHEN tbl_candidates.position = 'Secretary' THEN 3
+        WHEN tbl_candidates.position = 'Treasurer' THEN 4
+        WHEN tbl_candidates.position = 'Auditor' THEN 5
+        ELSE 6
+    END`;
+
     const queryParams = [];
 
     // Add filtering condition if filterBy is provided

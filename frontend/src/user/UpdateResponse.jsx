@@ -248,9 +248,9 @@ const handleSubmit = (e) => {
 		<>
 			<Header />
 			<section className='fixed inset-0 pt-20 pb-10  h-full w-full overflow-y-auto'>
-				<div className='p-5'>
-					<h1 className="text-3xl font-bold leading-tight tracking-tight text-gray-900 md:text-4xl "><span className='text-orange-600'>Election</span> Page</h1>
-				</div>
+        <button className='px-5 py-3 relative'>
+					<Link to="/user"><img className='w-10 hover:scale-105' src="/back.png" alt="" /></Link>
+				</button>
 
                 <div className='absolute duration top-24 right-5  py-3 px-4 flex items-center cursor-help justify-center h-max bg-orange-600 text-white shadow-lg rounded-xl w-max'>
                         <img className='w-5 h-5' src="/duration.png" alt="" />
@@ -265,6 +265,9 @@ const handleSubmit = (e) => {
                 </div>
 
 				<form className='flex flex-col gap-5 justify-center items-center p-2' onSubmit={handleSubmit}>
+          <div>
+						<h1 className="text-3xl font-bold leading-tight tracking-tight text-gray-900 md:text-4xl "><span className='text-orange-600'>Update</span> Vote</h1>
+					</div>
 					{Position}
 					<div className=" w-full md:w-5/6 lg:w-2/3 xl:w-1/2 text-xs sm:text-sm lg:text-[16px]">
 						<div className='text-center w-full'>

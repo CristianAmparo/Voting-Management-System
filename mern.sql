@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 21, 2023 at 09:20 AM
+-- Generation Time: Jan 26, 2024 at 11:51 AM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.4
 
@@ -38,7 +38,7 @@ CREATE TABLE `election_settings` (
 --
 
 INSERT INTO `election_settings` (`id`, `start_date`, `end_date`) VALUES
-(1, '2023-11-19 16:12:00', '2023-11-21 14:47:00');
+(1, '0000-00-00 00:00:00', '2024-01-16 21:45:00');
 
 -- --------------------------------------------------------
 
@@ -70,7 +70,7 @@ INSERT INTO `tbl_candidates` (`id`, `name`, `position`, `image`, `platform`, `cr
 (36, 'Jannete Aquino', 'Peace_Officer', 'image_1700532821537.jpg', 'Monthly allowance worth 3,000\r\nFree Printing Service\r\n', 'SHS Graduate with Honors\r\n5 Months of leadership training', 'Rest In Peace Partylist'),
 (37, 'Senior Agila', 'President', 'image_1700532992991.jpg', 'Educational Assistance Program \r\nFree Printing Services\r\nFree School Supplies', 'Academic Excellence Awardee \r\nDean\'s Lister (2021 - current)\r\nIskolar ng Bayan (2017-2021)', 'Socorro Group Partylist'),
 (38, 'Vice Ganda', 'Vice_President', 'image_1700533065317.jpg', 'Enforcement of GAD Program\r\nFree Printing Services', 'SK Kagawad (2020-2023)\r\nSSG President (2017-2021)', 'Socorro Group Partylist'),
-(39, 'Anne Curtis', 'Secretary', 'image_1700533102094.jpg', 'Annual Tiger Talk\r\nFree Printing Services', 'SHS Valedictorian (2015)\r\nPresident\'s Lister', 'Socorro Group Partylist'),
+(39, 'Anne Curtis', 'Secretary', 'image_1700627571090.jpg', 'Annual Tiger Talk\r\nFree Printing Services', 'SHS Valedictorian (2015)\r\nPresident\'s Lister', 'Socorro Group Partylist'),
 (40, 'Vhong Navarro', 'Treasurer', 'image_1700533164904.jpg', 'Tech Workshops\r\nFree Printing Services', 'SC Treasurer (2018-2021)\r\nExcellence Awardee (2019-2021)', 'Socorro Group Partylist'),
 (41, 'Jhong Hilario', 'Auditor', 'image_1700533214607.jpg', 'Free Printing Services', 'SSG Auditor (2018-2021)\r\nConsistent Honor Student ', 'Socorro Group Partylist'),
 (42, 'Jugs Hugueta', 'Peace_Officer', 'image_1700533258750.jpg', 'Free School Supplies', ' Academic Excellence Awardee', 'Socorro Group Partylist'),
@@ -102,21 +102,21 @@ CREATE TABLE `tbl_users` (
 --
 
 INSERT INTO `tbl_users` (`id`, `name`, `username`, `password`, `image`) VALUES
-(4, 'sample4', 'sample4@gmail.com', '$2a$10$0S00MvWg22dgCyhbH20rBON/rimQjYhoQ8R0F6vWqDPaZf1hkHx0C', ''),
-(5, 'sample1', 'sample1@gmail.com', '$2a$10$sMSOyCui/Wn9NuVA3d9VL.JrRrqCUEb5xEPmR6Y9sCy6Tkiql89Zy', ''),
-(6, 'sample3', 'sample3@gmail.com', '$2a$10$10SFGoi53/nBxynlYseQfO/KZu9SC33GlPAlN69TOoucikd8uFZy6', ''),
+(4, 'sample voter4', 'sample4@gmail.com', '$2a$10$eLe3tdlbVZKSqAc4uZbqnuuba0VUoMrM7nkpmkqBh/MYhSQ1v.4he', 'image_1700630658665.jpg'),
+(5, 'sample voters2', 'sample1@gmail.com', '$2a$10$aauBoab5SGHdQxQQ7691le8dafMPHiyOvDyUPMBIz/YDBgVhpRPSK', 'image_1700630658665.jpg'),
 (7, 'sample2', 'sample2@gmail.com', '$2a$10$7u7T03IMkkiHRtUeZq63m.hh2TcF6E6nbsiiZl9VooJcPBSngqLw2', ''),
-(8, 'sample10', 'sample10@gmail.com', '$2a$10$HcoAgyVylFim4n5Z4NV7guGQ3nNutcTwELT8wQbqCMUUYD0QnGnFy', ''),
-(9, 'sample11', 'sample11@gmail.com', '$2a$10$gLss8z1uj/HmTgoXUrETOeAw65egIH/aCKggxyarwnF9goLLMd8mK', ''),
+(8, 'sample voter10', 'sample10@gmail.com', '$2a$10$3gBL2yY3uXGJjI/ukyTJZeWE7yNtCMk7GFuesE3OIXgs5P.u4a2SS', 'image_1700630658665.jpg'),
+(9, 'sample 11', 'sample11@gmail.com', '$2a$10$hcZ/sdveyqyRd5DpHEVgb.anp/.dXP4ciimWAluAlvfqo2MbfQevm', 'image_1705555362846.jpg'),
 (11, 'samplehaha20', 'sample20@gmail.com', '$2a$10$FZVApK6WpyHZU60Qn2E0BuMZj8a4IDGqKDwYh/yLE2zcpGXvBaKzq', ''),
-(12, 'samp lehaha21', 'sample21@gmail.com', '$2a$10$2KPU8k6tyCLcmF2lXzKY9u1.ZTLd3NY9.ndMD1Cc2ny83wLsfAeGC', ''),
 (13, 'Magelan Puti', 'sample15@gmail.com', '$2a$10$EnrO6mdQAS3/TbLOXD7Sre8DQC322KNlXXH5RTBGMXRlvtSWHgwcK', ''),
-(14, 'sample voters', 'voter1@gmail.com', '$2a$10$e4fNLMAlezYVYvwERvc0XuNjcuIjB2eBq9Pit3TiXASwZeUx0AppK', 'image_1700448801403.jpeg'),
+(14, 'sample voters', 'voter1@gmail.com', '$2a$10$tKtz3vbK1x6CsHTpfTis9uk8l3yEv3kD2BvuUo3EEXI555YMiPitu', 'image_1700630658665.jpg'),
 (15, 'sample voter2', 'voter2@gmail.com', '$2a$10$Njh0nG2hIZea/jReICYw0uF/4ZNDzxRTF8UL7JsFvjYyGpQOt.sVe', 'image_1700449137960.jpg'),
 (16, 'asdasd asdasda', 'voter3@gmail.com', '$2a$10$kEn8zloL8Hoc/p3meQNXYum87GRuHiuRC5QnHyuOrTQyzvFzslVJG', 'image_1700449254837.jpg'),
-(17, 'sdasda sdasd', 'voter4a@gmail.com', '$2a$10$Rnb.I1VGN.SF.tTMfRJJAeoJ6gCyk3NymNDiZ4DMLffVODAJtaKe2', 'image_1700449307825.jpg'),
-(18, 'Voting System Admin', 'admin@gmail.com', '$2a$10$FtpyXs/e95K8wCcdI0PA3uvvvAVPQpv9eB6/1/5lA.X.gT96L9A.2', 'image_1700449950142.png'),
-(19, 'asdasd asdasdasdasd', 'voters30@gmail.com', '$2a$10$k.JpWTvYw4S3mC.UYEw5IuI3Ow3Ip2Xtqc9Kkl1rqWISspQFiAHWe', 'image_1700460159983.png');
+(18, 'Voting_System Administrator', 'admin@gmail.com', '$2a$10$dcN.3FAQoZRDSZp0NWuNt.8sR0IkHap45n0Sh89EVygB4J1VoXrMK', 'image_1705555387492.jpg'),
+(19, 'asdasd asdasdasdasd', 'voters30@gmail.com', '$2a$10$k.JpWTvYw4S3mC.UYEw5IuI3Ow3Ip2Xtqc9Kkl1rqWISspQFiAHWe', 'image_1700460159983.png'),
+(20, 'asd asd', 'sample100@gmail.com', '$2a$10$CjdTlZBFxwe0qOxBNVp2ieVHIZYg3Pr0MXCceiBU0FYzLmEd7vpyK', 'image_1702952254374.jpg'),
+(22, 'asdasd asdasdasd', 'amparo@gmail.com', '$2a$10$Dn92EGgjZXXAXQ/d6.JErOE42.RlVIwGRoUftmUsHB1jvOAkn1iru', 'image_1703820433781.jpg'),
+(24, 'john lucas', 'john@gmail.com', '$2a$10$FPCTjpq9gM9w8owj/V9l4OJPMosSvwfKKy535/ePvpGU4iiN99A6y', 'image_1705555149301.jpg');
 
 -- --------------------------------------------------------
 
@@ -140,10 +140,12 @@ CREATE TABLE `tbl_vote` (
 --
 
 INSERT INTO `tbl_vote` (`id`, `user_id`, `President`, `Vice_President`, `Secretary`, `Treasurer`, `Auditor`, `Peace_Officer`) VALUES
-(11, 18, 'Fredie Marquez', 'Vice Ganda', 'Salve Mae Pilit', 'abstainTreasurer', 'Mario Dalibhasa', 'Teddy Corpuz'),
-(12, 18, 'Senior Agila', 'Sara Dumalit', 'Salve Mae Pilit', 'Emmanuel Sabalboro', 'Rachel Mae Unawa', 'Chako Lagui'),
-(13, 18, 'Senior Agila', 'Vice Ganda', 'Salve Mae Pilit', 'Emmanuel Sabalboro', 'Jhong Hilario', 'Jugs Hugueta'),
-(14, 18, 'Steven Spedido', 'Adrian Carranza', 'Winsie Grace Rebaya', 'Maria Magda', 'Rachel Mae Unawa', 'Teddy Corpuz');
+(15, 15, 'Senior Agila', 'Vice Ganda', 'Anne Curtis', 'Vhong Navarro', 'Rachel Mae Unawa', 'Jannete Aquino'),
+(16, 4, 'Steven Spedido', 'Vice Ganda', 'Salve Mae Pilit', 'Maria Magda', 'Mario Dalibhasa', 'Chako Lagui'),
+(18, 14, 'Steven Spedido', 'Vice Ganda', 'Salve Mae Pilit', 'Maria Magda', 'Mario Dalibhasa', 'Jugs Hugueta'),
+(19, 8, 'Steven Spedido', 'Adrian Carranza', 'Winsie Grace Rebaya', 'Emmanuel Sabalboro', 'Rachel Mae Unawa', 'Jannete Aquino'),
+(20, 20, 'Steven Spedido', 'Adrian Carranza', 'Winsie Grace Rebaya', 'Emmanuel Sabalboro', 'Rachel Mae Unawa', 'Lae Bogu'),
+(23, 22, 'Senior Agila', 'Vice Ganda', 'Anne Curtis', 'Vhong Navarro', 'Jhong Hilario', 'Jannete Aquino');
 
 --
 -- Indexes for dumped tables
@@ -187,19 +189,19 @@ ALTER TABLE `election_settings`
 -- AUTO_INCREMENT for table `tbl_candidates`
 --
 ALTER TABLE `tbl_candidates`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
 
 --
 -- AUTO_INCREMENT for table `tbl_users`
 --
 ALTER TABLE `tbl_users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT for table `tbl_vote`
 --
 ALTER TABLE `tbl_vote`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -9,6 +9,9 @@ const DoneVoting = () => {
     <>
 
     <section className='fixed inset-0 pt-20 pb-10  h-full w-full overflow-y-auto'>
+        <button className='px-5 py-3 relative'>
+					<Link to="/user"><img className='w-10 hover:scale-105' src="/back.png" alt="" /></Link>
+				</button>
         <div className='p-5'>
           <h1 className="text-2xl font-bold leading-tight tracking-tight text-gray-900 md:text-4xl text-center"><span className='text-orange-600'>Election</span> Page</h1> 
         </div>
