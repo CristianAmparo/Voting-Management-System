@@ -5,8 +5,6 @@ import axios from 'axios';
 const apiHost = import.meta.env.VITE_host
 
 function AddCandidateModal() {
-  const [success, setSuccess] = useState('');
-  const [error, setError] = useState('');
   const {closeAddCandidateModal} = useContext(MyContext)
   const [formData, setFormData] = useState({
     name: '',
@@ -48,6 +46,7 @@ function AddCandidateModal() {
 
 const handleSubmit = (e) => {
   e.preventDefault();
+  Swal.showLoading();
 
   // Simulate an API request to handle form submission
   const formDataToSend = new FormData();
@@ -66,10 +65,11 @@ const handleSubmit = (e) => {
         icon: 'success',
         title: 'Success!',
         text: response.data.message,
+        showConfirmButton: false,
+        timer: 1000,
       });
 
       // Clear form data or perform any other necessary actions
-
       const timeoutId = setTimeout(() => {
         closeAddCandidateModal();
       }, 1500);
@@ -81,10 +81,10 @@ const handleSubmit = (e) => {
         icon: 'error',
         title: 'Error',
         text: error.response.data.error,
+        showConfirmButton: false,
+        timer: 1500,
       });
 
-      // Clear success message and set error message
-      setSuccess('');
     });
 };
 
@@ -182,10 +182,6 @@ const handleSubmit = (e) => {
                               onChange={handleChange}
                             />  
                         </div>
-                      </div>
-                      <div className='text-center w-full'> 
-                        {success !== '' && <h1 className='text-green-700'>{success}</h1>}
-                        {error !== '' && <h1 className='text-red-700'>{error}</h1>}
                       </div>
                       <button type="submit" className="w-full text-white bg-orange-600 hover:bg-orange-700 focus:ring-1 font-medium rounded-lg text-lg px-5 py-2.5 text-center">Add Candidate</button>
                    

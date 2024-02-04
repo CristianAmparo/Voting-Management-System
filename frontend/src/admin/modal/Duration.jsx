@@ -38,7 +38,7 @@ const handleUpdateSettings = () => {
   }).then((result) => {
     // If the user confirms the update
     if (result.isConfirmed) {
-      // Make the API request to update election settings
+      Swal.showLoading();
       axios
         .put(`${apiHost}api/votes/voteEnd`, { startDate, endDate }, { headers })
         .then(response => {
@@ -47,6 +47,8 @@ const handleUpdateSettings = () => {
             icon: 'success',
             title: 'Success!',
             text: response.data.message,
+            showConfirmButton: false,
+            timer: 1500
           });
 
           // Log the response data

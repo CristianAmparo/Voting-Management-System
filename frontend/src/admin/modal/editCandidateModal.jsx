@@ -74,6 +74,7 @@ const handleSubmit = (e) => {
   }).then((result) => {
     // If the user confirms the update
     if (result.isConfirmed) {
+      Swal.showLoading();
       // Simulate an API request to handle form submission
       const formDataToSend = new FormData();
       formDataToSend.append('name', name);
@@ -91,6 +92,8 @@ const handleSubmit = (e) => {
             icon: 'success',
             title: 'Success!',
             text: response.data.message,
+            showConfirmButton: false,
+            timer: 1000,
           });
 
           // Clear form data or perform any other necessary actions

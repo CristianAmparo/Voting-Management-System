@@ -41,6 +41,8 @@ const Header = () => {
         Swal.fire({
           icon: 'success',
           title: 'Logged out successfully',
+          showConfirmButton: false,
+          timer: 1200
         });
 
         // Navigate to the home route

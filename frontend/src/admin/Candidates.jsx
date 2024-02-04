@@ -60,6 +60,8 @@ const handleDelete = (id) => {
             icon: 'success',
             title: 'Success!',
             text: response.data.message,
+            showConfirmButton: false,
+            timer: 1500,
           });
 
           // Update local state to reflect the removal of the deleted candidate

@@ -29,6 +29,7 @@ const handleSubmit = async (e) => {
   e.preventDefault();
 
   try {
+    Swal.showLoading();
     const response = await axios.post(`${apiHost}api/users/login`, formData);
 
     if (response.data.user && response.data.token) {
@@ -46,6 +47,8 @@ const handleSubmit = async (e) => {
         Swal.fire({
           icon: 'success',
           title: 'Login Successfully',
+          showConfirmButton: false,
+          timer: 1200
         });
         // Navigate to the admin route
         navigate("/admin/");
@@ -63,6 +66,7 @@ const handleSubmit = async (e) => {
         icon: 'error',
         title: 'Error',
         text: error.response.data.error,
+
       });
     }
   } catch (error) {

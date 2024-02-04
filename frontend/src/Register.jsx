@@ -48,6 +48,7 @@ function Register() {
 
 const handleSubmit = (e) => {
   e.preventDefault();
+  Swal.showLoading();
 
   const formDataToSend = new FormData();
   formDataToSend.append('fname', fname);
@@ -60,11 +61,14 @@ const handleSubmit = (e) => {
   axios
     .post(`${apiHost}api/users/`, formDataToSend)
     .then((response) => {
+      Swal.close();
       // Display a SweetAlert2 success message
       Swal.fire({
         icon: 'success',
         title: 'Success!',
         text: response.data.message,
+        showConfirmButton: false,
+        timer: 1300
       });
 
       // Clear form data or perform any other necessary actions
