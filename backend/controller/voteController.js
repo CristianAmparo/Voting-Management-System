@@ -118,14 +118,21 @@ const updateVoteEnd = asyncHandler(async (req, res) => {
 // Get user vote for preview
 const myVote = asyncHandler(async (req, res) => {
     const { id } = req.params;
-    const query = 'SELECT * FROM tbl_vote WHERE user_id = ?';
-    const [results] = await db.promise().query(query, [id]);
-    if (results.length > 0) {
-        res.json(results);
-    } else {
-        res.json(false);
-    }
 
+    try {
+
+        const query = 'SELECT * FROM tbl_vote WHERE user_id = ?';
+        const [results] = await db.promise().query(query, [id]);
+
+        if (results.length > 0) {
+            res.status(200).json(results);
+        } else {
+            res.status(404).json({ message: "You don't have a vote yet" });
+        }
+    } catch (error) {
+        console.error('Error fetching vote:', error);
+        res.status(500).json({ message: 'An error occurred while fetching the vote' });
+    }
 });
 
 

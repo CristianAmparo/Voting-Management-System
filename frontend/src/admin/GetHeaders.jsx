@@ -10,8 +10,7 @@ const GetHeaders = () => {
   }
 
   return {
-    'Authorization': `Bearer ${token}`,
-    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${token}`
   };
 }
 

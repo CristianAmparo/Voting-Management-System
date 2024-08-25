@@ -3,14 +3,16 @@ import { MyContext } from '../../context/MyContext';
 import Swal from 'sweetalert2';
 import axios from 'axios';
 import GetHeaders from '../GetHeaders';
+
 const apiHost = import.meta.env.VITE_host
 
 function EditCandidateModal() {
+  const headers = GetHeaders();
   const {candidateId, closeEditCandidateModal} = useContext(MyContext)
   const [id , setID] = useState(candidateId)
   const [success, setSuccess] = useState('');
   const [error, setError] = useState('');
-  const headers = GetHeaders();
+ 
   const [formData, setFormData] = useState({
     name: '',
     image: '',
@@ -85,7 +87,7 @@ const handleSubmit = (e) => {
       formDataToSend.append('platform', platform);
 
       axios
-        .put(`${apiHost}api/candidates/${id}`, formDataToSend)
+        .put(`${apiHost}api/candidates/${id}`, formDataToSend, {headers})
         .then((response) => {
           // Display a SweetAlert2 success message
           Swal.fire({
@@ -148,7 +150,7 @@ const handleSubmit = (e) => {
                       <a className='icon absolute top-5 right-10 cursor-pointer' onClick={closeEditCandidateModal}><img src="/closeModal.png" alt="" /></a>
                       <div className='relative mx-auto bg-orange-600 w-[137px] h-[137px] flex items-center rounded-full'>
                         <div className=" w-32 h-32 bg-orange-100 rounded-full overflow-hidden border-4 border-white flex justify-center items-center mx-auto">
-                            <div><img id="imagePreview" src={`${apiHost}/uploads/${image}`} alt="" /></div>
+                            <div><img id="imagePreview" src={`${apiHost}uploads/${image}`} alt="" /></div>
                         </div>
                         <div className="">
                             <label htmlFor="imageInput" className="absolute bottom-1 right-0 rounded-full w-10 h-10 bg-slate-600 hover:bg-slate-700 p-2 text-white cursor-pointer flex justify-center items-center">

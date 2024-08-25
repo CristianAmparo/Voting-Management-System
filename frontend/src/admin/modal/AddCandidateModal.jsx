@@ -2,12 +2,13 @@ import React, { useState, useEffect, useContext } from 'react';
 import { MyContext } from '../../context/MyContext';
 import Swal from 'sweetalert2';
 import axios from 'axios';
+import GetHeaders from '../GetHeaders';
 
 const apiHost = import.meta.env.VITE_host
 
 function AddCandidateModal() {
 
-
+  const headers = GetHeaders();
   const {closeAddCandidateModal} = useContext(MyContext)
   const [formData, setFormData] = useState({
     name: '',
@@ -46,19 +47,7 @@ function AddCandidateModal() {
     }
   };
   
-  const headers = () => {
-  const storedData = JSON.parse(localStorage.getItem('myData'));
-  const token = storedData?.token;
 
-  if (!token) {
-    console.error('Token is missing');
-    return {};
-  }
-
-  return {
-    'Authorization': `Bearer ${token}`
-  };
-};
 const handleSubmit = (e) => {
   e.preventDefault();
   Swal.showLoading();
@@ -73,7 +62,7 @@ const handleSubmit = (e) => {
   formDataToSend.append('platform', platform);
 
   axios
-    .post(`${apiHost}api/candidates/`, formDataToSend , {headers: headers()})
+    .post(`${apiHost}api/candidates/`, formDataToSend , {headers})
     .then((response) => {
       // Display a SweetAlert2 success message
       Swal.fire({
